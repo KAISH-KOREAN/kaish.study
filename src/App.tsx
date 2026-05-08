@@ -16,13 +16,19 @@ function App() {
       />
 
       <nav className="relative z-10 mx-auto flex max-w-7xl flex-row items-center justify-between px-8 py-6">
-        <a
-          href="#"
-          className="text-3xl tracking-tight text-foreground"
-          style={{ fontFamily: "'Instrument Serif', serif" }}
-        >
-          Velorah<sup className="text-xs">®</sup>
-        </a>
+        <a href="#" className="flex items-center gap-3 text-foreground">
+  <img
+    src="/kaish-logo.png"
+    alt="KAISH logo"
+    className="h-12 w-12 rounded-full object-cover ring-1 ring-white/30"
+  />
+  <span
+    className="text-4xl font-semibold tracking-tight"
+    style={{ fontFamily: "'Instrument Serif', serif" }}
+  >
+    KAISH
+  </span>
+</a>
 
         <div className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
