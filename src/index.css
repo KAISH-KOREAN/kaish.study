@@ -92,3 +92,83 @@ body {
 .animate-fade-rise-delay-2 {
   animation: fade-rise 0.8s ease-out 0.4s both;
 }
+
+.theme-morning .background-lut {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(173, 232, 255, 0.34) 0%,
+      rgba(211, 244, 255, 0.2) 38%,
+      rgba(255, 248, 214, 0.14) 100%
+    ),
+    rgba(255, 255, 255, 0.08);
+  backdrop-filter: brightness(1.16) saturate(1.08) contrast(0.92);
+  -webkit-backdrop-filter: brightness(1.16) saturate(1.08) contrast(0.92);
+}
+
+.theme-afternoon .background-lut {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 202, 112, 0.32) 0%,
+      rgba(255, 145, 77, 0.2) 48%,
+      rgba(95, 55, 31, 0.2) 100%
+    ),
+    rgba(255, 187, 97, 0.1);
+  backdrop-filter: brightness(1.03) saturate(1.22) contrast(0.98);
+  -webkit-backdrop-filter: brightness(1.03) saturate(1.22) contrast(0.98);
+}
+
+.theme-night .background-lut {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 22, 46, 0.5) 0%,
+      rgba(5, 32, 64, 0.42) 45%,
+      rgba(0, 0, 0, 0.44) 100%
+    ),
+    rgba(0, 13, 35, 0.26);
+  backdrop-filter: brightness(0.78) saturate(1.05) contrast(1.08);
+  -webkit-backdrop-filter: brightness(0.78) saturate(1.05) contrast(1.08);
+}
+
+.background-option {
+  min-height: 82px;
+  position: relative;
+  overflow: hidden;
+}
+
+.background-option::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.95;
+  z-index: -1;
+}
+
+.background-option-morning::before {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(155, 226, 255, 0.95),
+      rgba(255, 246, 199, 0.75)
+    );
+}
+
+.background-option-afternoon::before {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 194, 96, 0.95),
+      rgba(219, 104, 47, 0.8)
+    );
+}
+
+.background-option-night::before {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(16, 52, 96, 0.95),
+      rgba(4, 10, 28, 0.9)
+    );
+}
