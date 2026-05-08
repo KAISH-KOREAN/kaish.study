@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 const GOOGLE_SHEET_WEB_APP_URL =
   "https://script.google.com/macros/s/AKfycbxmCBs9KGkVBSb5UvqykWkA1FcH7gH_poagkKdO2btW_pTanpEpdjIL77zhtw5qpiMrJg/exec";
 
-const videoUrl = "/videos/canola-sea-bg.mp4";
+const videoUrl = "/videos/297736-Trim.mp4";
 
 const navLinks = ["Home", "Studio", "About", "Journal", "Reach Us"];
 
