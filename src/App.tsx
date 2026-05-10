@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 const GOOGLE_SHEET_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbyTjaUj735-p_LP0Dj55ImTUu93XFi1iNExrhpJBcwzNFZHhAfFOm2luybKh7EMgKwgBQ/exec";
+  "https://script.google.com/macros/s/AKfycbxmCBs9KGkVBSb5UvqykWkA1FcH7gH_poagkKdO2btW_pTanpEpdjIL77zhtw5qpiMrJg/exec";
 
 const videoUrl = "/videos/297736-Trim.mp4";
 
@@ -66,6 +66,9 @@ const levelKoreanName: Record<string, string> = {
   "Sơ cấp 2A": "초급 2A",
   "Sơ cấp 2B": "초급 2B",
 };
+
+const publicLearningLevels = ["Luyện tập bảng chữ cái", "Sơ cấp 1A"];
+const teacherAccessCode = "KAISH2026";
 
 const exerciseTypes: {
   id: ExerciseType;
@@ -919,6 +922,14 @@ const extraLessonSeeds: Record<string, LessonSource> = {
   ]),
 };
 
+const QUESTION_COUNT_PER_TYPE = 30;
+
+const rotateOptions = (options: string[], shift: number) => {
+  if (options.length === 0) return options;
+  const offset = shift % options.length;
+  return [...options.slice(offset), ...options.slice(0, offset)];
+};
+
 function makeSeed(
   topic: string,
   vocabPairs: string[][],
@@ -967,42 +978,572 @@ function makeSeed(
 function makeWorkbookSeed(topic: string, vocabPairs: string[][]): LessonSeed {
   const normalizedPairs = vocabPairs.slice(0, 30);
   const vocabulary = normalizedPairs.map(([word, meaning]) => ({ word, meaning }));
-  const sentencePatterns = normalizedPairs.map(([word, meaning], index) => {
-    const optionSource = normalizedPairs
-      .map(([optionWord]) => optionWord)
-      .filter((optionWord) => optionWord !== word);
-    const rawOptions = [word, ...optionSource.slice(index, index + 3)].slice(0, 4);
-    const offset = rawOptions.length ? index % rawOptions.length : 0;
-    const options = [...rawOptions.slice(offset), ...rawOptions.slice(0, offset)];
-
-    while (options.length < 4) {
-      options.push(optionSource[options.length % optionSource.length] ?? word);
-    }
-
-    return {
-      sentence: `뜻이 "${meaning}"인 말은 ____입니다.`,
-      meaning: `"${meaning}" có nghĩa là "${word}".`,
-      answer: word,
-      options,
-    };
-  });
-  const fillPatterns = normalizedPairs.map(([word, meaning]) => ({
-    before: `뜻: ${meaning}. 알맞은 말은 `,
-    after: "입니다.",
-    meaning: `"${meaning}" có nghĩa là "${word}".`,
-    answer: word,
-    hint: meaning,
-  }));
+  const reservedFromMeaning = new Set(vocabulary.map((item) => normalizeKey(item.word)));
+  const sentencePatterns = buildWorkbookSentencePatterns(topic, reservedFromMeaning);
+  const reservedFromSentence = new Set([
+    ...Array.from(reservedFromMeaning),
+    ...sentencePatterns.map((question) => normalizeKey(question.answer)),
+  ]);
+  const fillPatterns = buildWorkbookFillPatterns(topic, reservedFromSentence);
 
   return { topic, vocabulary, sentencePatterns, fillPatterns };
 }
+
+type PracticeBankItem = {
+  answer: string;
+  prompt: string;
+  meaning: string;
+  hint: string;
+};
+
+const lessonSentenceFocus: Record<string, PracticeBankItem[]> = {
+  "한글": makeBank("한글", [
+    ["받침 읽기", "Âm cuối trong tiếng Hàn"],
+    ["초성 위치", "Vị trí phụ âm đầu"],
+    ["중성 위치", "Vị trí nguyên âm giữa"],
+    ["종성 위치", "Vị trí phụ âm cuối"],
+    ["모음 결합", "Ghép nguyên âm"],
+    ["자음 결합", "Ghép phụ âm"],
+    ["왼쪽에서 오른쪽", "Viết từ trái sang phải"],
+    ["위에서 아래", "Viết từ trên xuống dưới"],
+    ["한 음절", "Một âm tiết"],
+    ["두 음절", "Hai âm tiết"],
+  ]),
+  "소개": makeBank("소개", [
+    ["명사입니다", "Câu khẳng định danh từ"],
+    ["명사입니까", "Câu hỏi danh từ"],
+    ["주제 표시", "Đánh dấu chủ đề"],
+    ["주어 표시", "Đánh dấu chủ ngữ"],
+    ["소유 표현", "Biểu hiện sở hữu"],
+    ["자기소개", "Tự giới thiệu"],
+    ["인사 표현", "Cách chào hỏi"],
+    ["국적 말하기", "Nói quốc tịch"],
+    ["직업 말하기", "Nói nghề nghiệp"],
+    ["이름 묻기", "Hỏi tên"],
+  ]),
+  "학교": makeBank("학교", [
+    ["위치 묻기", "Hỏi vị trí"],
+    ["존재 말하기", "Nói có / ở"],
+    ["부정 명사문", "Câu phủ định danh từ"],
+    ["지시 표현", "Biểu hiện chỉ định"],
+    ["장소 표현", "Biểu hiện nơi chốn"],
+    ["물건 확인", "Xác nhận đồ vật"],
+    ["교실 위치", "Vị trí trong lớp"],
+    ["질문 만들기", "Tạo câu hỏi"],
+    ["대답 만들기", "Tạo câu trả lời"],
+    ["사물 설명", "Giải thích đồ vật"],
+  ]),
+  "일상생활": makeBank("일상생활", [
+    ["격식체 서술", "Đuôi câu trần thuật trang trọng"],
+    ["격식체 의문", "Đuôi câu hỏi trang trọng"],
+    ["목적어 표시", "Đánh dấu tân ngữ"],
+    ["장소에서 행동", "Hành động tại địa điểm"],
+    ["이동 표현", "Biểu hiện di chuyển"],
+    ["생활 동작", "Động tác sinh hoạt"],
+    ["현재 습관", "Thói quen hiện tại"],
+    ["동작 연결", "Liên kết động tác"],
+    ["행동 묻기", "Hỏi hành động"],
+    ["행동 대답", "Trả lời hành động"],
+  ]),
+  "날짜와 요일": makeBank("날짜와 요일", [
+    ["요일에", "Vào thứ"],
+    ["날짜 말하기", "Nói ngày tháng"],
+    ["시간에", "Vào lúc"],
+    ["오전 표현", "Buổi sáng"],
+    ["오후 표현", "Buổi chiều"],
+    ["시각 묻기", "Hỏi giờ"],
+    ["기간 시작", "Bắt đầu khoảng thời gian"],
+    ["기간 끝", "Kết thúc khoảng thời gian"],
+    ["일정 말하기", "Nói lịch trình"],
+    ["약속 확인", "Xác nhận cuộc hẹn"],
+  ]),
+  "하루 일과": makeBank("하루 일과", [
+    ["해요체 서술", "Đuôi câu thân mật lịch sự"],
+    ["부정 표현", "Câu phủ định ngắn"],
+    ["시간 순서", "Thứ tự thời gian"],
+    ["반복 습관", "Thói quen lặp lại"],
+    ["하루 설명", "Miêu tả một ngày"],
+    ["먼저 행동", "Hành động trước tiên"],
+    ["다음 행동", "Hành động tiếp theo"],
+    ["빈도 표현", "Tần suất"],
+    ["장소 이동", "Đi đến địa điểm"],
+    ["일과 묻기", "Hỏi lịch sinh hoạt"],
+  ]),
+  "주말": makeBank("주말", [
+    ["과거 서술", "Câu quá khứ"],
+    ["함께 행동", "Làm cùng ai"],
+    ["권유 표현", "Câu rủ rê"],
+    ["주말 경험", "Trải nghiệm cuối tuần"],
+    ["지난 일", "Việc đã qua"],
+    ["동반 표현", "Biểu hiện đi cùng"],
+    ["감상 말하기", "Nói cảm tưởng"],
+    ["바쁨 설명", "Giải thích bận"],
+    ["피곤함 설명", "Giải thích mệt"],
+    ["계획 제안", "Đề xuất kế hoạch"],
+  ]),
+  "물건 사기 (1)": makeBank("물건 사기", [
+    ["가격 묻기", "Hỏi giá"],
+    ["요청 표현", "Yêu cầu lịch sự"],
+    ["희망 표현", "Muốn làm gì"],
+    ["크기 설명", "Miêu tả kích cỡ"],
+    ["가격 평가", "Đánh giá giá"],
+    ["색깔 선택", "Chọn màu"],
+    ["수량 말하기", "Nói số lượng"],
+    ["구매 장소", "Nơi mua"],
+    ["물건 비교", "So sánh đồ vật"],
+    ["점원 대화", "Hội thoại với nhân viên"],
+  ]),
+  "음식": makeBank("음식", [
+    ["주문 표현", "Gọi món"],
+    ["맛 평가", "Đánh giá vị"],
+    ["권유 표현", "Mời ăn/uống"],
+    ["부정 맛 표현", "Nói vị không như vậy"],
+    ["의지 표현", "Ý định sẽ làm"],
+    ["정중 요청", "Yêu cầu lịch sự"],
+    ["식당 대화", "Hội thoại nhà hàng"],
+    ["추천 표현", "Gợi ý món"],
+    ["먹기 지시", "Mời ăn"],
+    ["마시기 지시", "Mời uống"],
+  ]),
+  "집": makeBank("집", [
+    ["앞 위치", "Vị trí phía trước"],
+    ["뒤 위치", "Vị trí phía sau"],
+    ["옆 위치", "Vị trí bên cạnh"],
+    ["반대쪽 위치", "Vị trí đối diện"],
+    ["방향 안내", "Chỉ đường"],
+    ["목적 이동", "Đi để làm gì"],
+    ["추가 표현", "Cũng có"],
+    ["거리 평가", "Đánh giá khoảng cách"],
+    ["주거 설명", "Miêu tả nơi sống"],
+    ["집 구조", "Cấu trúc nhà"],
+  ]),
+  "가족": makeBank("가족", [
+    ["높임 주어", "Chủ ngữ kính ngữ"],
+    ["높임 서술", "Vị ngữ kính ngữ"],
+    ["높임 명령", "Mệnh lệnh kính ngữ"],
+    ["높임 존재", "Có/ở kính ngữ"],
+    ["높임 식사", "Ăn/uống kính ngữ"],
+    ["높임 수면", "Ngủ kính ngữ"],
+    ["존칭 나이", "Tuổi kính ngữ"],
+    ["존칭 이름", "Tên kính ngữ"],
+    ["존칭 생일", "Sinh nhật kính ngữ"],
+    ["존칭 집", "Nhà kính ngữ"],
+  ]),
+  "날씨": makeBank("날씨", [
+    ["날씨 묻기", "Hỏi thời tiết"],
+    ["더위 설명", "Miêu tả nóng"],
+    ["추위 설명", "Miêu tả lạnh"],
+    ["따뜻함 설명", "Miêu tả ấm"],
+    ["시원함 설명", "Miêu tả mát"],
+    ["비 상황", "Tình huống mưa"],
+    ["눈 상황", "Tình huống tuyết"],
+    ["기간 시작", "Từ khi"],
+    ["기간 끝", "Đến khi"],
+    ["미래 계획", "Kế hoạch tương lai"],
+  ]),
+  "전화 (1)": makeBank("전화", [
+    ["의도 표현", "Định làm gì"],
+    ["대조 연결", "Nối câu đối lập"],
+    ["상태 변화", "Thay đổi trạng thái"],
+    ["불가능 표현", "Không thể làm"],
+    ["다시 요청", "Yêu cầu làm lại"],
+    ["확인 요청", "Yêu cầu xác nhận"],
+    ["통화 시작", "Bắt đầu cuộc gọi"],
+    ["통화 종료", "Kết thúc cuộc gọi"],
+    ["연락 목적", "Mục đích liên lạc"],
+    ["메모 남기기", "Để lại ghi chú"],
+  ]),
+  "생일": makeBank("생일", [
+    ["도움 표현", "Làm giúp/cho ai"],
+    ["이유 표현", "Nêu lý do"],
+    ["결과 표현", "Nêu kết quả"],
+    ["불가능 표현", "Không thể làm"],
+    ["축하 표현", "Chúc mừng"],
+    ["초대 표현", "Mời"],
+    ["선물 설명", "Miêu tả quà"],
+    ["감사 표현", "Cảm ơn"],
+    ["파티 안내", "Thông báo tiệc"],
+    ["약속 거절", "Từ chối hẹn"],
+  ]),
+  "취미": makeBank("취미", [
+    ["명사화 기", "Danh từ hóa -기"],
+    ["명사화 는것", "Danh từ hóa 는 것"],
+    ["선호 표현", "Nói sở thích"],
+    ["감상 표현", "Nói cảm nhận"],
+    ["반복 활동", "Hoạt động lặp lại"],
+    ["수집 활동", "Hoạt động sưu tầm"],
+    ["경험 활동", "Hoạt động trải nghiệm"],
+    ["능력 표현", "Nói khả năng"],
+    ["관심 표현", "Nói sự quan tâm"],
+    ["취미 묻기", "Hỏi sở thích"],
+  ]),
+  "교통": makeBank("교통", [
+    ["수단 표현", "Biểu hiện phương tiện"],
+    ["목적 이동", "Đi để làm gì"],
+    ["의도 이동", "Định đi làm gì"],
+    ["승차 표현", "Lên phương tiện"],
+    ["하차 표현", "Xuống phương tiện"],
+    ["환승 표현", "Chuyển tuyến"],
+    ["귀가 표현", "Trở về"],
+    ["길 안내", "Chỉ đường"],
+    ["시간 소요", "Mất thời gian"],
+    ["교통 비교", "So sánh giao thông"],
+  ]),
+};
+
+const lessonFillFocus: Record<string, PracticeBankItem[]> = {
+  "한글": makeBank("한글쓰기", [
+    ["가나다", "Chuỗi âm tiết cơ bản"],
+    ["마바사", "Luyện ghép phụ âm và nguyên âm"],
+    ["아자차", "Luyện âm tiết có ㅇ/ㅈ/ㅊ"],
+    ["카타파", "Luyện phụ âm bật hơi"],
+    ["하나", "Từ luyện đọc đơn giản"],
+    ["나라", "Từ luyện đọc đơn giản"],
+    ["바다", "Từ luyện đọc đơn giản"],
+    ["사자", "Từ luyện đọc đơn giản"],
+    ["차표", "Từ luyện đọc đơn giản"],
+    ["모자", "Từ luyện đọc đơn giản"],
+  ]),
+  "소개": makeBank("자기소개 완성", [
+    ["처음뵙겠습니다", "Rất hân hạnh gặp lần đầu"],
+    ["만나서반갑습니다", "Rất vui được gặp"],
+    ["잘부탁드립니다", "Mong được giúp đỡ"],
+    ["베트남에서왔습니다", "Tôi đến từ Việt Nam"],
+    ["한국어를공부합니다", "Tôi học tiếng Hàn"],
+    ["회사에다닙니다", "Tôi đi làm ở công ty"],
+    ["대학생입니다", "Tôi là sinh viên đại học"],
+    ["취미는독서입니다", "Sở thích là đọc sách"],
+    ["고향은하노이입니다", "Quê là Hà Nội"],
+    ["반갑게인사합니다", "Chào một cách vui vẻ"],
+  ]),
+  "학교": makeBank("교실 상황 완성", [
+    ["교실에있습니다", "Ở trong lớp học"],
+    ["책상위에있습니다", "Ở trên bàn học"],
+    ["칠판앞에있습니다", "Ở trước bảng"],
+    ["가방안에있습니다", "Ở trong cặp"],
+    ["도서관에갑니다", "Đi thư viện"],
+    ["화장실이어디입니까", "Nhà vệ sinh ở đâu"],
+    ["컴퓨터를사용합니다", "Sử dụng máy tính"],
+    ["문을엽니다", "Mở cửa"],
+    ["창문을닫습니다", "Đóng cửa sổ"],
+    ["사전을찾습니다", "Tra từ điển"],
+  ]),
+  "일상생활": makeBank("생활 문장 완성", [
+    ["아침에갑니다", "Đi vào buổi sáng"],
+    ["저녁에옵니다", "Đến vào buổi tối"],
+    ["식당에서먹습니다", "Ăn ở nhà ăn"],
+    ["집에서쉽니다", "Nghỉ ở nhà"],
+    ["회사에서일합니다", "Làm việc ở công ty"],
+    ["도서관에서읽습니다", "Đọc ở thư viện"],
+    ["음악을듣습니다", "Nghe nhạc"],
+    ["영화를봅니다", "Xem phim"],
+    ["친구를만납니다", "Gặp bạn"],
+    ["물건을삽니다", "Mua đồ"],
+  ]),
+  "날짜와 요일": makeBank("일정 문장 완성", [
+    ["월요일에수업이있습니다", "Thứ hai có lớp"],
+    ["화요일에시험이있습니다", "Thứ ba có thi"],
+    ["수요일에약속이있습니다", "Thứ tư có hẹn"],
+    ["오전에회의가있습니다", "Buổi sáng có họp"],
+    ["오후에공부합니다", "Buổi chiều học"],
+    ["주말에쉽니다", "Cuối tuần nghỉ"],
+    ["생일은일요일입니다", "Sinh nhật là chủ nhật"],
+    ["방학은내일부터입니다", "Kỳ nghỉ bắt đầu từ mai"],
+    ["수업은까지입니다", "Lớp học đến khi"],
+    ["오늘날짜를말합니다", "Nói ngày hôm nay"],
+  ]),
+  "하루 일과": makeBank("일과 문장 완성", [
+    ["일곱시에일어나요", "Thức dậy lúc 7 giờ"],
+    ["아침에세수해요", "Rửa mặt buổi sáng"],
+    ["학교에가요", "Đi học"],
+    ["수업후에공부해요", "Học sau giờ học"],
+    ["오후에운동해요", "Tập thể dục buổi chiều"],
+    ["저녁에숙제해요", "Làm bài tập buổi tối"],
+    ["밤에쉬어요", "Nghỉ buổi đêm"],
+    ["열한시에자요", "Ngủ lúc 11 giờ"],
+    ["가끔신문을봐요", "Thỉnh thoảng đọc báo"],
+    ["친구에게전화해요", "Gọi điện cho bạn"],
+  ]),
+  "주말": makeBank("주말 문장 완성", [
+    ["토요일에영화를봤어요", "Thứ bảy đã xem phim"],
+    ["일요일에친구를만났어요", "Chủ nhật đã gặp bạn"],
+    ["공원에갔어요", "Đã đi công viên"],
+    ["식당에서먹었어요", "Đã ăn ở nhà hàng"],
+    ["집에서쉬었어요", "Đã nghỉ ở nhà"],
+    ["쇼핑을했어요", "Đã mua sắm"],
+    ["같이공부합시다", "Hãy cùng học"],
+    ["음악을들었어요", "Đã nghe nhạc"],
+    ["사진을찍었어요", "Đã chụp ảnh"],
+    ["숙제를했습니다", "Đã làm bài tập"],
+  ]),
+  "물건 사기 (1)": makeBank("쇼핑 문장 완성", [
+    ["이거얼마예요", "Cái này bao nhiêu"],
+    ["하나주세요", "Cho tôi một cái"],
+    ["큰것을사고싶어요", "Muốn mua cái lớn"],
+    ["작은것도있어요", "Cũng có cái nhỏ"],
+    ["너무비싸요", "Quá đắt"],
+    ["조금싸요", "Hơi rẻ"],
+    ["빨간색으로주세요", "Cho màu đỏ"],
+    ["가게에서샀어요", "Đã mua ở cửa hàng"],
+    ["돈을냈어요", "Đã trả tiền"],
+    ["물건을골랐어요", "Đã chọn đồ"],
+  ]),
+  "음식": makeBank("식당 문장 완성", [
+    ["메뉴를보겠습니다", "Tôi sẽ xem thực đơn"],
+    ["비빔밥을주문하겠습니다", "Tôi sẽ gọi bibimbap"],
+    ["물좀주세요", "Cho tôi chút nước"],
+    ["맛있게드세요", "Chúc ăn ngon"],
+    ["맵지않게해주세요", "Làm không cay giúp tôi"],
+    ["달지않아요", "Không ngọt"],
+    ["식당에갑니다", "Đi nhà hàng"],
+    ["배가고픕니다", "Đói bụng"],
+    ["배가부릅니다", "No bụng"],
+    ["차를마시겠습니다", "Tôi sẽ uống trà"],
+  ]),
+  "집": makeBank("길과 집 문장 완성", [
+    ["오른쪽으로가세요", "Đi sang phải"],
+    ["왼쪽으로가세요", "Đi sang trái"],
+    ["앞에서기다려요", "Chờ phía trước"],
+    ["뒤에있어요", "Ở phía sau"],
+    ["옆으로오세요", "Hãy đến bên cạnh"],
+    ["반대쪽에있어요", "Ở phía đối diện"],
+    ["집에살아요", "Sống ở nhà"],
+    ["공원에가고싶어요", "Muốn đi công viên"],
+    ["수영하러가요", "Đi để bơi"],
+    ["회사가멀어요", "Công ty xa"],
+  ]),
+  "가족": makeBank("가족 높임 완성", [
+    ["아버지께서오세요", "Bố đến, kính ngữ"],
+    ["어머니께서계세요", "Mẹ ở, kính ngữ"],
+    ["할아버지께서드세요", "Ông ăn, kính ngữ"],
+    ["할머니께서주무세요", "Bà ngủ, kính ngữ"],
+    ["성함이어떻게되세요", "Quý danh là gì"],
+    ["연세가어떻게되세요", "Tuổi kính ngữ là bao nhiêu"],
+    ["댁이어디세요", "Nhà kính ngữ ở đâu"],
+    ["생신을축하드려요", "Chúc mừng sinh nhật kính ngữ"],
+    ["말씀을들었어요", "Đã nghe lời nói kính ngữ"],
+    ["편찮으세요", "Bị ốm, kính ngữ"],
+  ]),
+  "날씨": makeBank("날씨 문장 완성", [
+    ["오늘날씨가좋아요", "Thời tiết hôm nay đẹp"],
+    ["여름은더워요", "Mùa hè nóng"],
+    ["겨울은추워요", "Mùa đông lạnh"],
+    ["봄은따뜻해요", "Mùa xuân ấm"],
+    ["가을은시원해요", "Mùa thu mát"],
+    ["비가많이와요", "Mưa nhiều"],
+    ["눈이조금와요", "Tuyết rơi một chút"],
+    ["우산을가져가세요", "Hãy mang ô"],
+    ["바다에갈거예요", "Sẽ đi biển"],
+    ["방학부터쉴거예요", "Sẽ nghỉ từ kỳ nghỉ"],
+  ]),
+  "전화 (1)": makeBank("전화 문장 완성", [
+    ["전화를걸려고해요", "Định gọi điện"],
+    ["문자를보내려고해요", "Định gửi tin nhắn"],
+    ["메일을확인하려고해요", "Định kiểm tra email"],
+    ["전화했지만안받았어요", "Đã gọi nhưng không nhận"],
+    ["파일을보냈지만열리지않아요", "Đã gửi file nhưng không mở"],
+    ["휴대폰이고장났어요", "Điện thoại bị hỏng"],
+    ["배터리가꺼졌어요", "Pin tắt/hết"],
+    ["나중에다시전화해요", "Lát nữa gọi lại"],
+    ["주소를보내주세요", "Hãy gửi địa chỉ"],
+    ["알림이울렸어요", "Thông báo đã kêu"],
+  ]),
+  "생일": makeBank("생일 문장 완성", [
+    ["선물을사주었어요", "Đã mua quà cho"],
+    ["꽃을보내주었어요", "Đã gửi hoa cho"],
+    ["케이크를만들어주었어요", "Đã làm bánh cho"],
+    ["생일을축하해요", "Chúc mừng sinh nhật"],
+    ["파티에초대했어요", "Đã mời tới tiệc"],
+    ["비때문에못갔어요", "Không đi được vì mưa"],
+    ["바빠서못샀어요", "Không mua được vì bận"],
+    ["그래서카드를썼어요", "Vì vậy đã viết thiệp"],
+    ["노래를불러주었어요", "Đã hát cho"],
+    ["친구에게받았어요", "Đã nhận từ bạn"],
+  ]),
+  "취미": makeBank("취미 문장 완성", [
+    ["여행하기를좋아해요", "Thích đi du lịch"],
+    ["노래듣는것을좋아해요", "Thích nghe nhạc"],
+    ["걷기가재미있어요", "Đi bộ thú vị"],
+    ["요리하는것을배워요", "Học việc nấu ăn"],
+    ["우표수집을해요", "Sưu tầm tem"],
+    ["사진찍기를좋아해요", "Thích chụp ảnh"],
+    ["드라마보는것이재미있어요", "Xem phim thú vị"],
+    ["아침마다걸어요", "Đi bộ mỗi sáng"],
+    ["문화를체험해요", "Trải nghiệm văn hóa"],
+    ["질문을묻습니다", "Hỏi câu hỏi"],
+  ]),
+  "교통": makeBank("교통 문장 완성", [
+    ["버스로가요", "Đi bằng xe buýt"],
+    ["지하철로갈아타요", "Chuyển sang tàu điện ngầm"],
+    ["택시를타요", "Đi taxi"],
+    ["기차에서내려요", "Xuống tàu"],
+    ["비행기로가려고해요", "Định đi bằng máy bay"],
+    ["고향에돌아가요", "Trở về quê"],
+    ["시험장에가요", "Đi đến phòng thi"],
+    ["점심을먹으러가요", "Đi ăn trưa"],
+    ["운동장으로가세요", "Hãy đi về phía sân vận động"],
+    ["회사앞에서만나요", "Gặp trước công ty"],
+  ]),
+};
+
+function makeBank(topic: string, rows: string[][]): PracticeBankItem[] {
+  return rows.map(([answer, meaning], index) => ({
+    answer,
+    meaning,
+    hint: meaning,
+    prompt: `${topic} 상황 ${index + 1}`,
+  }));
+}
+
+const buildWorkbookSentencePatterns = (
+  topic: string,
+  reserved: Set<string>
+): LessonSeed["sentencePatterns"] => {
+  const bank = makeSeparatedBank(
+    lessonSentenceFocus[topic] ?? makeDefaultSentenceBank(topic),
+    reserved,
+    "문법"
+  );
+
+  return Array.from({ length: QUESTION_COUNT_PER_TYPE }, (_, index) => {
+    const item = bank[index % bank.length];
+    const options = makeRotatedOptions(
+      item.answer,
+      bank.filter((option) => option.answer !== item.answer).map((option) => option.answer),
+      index
+    );
+
+    return {
+      sentence: makeSentencePrompt(topic, item, index),
+      meaning: item.meaning,
+      answer: item.answer,
+      options,
+    };
+  });
+};
+
+const buildWorkbookFillPatterns = (
+  topic: string,
+  reserved: Set<string>
+): LessonSeed["fillPatterns"] => {
+  const bank = makeSeparatedBank(
+    lessonFillFocus[topic] ?? makeDefaultFillBank(topic),
+    reserved,
+    "문장"
+  );
+
+  return Array.from({ length: QUESTION_COUNT_PER_TYPE }, (_, index) => {
+    const item = bank[index % bank.length];
+
+    return {
+      before: makeFillBefore(topic, item, index),
+      after: makeFillAfter(topic, index),
+      meaning: item.meaning,
+      answer: item.answer,
+      hint: item.hint,
+      accepted: [item.answer],
+    };
+  });
+};
+
+const makeSeparatedBank = (
+  bank: PracticeBankItem[],
+  reserved: Set<string>,
+  suffix: string
+) => {
+  return bank.map((item, index) => {
+    const key = normalizeKey(item.answer);
+    if (!reserved.has(key)) return item;
+
+    return {
+      ...item,
+      answer: `${item.answer}${suffix}${index + 1}`.replace(/\s+/g, ""),
+    };
+  });
+};
+
+const makeDefaultSentenceBank = (topic: string) =>
+  makeBank(topic, [
+    ["문법선택", "Chọn cấu trúc ngữ pháp phù hợp"],
+    ["상황표현", "Chọn biểu hiện theo tình huống"],
+    ["질문형", "Tạo dạng câu hỏi"],
+    ["대답형", "Tạo dạng câu trả lời"],
+    ["연결표현", "Chọn biểu hiện nối câu"],
+    ["높임표현", "Chọn biểu hiện lịch sự"],
+    ["부정표현", "Chọn biểu hiện phủ định"],
+    ["시간표현", "Chọn biểu hiện thời gian"],
+    ["장소표현", "Chọn biểu hiện địa điểm"],
+    ["목적표현", "Chọn biểu hiện mục đích"],
+  ]);
+
+const makeDefaultFillBank = (topic: string) =>
+  makeBank(topic, [
+    ["문장을완성합니다", "Hoàn thành câu"],
+    ["자연스럽게말합니다", "Nói tự nhiên"],
+    ["상황에맞게씁니다", "Viết đúng tình huống"],
+    ["정중하게말합니다", "Nói lịch sự"],
+    ["질문을만듭니다", "Tạo câu hỏi"],
+    ["대답을만듭니다", "Tạo câu trả lời"],
+    ["이유를말합니다", "Nói lý do"],
+    ["계획을말합니다", "Nói kế hoạch"],
+    ["경험을말합니다", "Nói trải nghiệm"],
+    ["위치를말합니다", "Nói vị trí"],
+  ]);
+
+const makeRotatedOptions = (answer: string, optionSource: string[], index: number) => {
+  const source = optionSource.length > 0 ? optionSource : [answer];
+  const wrongOptions = Array.from({ length: 3 }, (_, wrongIndex) => {
+    return source[(index + wrongIndex) % source.length];
+  });
+  const options = [answer, ...wrongOptions];
+  return rotateOptions(options, index).slice(0, 4);
+};
+
+const makeSentencePrompt = (
+  topic: string,
+  item: PracticeBankItem,
+  index: number
+) => {
+  if (topic === "한글") {
+    return `${item.prompt}: 알맞은 읽기/쓰기 개념은 ____입니다.`;
+  }
+
+  const templates = [
+    `${item.prompt}: 이 상황에 맞는 문법/표현은 ____입니다.`,
+    `${topic} 대화에서 자연스러운 구조를 고르세요: ____`,
+    `${item.prompt}: 문장을 완성하는 알맞은 말은 ____입니다.`,
+    `${topic}에서 배운 문형 중 가장 알맞은 것은 ____입니다.`,
+  ];
+
+  return templates[index % templates.length];
+};
+
+const makeFillBefore = (topic: string, item: PracticeBankItem, index: number) => {
+  if (topic === "한글") return `${item.prompt}: `;
+
+  const templates = [
+    `${item.prompt}: `,
+    `다음 ${topic} 문장을 완성하세요: `,
+    `상황에 맞게 빈칸을 채우세요: `,
+    `배운 문장 구조를 사용하세요: `,
+  ];
+
+  return templates[index % templates.length];
+};
+
+const makeFillAfter = (topic: string, index: number) => {
+  if (topic === "한글") return "을/를 쓰세요.";
+
+  const endings = ["요.", "입니다.", "라고 말합니다.", "라고 씁니다."];
+  return endings[index % endings.length];
+};
 
 const sc1WorkbookLessonSeeds: Record<string, LessonSource> = {
   "Luyện tập bảng chữ cái|Bảng chữ cái": makeWorkbookSeed("한글", [
     ["ㅏ", "nguyên âm a"], ["ㅑ", "nguyên âm ya"], ["ㅓ", "nguyên âm eo"], ["ㅕ", "nguyên âm yeo"], ["ㅗ", "nguyên âm o"],
     ["ㅛ", "nguyên âm yo"], ["ㅜ", "nguyên âm u"], ["ㅠ", "nguyên âm yu"], ["ㅡ", "nguyên âm eu"], ["ㅣ", "nguyên âm i"],
     ["ㄱ", "phụ âm g/k"], ["ㄴ", "phụ âm n"], ["ㄷ", "phụ âm d/t"], ["ㄹ", "phụ âm r/l"], ["ㅁ", "phụ âm m"],
-    ["ㅂ", "phụ âm b/p"], ["ㅅ", "phụ âm s"], ["ㅇ", "phụ âm ng / âm câm đầu âm tiết"], ["ㅈ", "phụ âm j/ch"], ["ㅊ", "phụ âm j/ch"],
+    ["ㅂ", "phụ âm b/p"], ["ㅅ", "phụ âm s"], ["ㅇ", "phụ âm ng / âm câm đầu âm tiết"], ["ㅈ", "phụ âm j"], ["ㅊ", "phụ âm ch"],
     ["ㅋ", "phụ âm kh"], ["ㅌ", "phụ âm th"], ["ㅍ", "phụ âm ph"], ["ㅎ", "phụ âm h"], ["가", "ga / ka"],
     ["나", "na"], ["다", "da / ta"], ["라", "ra / la"], ["마", "ma"], ["바", "ba / pa"],
   ]),
@@ -1132,13 +1673,6 @@ const rawLessonSeeds: Record<string, LessonSource> = {
   ...lessonSeeds,
   ...extraLessonSeeds,
   ...sc1WorkbookLessonSeeds,
-};
-const QUESTION_COUNT_PER_TYPE = 30;
-
-const rotateOptions = (options: string[], shift: number) => {
-  if (options.length === 0) return options;
-  const offset = shift % options.length;
-  return [...options.slice(offset), ...options.slice(0, offset)];
 };
 
 const expandVocabulary = (
@@ -1303,9 +1837,20 @@ function App() {
   const [submitMessage, setSubmitMessage] = useState("");
   const [savedMeaning, setSavedMeaning] = useState(false);
   const [savedSentenceChoice, setSavedSentenceChoice] = useState(false);
+  const [exerciseNotice, setExerciseNotice] = useState("");
+  const [accessCodeInput, setAccessCodeInput] = useState("");
+  const [accessMessage, setAccessMessage] = useState("");
+  const [unlockedLevels, setUnlockedLevels] = useState<Record<string, boolean>>(
+    {}
+  );
 
   const selectedLessonKey = selectedLevel && selectedLesson ? `${selectedLevel}|${selectedLesson}` : "";
   const currentLessonData = selectedLessonKey ? lessonExerciseData[selectedLessonKey] : null;
+  const selectedLevelIsProtected =
+    Boolean(selectedLevel) &&
+    !publicLearningLevels.includes(selectedLevel ?? "");
+  const selectedLevelIsUnlocked =
+    !selectedLevelIsProtected || Boolean(selectedLevel && unlockedLevels[selectedLevel]);
   const meaningQuestions = useMemo(
     () => currentLessonData?.vocabulary.slice(0, 30) ?? [],
     [currentLessonData]
@@ -1335,11 +1880,17 @@ function App() {
     setVocabMode("meaning");
   };
 
+  const resetAccessForm = () => {
+    setAccessCodeInput("");
+    setAccessMessage("");
+  };
+
   const handleStartLearning = () => {
     setLevelsOpen((value) => !value);
     setSelectedLevel(null);
     setSelectedLesson(null);
     setSelectedExercise(null);
+    resetAccessForm();
     resetVocabularyProgress();
   };
 
@@ -1348,6 +1899,7 @@ function App() {
       setSelectedLevel(level);
       setSelectedLesson(null);
       setSelectedExercise(null);
+      resetAccessForm();
       resetVocabularyProgress();
       return;
     }
@@ -1359,19 +1911,51 @@ function App() {
     setSelectedLevel(null);
     setSelectedLesson(null);
     setSelectedExercise(null);
+    resetAccessForm();
     resetVocabularyProgress();
   };
 
   const handleLessonClick = (lesson: string) => {
+    if (!selectedLevelIsUnlocked) {
+      setAccessMessage("Vui lòng nhập đúng mã giáo viên đã cung cấp trước khi chọn bài.");
+      return;
+    }
+
     setSelectedLesson(lesson);
     setSelectedExercise(null);
+    setExerciseNotice("");
     resetVocabularyProgress();
   };
 
-  const handleExerciseClick = (exercise: ExerciseType) => {
-    setSelectedExercise(exercise);
-    resetVocabularyProgress();
+  const handleUnlockLevel = () => {
+    if (!selectedLevel) return;
+
+    if (accessCodeInput.trim() !== teacherAccessCode) {
+      setAccessMessage("Mã chưa đúng. Hãy kiểm tra lại mã giáo viên đã cung cấp trong lớp học.");
+      return;
+    }
+
+    setUnlockedLevels((prev) => ({
+      ...prev,
+      [selectedLevel]: true,
+    }));
+    setAccessMessage("");
+    setAccessCodeInput("");
   };
+
+  const handleExerciseClick = (exercise: ExerciseType) => {
+  if (exercise !== "vocabulary") {
+    setSelectedExercise(null);
+    setExerciseNotice("Bạn cần làm bài tập từ vựng trước.");
+    resetVocabularyProgress();
+    return;
+  }
+
+  setExerciseNotice("");
+  setSelectedExercise(exercise);
+  resetVocabularyProgress();
+};
+
 
   const updateAnswerOnce = (key: string, value: string) => {
     setAnswers((prev) => {
@@ -1554,6 +2138,8 @@ function App() {
       const body = new URLSearchParams();
       body.append("payload", JSON.stringify(payload));
 
+      console.log("Submitting quiz payload:", payload);
+
       await fetch(GOOGLE_SHEET_WEB_APP_URL, {
         method: "POST",
         mode: "no-cors",
@@ -1561,7 +2147,7 @@ function App() {
       });
 
       setSubmitMessage(
-        `Đã nộp bài. Điểm của bạn: ${score}/${total}. Câu sai đã được gửi vào Google Sheet.`
+        `Đã nộp bài. Điểm của bạn: ${score}/${total}. Yêu cầu đã được gửi tới Apps Script; nếu Google Sheet chưa hiện dòng mới, hãy Deploy lại Apps Script theo Code.gs mới.`
       );
     } catch (error) {
       console.error(error);
@@ -2089,7 +2675,11 @@ function App() {
               <div>
                 <p className="text-sm text-white/60">{levelKoreanName[selectedLevel] ?? selectedLevel}</p>
                 <h2 className="mt-1 text-3xl font-semibold text-white">{selectedLevel} - Danh sách bài tập</h2>
-                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/65">Chọn bài học để mở các dạng bài tập.</p>
+                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/65">
+                  {selectedLevelIsUnlocked
+                    ? "Chọn bài học để mở các dạng bài tập."
+                    : "Nhập mã giáo viên đã cung cấp trong lớp học để mở khóa cấp học này."}
+                </p>
               </div>
 
               <button onClick={handleCloseLayer} className="rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-sm text-white transition-transform duration-300 hover:scale-[1.03] hover:bg-white/[0.14]">
@@ -2097,22 +2687,63 @@ function App() {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {lessonsByLevel[selectedLevel].map((lesson) => (
-                <button
-                  key={lesson}
-                  onClick={() => handleLessonClick(lesson)}
-                  className={`rounded-2xl border border-white/15 bg-white/[0.08] px-5 py-4 text-left text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/[0.12] ${
-                    selectedLesson === lesson ? "ring-2 ring-white/80" : ""
-                  }`}
-                >
-                  <span className="block text-base font-semibold">{lesson}</span>
-                  <span className="mt-1 block text-xs text-white/60">Bấm để chọn bài tập</span>
-                </button>
-              ))}
-            </div>
+            {!selectedLevelIsUnlocked ? (
+              <div className="rounded-3xl border border-white/15 bg-black/35 p-5">
+                <div className="mb-4">
+                  <p className="text-sm text-white/60">Mã lớp học</p>
+                  <h3 className="text-2xl font-semibold text-white">
+                    Nhập mã để mở khóa {selectedLevel}
+                  </h3>
+                </div>
 
-            {selectedLesson && (
+                <div className="flex flex-col gap-3 md:flex-row md:items-center">
+                  <input
+                    value={accessCodeInput}
+                    onChange={(event) => {
+                      setAccessCodeInput(event.target.value);
+                      setAccessMessage("");
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") handleUnlockLevel();
+                    }}
+                    placeholder="Nhập mã giáo viên cung cấp"
+                    type="password"
+                    autoComplete="off"
+                    className="min-w-0 flex-1 rounded-full border border-white/20 bg-white/[0.08] px-6 py-4 text-base text-white outline-none placeholder:text-white/45 focus:border-white/60"
+                  />
+
+                  <button
+                    onClick={handleUnlockLevel}
+                    className="rounded-full bg-white px-8 py-4 text-base font-semibold text-black transition-transform hover:scale-[1.03]"
+                  >
+                    Mở khóa
+                  </button>
+                </div>
+
+                {accessMessage && (
+                  <p className="mt-4 rounded-2xl bg-rose-400/15 p-4 text-sm leading-relaxed text-rose-50">
+                    {accessMessage}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {lessonsByLevel[selectedLevel].map((lesson) => (
+                  <button
+                    key={lesson}
+                    onClick={() => handleLessonClick(lesson)}
+                    className={`rounded-2xl border border-white/15 bg-white/[0.08] px-5 py-4 text-left text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/[0.12] ${
+                      selectedLesson === lesson ? "ring-2 ring-white/80" : ""
+                    }`}
+                  >
+                    <span className="block text-base font-semibold">{lesson}</span>
+                    <span className="mt-1 block text-xs text-white/60">Bấm để chọn bài tập</span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {selectedLevelIsUnlocked && selectedLesson && (
               <div className="mt-7 rounded-3xl border border-white/15 bg-black/35 p-5">
                 <div className="mb-4">
                   <p className="text-sm text-white/60">
@@ -2135,6 +2766,12 @@ function App() {
                     </button>
                   ))}
                 </div>
+                {exerciseNotice && (
+  <p className="mt-4 rounded-2xl bg-amber-400/15 p-4 text-base font-medium text-amber-50">
+    {exerciseNotice}
+  </p>
+)}
+
               </div>
             )}
           </div>
