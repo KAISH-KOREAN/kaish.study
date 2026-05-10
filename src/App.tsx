@@ -1948,8 +1948,7 @@ function App() {
   };
 
   const handleExerciseClick = (exercise: ExerciseType) => {
-  setMusicOpen(false);
-  
+    
     if (exercise !== "vocabulary") {
     setSelectedExercise(null);
     setExerciseNotice("Bạn cần làm bài tập từ vựng trước.");
@@ -2826,7 +2825,7 @@ function App() {
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowFullScreen
       />
-      
+
     </div>
 
     <p className="mt-3 text-xs leading-relaxed text-white/45">
