@@ -5,6 +5,9 @@ const GOOGLE_SHEET_WEB_APP_URL =
 
 const videoUrl = "/videos/297736-Trim.mp4";
 
+const gammaMusicEmbedUrl =
+  "https://www.youtube.com/embed/n4YghVcjbpw";
+
 const navLinks = ["Home", "Studio", "About", "Journal", "Reach Us"];
 
 type BackgroundMode = "morning" | "afternoon" | "night";
@@ -1828,6 +1831,7 @@ function App() {
   const [backgroundMode, setBackgroundMode] = useState<BackgroundMode>("morning");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [levelsOpen, setLevelsOpen] = useState(false);
+  const [musicOpen, setMusicOpen] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [selectedLesson, setSelectedLesson] = useState<string | null>(null);
   const [selectedExercise, setSelectedExercise] = useState<ExerciseType>(null);
@@ -1944,7 +1948,9 @@ function App() {
   };
 
   const handleExerciseClick = (exercise: ExerciseType) => {
-  if (exercise !== "vocabulary") {
+  setMusicOpen(false);
+  
+    if (exercise !== "vocabulary") {
     setSelectedExercise(null);
     setExerciseNotice("Bạn cần làm bài tập từ vựng trước.");
     resetVocabularyProgress();
@@ -2629,9 +2635,20 @@ function App() {
             )}
           </div>
 
-          <button onClick={handleStartLearning} className="liquid-glass rounded-full px-6 py-2.5 text-sm text-white transition-transform duration-300 hover:scale-[1.03]">
-            Start Learning
-          </button>
+          <button
+  onClick={handleStartLearning}
+  className="liquid-glass rounded-full px-6 py-2.5 text-sm text-white transition-transform duration-300 hover:scale-[1.03]"
+>
+  Start Learning
+</button>
+
+<button
+  onClick={() => setMusicOpen((value) => !value)}
+  className="liquid-glass flex items-center gap-2 rounded-full px-5 py-2.5 text-sm text-white transition-transform duration-300 hover:scale-[1.03]"
+>
+  <span>🎧</span>
+  <span>Gamma Music</span>
+</button>
         </div>
       </nav>
 
@@ -2777,6 +2794,48 @@ function App() {
           </div>
         </section>
       )}
+{musicOpen && (
+  <div className="fixed right-6 top-24 z-[35] w-[380px] rounded-[28px] border border-white/20 bg-slate-950/85 p-4 text-left shadow-2xl backdrop-blur-2xl">
+    <div className="mb-3 flex items-center justify-between gap-3">
+      <div>
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/45">
+          Focus audio
+        </p>
+        <h3 className="mt-1 text-lg font-semibold text-white">
+          Gamma Brainwave Music
+        </h3>
+        <p className="mt-1 text-xs text-white/55">
+          Nhạc tập trung nhẹ nhàng khi làm bài
+        </p>
+      </div>
+
+      <button
+        onClick={() => setMusicOpen(false)}
+        className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 text-xs text-white/65 transition-colors hover:bg-white/[0.12] hover:text-white"
+      >
+        Đóng
+      </button>
+    </div>
+
+    <div className="aspect-video overflow-hidden rounded-2xl border border-white/15 bg-black/50">
+      <iframe
+      className="h-full w-full"
+      src={`${gammaMusicEmbedUrl}?rel=0&modestbranding=1`}
+      title="Gamma brainwave study music"
+      referrerPolicy="strict-origin-when-cross-origin"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+      />
+      
+    </div>
+
+    <p className="mt-3 text-xs leading-relaxed text-white/45">
+      Gợi ý: bật âm lượng nhỏ để giữ trạng thái tập trung ổn định.
+    </p>
+  </div>
+)}
+
+{selectedExercise === "vocabulary" && renderVocabularyExerciseModal()}
 
       {selectedExercise === "vocabulary" && renderVocabularyExerciseModal()}
     </main>
