@@ -11,7 +11,7 @@ const gammaMusicEmbedUrl =
 const navLinks = ["Home", "Studio", "About", "Journal", "Reach Us"];
 
 type BackgroundMode = "morning" | "afternoon" | "night";
-type ExerciseType = "vocabulary" | "translation" | "choice" | null;
+type ExerciseType = "vocabulary" | "translation" | "choice" | "topikReading" | null;
 type VocabMode = "meaning" | "sentenceChoice" | "fillBlank";
 
 const backgroundOptions: {
@@ -24,6 +24,9 @@ const backgroundOptions: {
   { id: "night", label: "Tối", description: "Cinematic" },
 ];
 
+const TOPIK_READING_LEVEL = "Ôn TOPIK II";
+const TOPIK_READING_LESSON = "Đọc";
+
 const learningLevels = [
   "Luyện tập bảng chữ cái",
   "Sơ cấp 1A",
@@ -34,6 +37,7 @@ const learningLevels = [
   "Trung cấp 2",
   "TOPIK 3-4",
   "TOPIK 5-6",
+  TOPIK_READING_LEVEL,
 ];
 
 const lessonsByLevel: Record<string, string[]> = {
@@ -60,6 +64,7 @@ const lessonsByLevel: Record<string, string[]> = {
     "Bài 14",
     "Bài 15",
   ],
+  [TOPIK_READING_LEVEL]: [TOPIK_READING_LESSON],
 };
 
 const levelKoreanName: Record<string, string> = {
@@ -68,9 +73,10 @@ const levelKoreanName: Record<string, string> = {
   "Sơ cấp 1B": "초급 1B",
   "Sơ cấp 2A": "초급 2A",
   "Sơ cấp 2B": "초급 2B",
+  [TOPIK_READING_LEVEL]: "TOPIK II 읽기",
 };
 
-const publicLearningLevels = ["Luyện tập bảng chữ cái", "Sơ cấp 1A"];
+const publicLearningLevels = ["Luyện tập bảng chữ cái", "Sơ cấp 1A", TOPIK_READING_LEVEL];
 const teacherAccessCode = "KAISH2026";
 
 const exerciseTypes: {
@@ -94,6 +100,66 @@ const exerciseTypes: {
     description: "Phần này sẽ được xây dựng ở bước tiếp theo.",
   },
 ];
+
+type TopikReadingAnswer = "1" | "2" | "3" | "4";
+
+type TopikReadingTest = {
+  id: string;
+  title: string;
+  session: string;
+  sourceFileName: string;
+  pdfUrl: string;
+  questionCount: number;
+  readingType: string;
+  note: string;
+  answerKey?: Partial<Record<number, TopikReadingAnswer>>;
+};
+
+const topikExerciseTypes: {
+  id: ExerciseType;
+  title: string;
+  description: string;
+}[] = [
+  {
+    id: "topikReading",
+    title: "Luyện đọc TOPIK II",
+    description: "Mở đề đọc đúng theo file PDF đã tải lên và làm phiếu chọn 1-50.",
+  },
+];
+
+const topikReadingTests: TopikReadingTest[] = [
+  {
+    id: "topik96-reading",
+    title: "TOPIK II 읽기 - Kỳ 96",
+    session: "제96회",
+    sourceFileName: "TOPIK 96 읽기 (level II).pdf",
+    pdfUrl: "/topik/topik-96-reading-level-ii.pdf",
+    questionCount: 50,
+    readingType: "2교시 읽기",
+    note: "Đề TOPIK II đọc kỳ 96, B 홀수형, gồm 50 câu. File có nhiều phần hình/biểu đồ nên hiển thị PDF gốc để giữ đúng nội dung.",
+  },
+  {
+    id: "topik99-reading",
+    title: "TOPIK II 읽기 - Kỳ 99",
+    session: "제99회",
+    sourceFileName: "TOPIK 99 읽기 (level II).pdf",
+    pdfUrl: "/topik/topik-99-reading-level-ii.pdf",
+    questionCount: 50,
+    readingType: "읽기",
+    note: "Đề đọc kỳ 99 trong tài liệu Tổng ôn TOPIK. Giữ PDF gốc để bảo toàn chữ Hàn, câu hỏi, bảng và hình minh họa.",
+  },
+  {
+    id: "topik102-reading",
+    title: "TOPIK II 읽기 - Kỳ 102",
+    session: "제102회",
+    sourceFileName: "제102회_문제지 TOPIK2_2교시_읽기_탑재용.pdf",
+    pdfUrl: "/topik/topik-102-reading-level-ii.pdf",
+    questionCount: 50,
+    readingType: "2교시 읽기",
+    note: "Đề TOPIK II đọc kỳ 102 bản 탑재용. Đây là PDF scan/ảnh, vì vậy xem trực tiếp PDF là cách chính xác nhất.",
+  },
+];
+
 
 type VocabItem = {
   word: string;
@@ -1847,6 +1913,12 @@ function App() {
   const [unlockedLevels, setUnlockedLevels] = useState<Record<string, boolean>>(
     {}
   );
+  const [selectedTopikTestId, setSelectedTopikTestId] = useState(
+    topikReadingTests[0]?.id ?? ""
+  );
+  const [topikAnswers, setTopikAnswers] = useState<Record<string, TopikReadingAnswer>>({});
+  const [topikStudentName, setTopikStudentName] = useState("");
+  const [topikSubmitMessage, setTopikSubmitMessage] = useState("");
 
   const selectedLessonKey = selectedLevel && selectedLesson ? `${selectedLevel}|${selectedLesson}` : "";
   const currentLessonData = selectedLessonKey ? lessonExerciseData[selectedLessonKey] : null;
@@ -1861,6 +1933,19 @@ function App() {
   );
   const sentenceChoiceQuestions = currentLessonData?.sentenceChoiceQuestions ?? [];
   const fillBlankQuestions = currentLessonData?.fillBlankQuestions ?? [];
+  const currentTopikTest = useMemo(
+    () => topikReadingTests.find((test) => test.id === selectedTopikTestId) ?? topikReadingTests[0],
+    [selectedTopikTestId]
+  );
+  const currentExerciseTypes =
+    selectedLevel === TOPIK_READING_LEVEL && selectedLesson === TOPIK_READING_LESSON
+      ? topikExerciseTypes
+      : exerciseTypes;
+  const selectedTopikAnswerCount = currentTopikTest
+    ? Array.from({ length: currentTopikTest.questionCount }).filter(
+        (_, index) => topikAnswers[`${currentTopikTest.id}-${index + 1}`]
+      ).length
+    : 0;
 
   useEffect(() => {
     const savedMode = localStorage.getItem("kaish-background-mode");
@@ -1884,6 +1969,15 @@ function App() {
     setVocabMode("meaning");
   };
 
+  const resetTopikReadingProgress = (keepSelectedTest = true) => {
+    setTopikAnswers({});
+    setTopikStudentName("");
+    setTopikSubmitMessage("");
+    if (!keepSelectedTest) {
+      setSelectedTopikTestId(topikReadingTests[0]?.id ?? "");
+    }
+  };
+
   const resetAccessForm = () => {
     setAccessCodeInput("");
     setAccessMessage("");
@@ -1896,6 +1990,7 @@ function App() {
     setSelectedExercise(null);
     resetAccessForm();
     resetVocabularyProgress();
+    resetTopikReadingProgress(false);
   };
 
   const handleLevelClick = (level: string) => {
@@ -1905,6 +2000,7 @@ function App() {
       setSelectedExercise(null);
       resetAccessForm();
       resetVocabularyProgress();
+      resetTopikReadingProgress();
       return;
     }
 
@@ -1917,6 +2013,7 @@ function App() {
     setSelectedExercise(null);
     resetAccessForm();
     resetVocabularyProgress();
+    resetTopikReadingProgress(false);
   };
 
   const handleLessonClick = (lesson: string) => {
@@ -1929,6 +2026,7 @@ function App() {
     setSelectedExercise(null);
     setExerciseNotice("");
     resetVocabularyProgress();
+    resetTopikReadingProgress();
   };
 
   const handleUnlockLevel = () => {
@@ -1948,18 +2046,27 @@ function App() {
   };
 
   const handleExerciseClick = (exercise: ExerciseType) => {
-    
-    if (exercise !== "vocabulary") {
-    setSelectedExercise(null);
-    setExerciseNotice("Bạn cần làm bài tập từ vựng trước.");
-    resetVocabularyProgress();
-    return;
-  }
+    if (exercise === "topikReading") {
+      setExerciseNotice("");
+      setSelectedExercise("topikReading");
+      resetVocabularyProgress();
+      resetTopikReadingProgress();
+      return;
+    }
 
-  setExerciseNotice("");
-  setSelectedExercise(exercise);
-  resetVocabularyProgress();
-};
+    if (exercise !== "vocabulary") {
+      setSelectedExercise(null);
+      setExerciseNotice("Bạn cần làm bài tập từ vựng trước.");
+      resetVocabularyProgress();
+      resetTopikReadingProgress();
+      return;
+    }
+
+    setExerciseNotice("");
+    setSelectedExercise(exercise);
+    resetVocabularyProgress();
+    resetTopikReadingProgress();
+  };
 
 
   const updateAnswerOnce = (key: string, value: string) => {
@@ -2158,6 +2265,103 @@ function App() {
       console.error(error);
       setSubmitMessage(
         `Điểm của bạn: ${score}/${total}. Nhưng chưa gửi được Google Sheet, hãy kiểm tra Apps Script URL.`
+      );
+    }
+  };
+
+
+
+  const updateTopikAnswer = (questionNumber: number, answer: TopikReadingAnswer) => {
+    if (!currentTopikTest) return;
+
+    setTopikAnswers((prev) => ({
+      ...prev,
+      [`${currentTopikTest.id}-${questionNumber}`]: answer,
+    }));
+  };
+
+  const getTopikAnswer = (questionNumber: number) => {
+    if (!currentTopikTest) return undefined;
+    return topikAnswers[`${currentTopikTest.id}-${questionNumber}`];
+  };
+
+  const calculateTopikReadingScore = () => {
+    if (!currentTopikTest) return { score: 0, total: 0, wrongQuestions: [] as string[] };
+
+    const answerKey = currentTopikTest.answerKey ?? {};
+    const wrongQuestions: string[] = [];
+    let score = 0;
+
+    Object.entries(answerKey).forEach(([questionNumber, correctAnswer]) => {
+      const typedQuestionNumber = Number(questionNumber);
+      const selectedAnswer = getTopikAnswer(typedQuestionNumber);
+
+      if (selectedAnswer === correctAnswer) {
+        score += 1;
+      } else {
+        wrongQuestions.push(
+          `${typedQuestionNumber}. Chọn: ${selectedAnswer ?? "chưa chọn"} | Đúng: ${correctAnswer}`
+        );
+      }
+    });
+
+    return { score, total: Object.keys(answerKey).length, wrongQuestions };
+  };
+
+  const getTopikSelectedAnswerSummary = () => {
+    if (!currentTopikTest) return "";
+
+    return Array.from({ length: currentTopikTest.questionCount })
+      .map((_, index) => {
+        const questionNumber = index + 1;
+        return `${questionNumber}:${getTopikAnswer(questionNumber) ?? "-"}`;
+      })
+      .join(" ");
+  };
+
+  const handleSubmitTopikReading = async () => {
+    if (!currentTopikTest) return;
+
+    if (!topikStudentName.trim()) {
+      setTopikSubmitMessage("Vui lòng nhập tên học sinh trước khi lưu bài đọc TOPIK.");
+      return;
+    }
+
+    const { score, total, wrongQuestions } = calculateTopikReadingScore();
+    const hasAnswerKey = total > 0;
+    const payload = {
+      studentName: topikStudentName.trim(),
+      lesson: currentTopikTest.title,
+      exerciseMode: "Ôn TOPIK II - 읽기",
+      score: hasAnswerKey ? score : 0,
+      total: hasAnswerKey ? total : currentTopikTest.questionCount,
+      wrongCount: hasAnswerKey ? wrongQuestions.length : 0,
+      wrongQuestions: hasAnswerKey
+        ? wrongQuestions.join("\n")
+        : `Chưa có answerKey trong code. Phiếu chọn của học sinh:\n${getTopikSelectedAnswerSummary()}`,
+    };
+
+    try {
+      const body = new URLSearchParams();
+      body.append("payload", JSON.stringify(payload));
+
+      await fetch(GOOGLE_SHEET_WEB_APP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body,
+      });
+
+      setTopikSubmitMessage(
+        hasAnswerKey
+          ? `Đã nộp bài đọc TOPIK. Điểm của bạn: ${score}/${total}.`
+          : "Đã lưu phiếu chọn đáp án TOPIK vào Google Sheet. Chưa chấm tự động vì trong file đề không có đáp án chính thức."
+      );
+    } catch (error) {
+      console.error(error);
+      setTopikSubmitMessage(
+        hasAnswerKey
+          ? `Điểm của bạn: ${score}/${total}. Nhưng chưa gửi được Google Sheet, hãy kiểm tra Apps Script URL.`
+          : "Đã ghi nhận phiếu chọn trên giao diện, nhưng chưa gửi được Google Sheet. Hãy kiểm tra Apps Script URL."
       );
     }
   };
@@ -2453,6 +2657,186 @@ function App() {
           <p className="mt-5 rounded-2xl bg-white/[0.08] p-5 text-base leading-relaxed text-white">{submitMessage}</p>
         )}
       </div>
+    );
+  };
+
+
+  const renderTopikReadingModal = () => {
+    if (!currentTopikTest) return null;
+
+    const answerOptions: TopikReadingAnswer[] = ["1", "2", "3", "4"];
+    const { score, total } = calculateTopikReadingScore();
+    const hasAnswerKey = total > 0;
+
+    return (
+      <section className="fixed inset-0 z-40 flex items-center justify-center px-5 py-6">
+        <div className="absolute inset-0 bg-black/35" />
+
+        <div className="relative z-50 flex max-h-[94vh] w-full max-w-[1700px] rounded-[40px] border border-white/20 bg-slate-950/90 p-7 text-left shadow-2xl backdrop-blur-2xl">
+          <aside className="mr-7 flex w-[350px] shrink-0 flex-col border-r border-white/15 pr-7">
+            <p className="text-base text-white/60">TOPIK II · 읽기</p>
+            <h2 className="mt-3 text-5xl font-semibold leading-tight tracking-tight text-white">Ôn TOPIK II</h2>
+            <p className="mt-5 text-base leading-relaxed text-white/65">
+              Chọn đề đọc, xem PDF gốc ở bên phải và làm phiếu đáp án 1-50. PDF được giữ nguyên để không sai chữ Hàn, bảng, biểu đồ và hình ảnh trong đề.
+            </p>
+
+            <div className="mt-7 flex flex-col gap-3">
+              {topikReadingTests.map((test) => (
+                <button
+                  key={test.id}
+                  onClick={() => {
+                    setSelectedTopikTestId(test.id);
+                    setTopikSubmitMessage("");
+                  }}
+                  className={`rounded-3xl p-5 text-left transition-all duration-300 ${
+                    currentTopikTest.id === test.id
+                      ? "bg-white text-black"
+                      : "bg-white/[0.08] text-white ring-1 ring-white/15 hover:bg-white/[0.12]"
+                  }`}
+                >
+                  <span className="block text-lg font-semibold">{test.title}</span>
+                  <span className="mt-1 block text-sm opacity-70">{test.session} · {test.questionCount} câu</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-7 rounded-3xl border border-white/15 bg-black/35 p-5 text-sm leading-relaxed text-white/65">
+              <p className="font-semibold text-white">File đang mở</p>
+              <p className="mt-2">{currentTopikTest.sourceFileName}</p>
+              <p className="mt-3">{currentTopikTest.note}</p>
+            </div>
+
+            <button
+              onClick={() => {
+                setSelectedExercise(null);
+                resetTopikReadingProgress();
+              }}
+              className="mt-auto rounded-full border border-white/20 bg-white/[0.08] px-6 py-3 text-base text-white transition-transform duration-300 hover:scale-[1.03] hover:bg-white/[0.14]"
+            >
+              Đóng phần đọc
+            </button>
+          </aside>
+
+          <div className="flex min-w-0 flex-1 flex-col">
+            <div className="mb-5 rounded-[32px] border border-white/15 bg-black/35 p-6">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p className="text-base text-white/60">{currentTopikTest.readingType}</p>
+                  <h3 className="mt-1 text-4xl font-semibold text-white">{currentTopikTest.title}</h3>
+                  <p className="mt-2 text-lg text-white/65">
+                    Đã chọn {selectedTopikAnswerCount}/{currentTopikTest.questionCount} câu.
+                    {hasAnswerKey
+                      ? ` Điểm tạm tính: ${score}/${total}.`
+                      : " Chưa có answerKey chính thức trong file đề nên phần này lưu phiếu chọn, chưa tự chấm."}
+                  </p>
+                </div>
+
+                <a
+                  href={currentTopikTest.pdfUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-white/20 bg-white/[0.08] px-5 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.03] hover:bg-white/[0.14]"
+                >
+                  Mở PDF tab mới
+                </a>
+              </div>
+            </div>
+
+            <div className="grid min-h-0 flex-1 grid-cols-1 gap-5 overflow-hidden lg:grid-cols-[minmax(0,1fr)_420px]">
+              <div className="min-h-0 overflow-hidden rounded-[32px] border border-white/15 bg-black/35 p-4">
+                <iframe
+                  src={`${currentTopikTest.pdfUrl}#toolbar=1&navpanes=0&view=FitH`}
+                  title={currentTopikTest.title}
+                  className="h-[70vh] w-full rounded-[24px] border-0 bg-white"
+                />
+              </div>
+
+              <div className="flex min-h-0 flex-col rounded-[32px] border border-white/15 bg-black/35 p-5">
+                <div className="mb-4">
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/45">Answer sheet</p>
+                  <h4 className="mt-1 text-2xl font-semibold text-white">Phiếu chọn đáp án</h4>
+                  <p className="mt-2 text-sm leading-relaxed text-white/60">
+                    Chọn ①-④ cho từng câu. Khi có đáp án chính thức, thêm thuộc tính <span className="font-semibold text-white">answerKey</span> vào dữ liệu đề để tự chấm điểm.
+                  </p>
+                </div>
+
+                <div className="min-h-0 flex-1 overflow-y-auto pr-2">
+                  <div className="grid gap-3">
+                    {Array.from({ length: currentTopikTest.questionCount }).map((_, index) => {
+                      const questionNumber = index + 1;
+                      const selected = getTopikAnswer(questionNumber);
+                      const correct = currentTopikTest.answerKey?.[questionNumber];
+                      const checked = Boolean(correct && selected);
+                      const isCorrect = checked && selected === correct;
+
+                      return (
+                        <div key={questionNumber} className="rounded-2xl border border-white/10 bg-slate-950/65 p-3">
+                          <div className="mb-2 flex items-center justify-between">
+                            <p className="text-sm font-semibold text-white">Câu {questionNumber}</p>
+                            {checked && (
+                              <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${isCorrect ? "bg-emerald-400/25 text-emerald-100" : "bg-rose-400/25 text-rose-100"}`}>
+                                {isCorrect ? "Đúng" : `Đúng: ${correct}`}
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="grid grid-cols-4 gap-2">
+                            {answerOptions.map((answer) => (
+                              <button
+                                key={answer}
+                                onClick={() => updateTopikAnswer(questionNumber, answer)}
+                                className={`rounded-xl px-3 py-2 text-sm font-semibold transition-all ${
+                                  selected === answer
+                                    ? "bg-white text-black"
+                                    : "bg-white/[0.08] text-white ring-1 ring-white/10 hover:bg-white/[0.14]"
+                                }`}
+                              >
+                                {answer === "1" && "①"}
+                                {answer === "2" && "②"}
+                                {answer === "3" && "③"}
+                                {answer === "4" && "④"}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-5 shrink-0 rounded-3xl border border-white/15 bg-slate-950/90 p-4">
+                  <p className="text-sm text-white/60">
+                    Tiến độ: {selectedTopikAnswerCount}/{currentTopikTest.questionCount}
+                    {hasAnswerKey ? ` · Điểm: ${score}/${total}` : " · Lưu phiếu chọn"}
+                  </p>
+
+                  <div className="mt-3 flex flex-col gap-3">
+                    <input
+                      value={topikStudentName}
+                      onChange={(event) => setTopikStudentName(event.target.value)}
+                      placeholder="Nhập tên học sinh"
+                      className="rounded-full border border-white/20 bg-white/[0.08] px-5 py-3 text-sm text-white outline-none placeholder:text-white/45 focus:border-white/60"
+                    />
+
+                    <button
+                      onClick={handleSubmitTopikReading}
+                      className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-transform hover:scale-[1.03]"
+                    >
+                      {hasAnswerKey ? "Nộp và chấm điểm" : "Lưu phiếu chọn đáp án"}
+                    </button>
+                  </div>
+
+                  {topikSubmitMessage && (
+                    <p className="mt-4 rounded-2xl bg-white/[0.08] p-4 text-sm leading-relaxed text-white">
+                      {topikSubmitMessage}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     );
   };
 
@@ -2769,7 +3153,7 @@ function App() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                  {exerciseTypes.map((exercise) => (
+                  {currentExerciseTypes.map((exercise) => (
                     <button
                       key={exercise.title}
                       className={`rounded-2xl border border-white/15 bg-white/[0.08] px-5 py-5 text-left text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/[0.12] ${
@@ -2836,7 +3220,7 @@ function App() {
 
 {selectedExercise === "vocabulary" && renderVocabularyExerciseModal()}
 
-      {selectedExercise === "vocabulary" && renderVocabularyExerciseModal()}
+      {selectedExercise === "topikReading" && renderTopikReadingModal()}
     </main>
   );
 }
