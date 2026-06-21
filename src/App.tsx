@@ -3846,7 +3846,7 @@ function App() {
     setYonseiChecked(true);
     setYonseiSubmissionReport(submission);
     setYonseiSubmitMessage(
-      `Đã nộp bài nghe Yonsei 2. Điểm điền từ: ${submission.score}/${submission.total} (${submission.percentage}%). Bài đã được lưu vào bảng kiểm tra trên trình duyệt này, không gửi Google Script.`
+      `Đã nộp bài nghe Yonsei 2. Điểm điền từ: ${submission.score}/${submission.total} (${submission.percentage}%). Bài đã được lưu vào bảng kiểm tra trên trình duyệt này.`
     );
   };
 
@@ -4162,7 +4162,7 @@ function App() {
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/45">Teacher dashboard</p>
             <h3 className="mt-2 text-4xl font-semibold text-white">Bảng kiểm tra giáo viên</h3>
             <p className="mt-4 text-base leading-relaxed text-white/65">
-              Nhập mã giáo viên để xem thống kê bài nộp, điểm, câu sai và bản dịch. Dữ liệu ở đây được lưu trên trình duyệt hiện tại, không gửi Google Script.
+              Nhập mã giáo viên để xem thống kê bài nộp, điểm, câu sai và bản dịch. Dữ liệu ở đây được lưu trên trình duyệt hiện tại.
             </p>
             <p className="mt-3 rounded-2xl border border-amber-300/20 bg-amber-300/10 p-4 text-sm leading-relaxed text-amber-50">
               Nếu học sinh làm trên máy riêng, giáo viên sẽ không tự thấy bài trong bảng này. Khi đó học sinh cần bấm <span className="font-semibold">Gửi email</span>, <span className="font-semibold">Copy báo cáo</span> hoặc <span className="font-semibold">Tải báo cáo .txt</span> sau khi nộp.
@@ -4410,11 +4410,11 @@ function App() {
             </button>
 
             <div className="mt-6 rounded-3xl border border-white/15 bg-black/35 p-5 text-sm leading-relaxed text-white/65">
-              <p className="font-semibold text-white">File nghe cần upload</p>
+              <p className="font-semibold text-white">File nghe đã tải xong</p>
               <p className="mt-2">
-                Ưu tiên: <span className="font-semibold text-white">public/yonsei-listening-2/lesson-{String(currentYonseiLesson.lessonNumber).padStart(2, "0")}.mp3</span>
+                File nghe đã upload thành công: <span className="font-semibold text-white">public/yonsei-listening-2/lesson-{String(currentYonseiLesson.lessonNumber).padStart(2, "0")}.mp3</span>
               </p>
-              <p className="mt-2">Cũng hỗ trợ .m4a, .wav hoặc tên theo CD: cd-{currentYonseiLesson.cd}.mp3.</p>
+              <p className="mt-2">Hãy kiểm tra âm thanh/chất lượng bản ghi âm: cd-{currentYonseiLesson.cd}.mp3.</p>
             </div>
 
             <button
