@@ -148,6 +148,89 @@ type YonseiBlankPart = {
 
 type YonseiClozePart = YonseiTextPart | YonseiBlankPart;
 
+type YonseiSubmissionAnswerDetail = {
+  number: number;
+  studentAnswer: string;
+  correctAnswer: string;
+  isCorrect: boolean;
+};
+
+type YonseiSubmissionRecord = {
+  id: string;
+  submittedAt: string;
+  studentName: string;
+  lessonId: string;
+  lesson: string;
+  lessonNumber: number;
+  title: string;
+  cd: string;
+  score: number;
+  total: number;
+  percentage: number;
+  wrongCount: number;
+  wrongQuestions: string[];
+  answerDetails: YonseiSubmissionAnswerDetail[];
+  studentCompletedText: string;
+  correctText: string;
+  translation: string;
+  reportText: string;
+};
+
+const YONSEI_LOCAL_SUBMISSIONS_KEY = "kaish-yonsei-listening-2-submissions";
+const YONSEI_UNSAVED_CONFIRM_MESSAGE = "Bạn chưa nộp bài tập này, xác nhận tải lại?";
+const YONSEI_TEACHER_EMAIL = "";
+
+const formatYonseiSubmittedAt = (isoDate: string) => {
+  try {
+    return new Intl.DateTimeFormat("vi-VN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(new Date(isoDate));
+  } catch {
+    return isoDate;
+  }
+};
+
+const sanitizeYonseiFilename = (value: string) =>
+  value
+    .trim()
+    .replace(/[\\/:*?"<>|]+/g, "-")
+    .replace(/\s+/g, "_")
+    .slice(0, 80) || "yonsei-report";
+
+const getYonseiSubmissionReportText = (submission: Omit<YonseiSubmissionRecord, "reportText">) =>
+  [
+    "KAISH - Luyện Nghe Yonsei 2",
+    `Thời gian nộp: ${formatYonseiSubmittedAt(submission.submittedAt)}`,
+    `Học sinh: ${submission.studentName}`,
+    `Bài: ${submission.lesson}`,
+    `Điểm điền từ: ${submission.score}/${submission.total} (${submission.percentage}%)`,
+    `Số câu sai: ${submission.wrongCount}`,
+    "",
+    "CÁC CÂU SAI",
+    submission.wrongQuestions.length ? submission.wrongQuestions.join("\n") : "Không sai chỗ trống nào.",
+    "",
+    "CHI TIẾT TẤT CẢ CHỖ TRỐNG",
+    submission.answerDetails
+      .map(
+        (item) =>
+          `${item.number}. ${item.isCorrect ? "Đúng" : "Sai"} | Học sinh điền: ${item.studentAnswer || "chưa điền"} | Đáp án: ${item.correctAnswer}`
+      )
+      .join("\n"),
+    "",
+    "BÀI HỌC SINH ĐÃ ĐIỀN",
+    submission.studentCompletedText,
+    "",
+    "BẢN ĐÚNG TIẾNG HÀN",
+    submission.correctText,
+    "",
+    "BẢN DỊCH TIẾNG VIỆT CỦA HỌC SINH",
+    submission.translation,
+  ].join("\n");
+
 
 const topikExerciseTypes: {
   id: ExerciseType;
@@ -2870,6 +2953,12 @@ function App() {
   const [yonseiTranslation, setYonseiTranslation] = useState("");
   const [yonseiStudentName, setYonseiStudentName] = useState("");
   const [yonseiSubmitMessage, setYonseiSubmitMessage] = useState("");
+  const [yonseiSubmissionReport, setYonseiSubmissionReport] = useState<YonseiSubmissionRecord | null>(null);
+  const [yonseiSubmissions, setYonseiSubmissions] = useState<YonseiSubmissionRecord[]>([]);
+  const [yonseiTeacherDashboardOpen, setYonseiTeacherDashboardOpen] = useState(false);
+  const [yonseiTeacherDashboardUnlocked, setYonseiTeacherDashboardUnlocked] = useState(false);
+  const [yonseiTeacherCodeInput, setYonseiTeacherCodeInput] = useState("");
+  const [yonseiTeacherMessage, setYonseiTeacherMessage] = useState("");
 
   const selectedLessonKey = selectedLevel && selectedLesson ? `${selectedLevel}|${selectedLesson}` : "";
   const currentLessonData = selectedLessonKey ? lessonExerciseData[selectedLessonKey] : null;
@@ -2925,6 +3014,12 @@ function App() {
     : 0;
   const isYonseiListeningReadyToCheck =
     currentYonseiBlanks.length > 0 && filledYonseiBlankCount === currentYonseiBlanks.length;
+  const hasUnsavedYonseiWork =
+    selectedExercise === "yonseiListening" &&
+    !yonseiSubmissionReport &&
+    (filledYonseiBlankCount > 0 ||
+      yonseiTranslation.trim().length > 0 ||
+      yonseiStudentName.trim().length > 0);
 
   useEffect(() => {
     const savedMode = localStorage.getItem("kaish-background-mode");
@@ -2933,6 +3028,38 @@ function App() {
       setBackgroundMode(savedMode);
     }
   }, []);
+
+  useEffect(() => {
+    const storedSubmissions = localStorage.getItem(YONSEI_LOCAL_SUBMISSIONS_KEY);
+    if (!storedSubmissions) return;
+
+    try {
+      const parsed = JSON.parse(storedSubmissions);
+      if (Array.isArray(parsed)) {
+        setYonseiSubmissions(parsed as YonseiSubmissionRecord[]);
+      }
+    } catch (error) {
+      console.error("Cannot load Yonsei submissions", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!hasUnsavedYonseiWork) return;
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = YONSEI_UNSAVED_CONFIRM_MESSAGE;
+      return YONSEI_UNSAVED_CONFIRM_MESSAGE;
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [hasUnsavedYonseiWork]);
+
+  const confirmLoseUnsavedYonseiWork = () => {
+    if (!hasUnsavedYonseiWork) return true;
+    return window.confirm(YONSEI_UNSAVED_CONFIRM_MESSAGE);
+  };
 
   const handleBackgroundChange = (mode: BackgroundMode) => {
     setBackgroundMode(mode);
@@ -2964,6 +3091,7 @@ function App() {
     setYonseiTranslation("");
     setYonseiStudentName("");
     setYonseiSubmitMessage("");
+    setYonseiSubmissionReport(null);
     if (!keepSelectedLesson) {
       setSelectedYonseiLessonId(yonseiListeningLessons[0]?.id ?? "");
     }
@@ -2975,6 +3103,8 @@ function App() {
   };
 
   const handleStartLearning = () => {
+    if (!confirmLoseUnsavedYonseiWork()) return;
+
     setLevelsOpen((value) => !value);
     setSelectedLevel(null);
     setSelectedLesson(null);
@@ -2986,6 +3116,8 @@ function App() {
   };
 
   const handleLevelClick = (level: string) => {
+    if (!confirmLoseUnsavedYonseiWork()) return;
+
     if (lessonsByLevel[level]) {
       setSelectedLevel(level);
       setSelectedLesson(null);
@@ -3001,6 +3133,8 @@ function App() {
   };
 
   const handleCloseLayer = () => {
+    if (!confirmLoseUnsavedYonseiWork()) return;
+
     setSelectedLevel(null);
     setSelectedLesson(null);
     setSelectedExercise(null);
@@ -3011,6 +3145,8 @@ function App() {
   };
 
   const handleLessonClick = (lesson: string) => {
+    if (!confirmLoseUnsavedYonseiWork()) return;
+
     if (!selectedLevelIsUnlocked) {
       setAccessMessage("Vui lòng nhập đúng mã giáo viên đã cung cấp trước khi chọn bài.");
       return;
@@ -3048,6 +3184,8 @@ function App() {
   };
 
   const handleExerciseClick = (exercise: ExerciseType) => {
+    if (selectedExercise === "yonseiListening" && exercise !== "yonseiListening" && !confirmLoseUnsavedYonseiWork()) return;
+
     if (exercise === "topikReading") {
       setExerciseNotice("");
       setSelectedExercise("topikReading");
@@ -3456,6 +3594,7 @@ function App() {
     }));
     setYonseiChecked(false);
     setYonseiSubmitMessage("");
+    setYonseiSubmissionReport(null);
   };
 
   const calculateYonseiListeningScore = () => {
@@ -3490,7 +3629,197 @@ function App() {
     setYonseiSubmitMessage(`Đã kiểm tra phần nghe. Điểm điền từ: ${score}/${total}. Tiếp theo hãy dịch toàn bộ bài sang tiếng Việt.`);
   };
 
-  const handleSubmitYonseiListening = async () => {
+  const getYonseiStudentCompletedText = () =>
+    currentYonseiParts
+      .map((part) => {
+        if (part.type === "text") return part.text;
+        return yonseiAnswers[getYonseiBlankKey(part.number)]?.trim() || `(${part.number}: chưa điền)`;
+      })
+      .join("");
+
+  const buildYonseiSubmissionRecord = (): YonseiSubmissionRecord | null => {
+    if (!currentYonseiLesson) return null;
+
+    const { score, total } = calculateYonseiListeningScore();
+    const answerDetails = currentYonseiBlanks.map((blank) => {
+      const studentAnswer = yonseiAnswers[getYonseiBlankKey(blank.number)]?.trim() ?? "";
+      return {
+        number: blank.number,
+        studentAnswer,
+        correctAnswer: blank.answer,
+        isCorrect: normalizeYonseiAnswer(studentAnswer) === normalizeYonseiAnswer(blank.answer),
+      };
+    });
+    const wrongQuestions = answerDetails
+      .filter((item) => !item.isCorrect)
+      .map((item) => `${item.number}. Điền: ${item.studentAnswer || "chưa điền"} | Đúng: ${item.correctAnswer}`);
+    const submittedAt = new Date().toISOString();
+    const percentage = total ? Math.round((score / total) * 100) : 0;
+    const draft: Omit<YonseiSubmissionRecord, "reportText"> = {
+      id: `${submittedAt}-${currentYonseiLesson.id}-${Math.random().toString(36).slice(2, 8)}`,
+      submittedAt,
+      studentName: yonseiStudentName.trim(),
+      lessonId: currentYonseiLesson.id,
+      lesson: `${currentYonseiLesson.lessonLabel} - ${currentYonseiLesson.title} - CD ${currentYonseiLesson.cd}`,
+      lessonNumber: currentYonseiLesson.lessonNumber,
+      title: currentYonseiLesson.title,
+      cd: currentYonseiLesson.cd,
+      score,
+      total,
+      percentage,
+      wrongCount: wrongQuestions.length,
+      wrongQuestions,
+      answerDetails,
+      studentCompletedText: getYonseiStudentCompletedText(),
+      correctText: getYonseiOriginalText(currentYonseiLesson.clozeText),
+      translation: yonseiTranslation.trim(),
+    };
+
+    return {
+      ...draft,
+      reportText: getYonseiSubmissionReportText(draft),
+    };
+  };
+
+  const saveYonseiSubmissionLocally = (submission: YonseiSubmissionRecord) => {
+    const nextSubmissions = [submission, ...yonseiSubmissions].slice(0, 500);
+    setYonseiSubmissions(nextSubmissions);
+    localStorage.setItem(YONSEI_LOCAL_SUBMISSIONS_KEY, JSON.stringify(nextSubmissions));
+  };
+
+  const copyTextToClipboard = async (text: string) => {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "true");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+  };
+
+  const handleCopyYonseiReport = async (submission: YonseiSubmissionRecord | null = yonseiSubmissionReport) => {
+    if (!submission) return;
+
+    try {
+      await copyTextToClipboard(submission.reportText);
+      setYonseiSubmitMessage("Đã copy báo cáo bài nộp. Giáo viên có thể dán vào Zalo, email hoặc file lưu bài.");
+    } catch (error) {
+      console.error(error);
+      setYonseiSubmitMessage("Chưa copy được báo cáo. Hãy dùng nút tải file hoặc gửi email.");
+    }
+  };
+
+  const downloadYonseiReport = (submission: YonseiSubmissionRecord | null = yonseiSubmissionReport) => {
+    if (!submission) return;
+
+    const blob = new Blob([submission.reportText], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${sanitizeYonseiFilename(submission.studentName)}-${sanitizeYonseiFilename(submission.lesson)}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    setYonseiSubmitMessage("Đã tải báo cáo .txt về máy.");
+  };
+
+  const openYonseiSubmissionEmail = (submission: YonseiSubmissionRecord | null = yonseiSubmissionReport) => {
+    if (!submission) return;
+
+    const recipient = YONSEI_TEACHER_EMAIL.trim();
+    const subject = `[KAISH] ${submission.studentName} - ${submission.lesson} - ${submission.score}/${submission.total}`;
+    const emailUrl = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(submission.reportText)}`;
+    window.location.href = emailUrl;
+    setYonseiSubmitMessage(
+      recipient
+        ? "Đã mở cửa sổ email kèm báo cáo bài làm. Học sinh chỉ cần bấm gửi trong email."
+        : "Đã mở email kèm báo cáo. Vì chưa cài email giáo viên trong code, học sinh cần tự nhập địa chỉ người nhận."
+    );
+  };
+
+  const handleUnlockYonseiTeacherDashboard = () => {
+    if (yonseiTeacherCodeInput.trim() !== teacherAccessCode) {
+      setYonseiTeacherMessage("Mã giáo viên chưa đúng.");
+      return;
+    }
+
+    setYonseiTeacherDashboardUnlocked(true);
+    setYonseiTeacherCodeInput("");
+    setYonseiTeacherMessage("Đã mở bảng kiểm tra giáo viên.");
+  };
+
+  const exportYonseiSubmissionsCsv = () => {
+    if (!yonseiSubmissions.length) {
+      setYonseiTeacherMessage("Chưa có bài nộp nào để xuất CSV.");
+      return;
+    }
+
+    const formatCsvCell = (value: string | number) => `"${String(value).replace(/"/g, '""')}"`;
+    const rows = [
+      ["Thời gian", "Học sinh", "Bài", "Điểm", "Tổng", "Phần trăm", "Số câu sai", "Câu sai", "Bản dịch"],
+      ...yonseiSubmissions.map((submission) => [
+        formatYonseiSubmittedAt(submission.submittedAt),
+        submission.studentName,
+        submission.lesson,
+        submission.score,
+        submission.total,
+        `${submission.percentage}%`,
+        submission.wrongCount,
+        submission.wrongQuestions.join(" | ") || "Không sai",
+        submission.translation,
+      ]),
+    ];
+    const csv = rows.map((row) => row.map(formatCsvCell).join(",")).join("\n");
+    const blob = new Blob([`\ufeff${csv}`], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "yonsei-listening-2-submissions.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    setYonseiTeacherMessage("Đã tải bảng thống kê CSV.");
+  };
+
+  const copyAllYonseiReports = async () => {
+    if (!yonseiSubmissions.length) {
+      setYonseiTeacherMessage("Chưa có bài nộp nào để copy.");
+      return;
+    }
+
+    try {
+      await copyTextToClipboard(yonseiSubmissions.map((submission) => submission.reportText).join("\n\n---\n\n"));
+      setYonseiTeacherMessage("Đã copy toàn bộ báo cáo bài nộp.");
+    } catch (error) {
+      console.error(error);
+      setYonseiTeacherMessage("Chưa copy được toàn bộ báo cáo. Hãy dùng nút xuất CSV.");
+    }
+  };
+
+  const clearYonseiSubmissions = () => {
+    if (!window.confirm("Bạn có chắc muốn xóa toàn bộ bài nộp Yonsei 2 đang lưu trên trình duyệt này?")) return;
+
+    setYonseiSubmissions([]);
+    localStorage.removeItem(YONSEI_LOCAL_SUBMISSIONS_KEY);
+    setYonseiTeacherMessage("Đã xóa dữ liệu bài nộp trên trình duyệt này.");
+  };
+
+  const toggleYonseiTeacherDashboard = () => {
+    if (!yonseiTeacherDashboardOpen && !confirmLoseUnsavedYonseiWork()) return;
+    setYonseiTeacherDashboardOpen((value) => !value);
+    setYonseiTeacherMessage("");
+  };
+
+  const handleSubmitYonseiListening = () => {
     if (!currentYonseiLesson) return;
 
     if (!yonseiStudentName.trim()) {
@@ -3510,48 +3839,15 @@ function App() {
       return;
     }
 
-    const { score, total, wrongQuestions } = calculateYonseiListeningScore();
-    const originalText = getYonseiOriginalText(currentYonseiLesson.clozeText);
-    const payload = {
-      studentName: yonseiStudentName.trim(),
-      lesson: `${currentYonseiLesson.lessonLabel} - ${currentYonseiLesson.title} - CD ${currentYonseiLesson.cd}`,
-      exerciseMode: "Luyện Nghe Yonsei 2 - Điền từ và dịch",
-      score,
-      total,
-      wrongCount: wrongQuestions.length,
-      wrongQuestions: [
-        wrongQuestions.length ? wrongQuestions.join("\n") : "Không sai chỗ trống nào.",
-        "",
-        "Bản gốc tiếng Hàn đã hoàn thành:",
-        originalText,
-        "",
-        "Bản dịch tiếng Việt của học sinh:",
-        yonseiTranslation.trim(),
-      ].join("\n"),
-      translation: yonseiTranslation.trim(),
-    };
+    const submission = buildYonseiSubmissionRecord();
+    if (!submission) return;
 
-    try {
-      const body = new URLSearchParams();
-      body.append("payload", JSON.stringify(payload));
-
-      await fetch(GOOGLE_SHEET_WEB_APP_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body,
-      });
-
-      setYonseiChecked(true);
-      setYonseiSubmitMessage(
-        `Đã nộp bài nghe Yonsei 2. Điểm điền từ: ${score}/${total}. Bản dịch tiếng Việt đã được gửi kèm để giáo viên chấm.`
-      );
-    } catch (error) {
-      console.error(error);
-      setYonseiChecked(true);
-      setYonseiSubmitMessage(
-        `Điểm điền từ: ${score}/${total}. Nhưng chưa gửi được Google Sheet, hãy kiểm tra Apps Script URL.`
-      );
-    }
+    saveYonseiSubmissionLocally(submission);
+    setYonseiChecked(true);
+    setYonseiSubmissionReport(submission);
+    setYonseiSubmitMessage(
+      `Đã nộp bài nghe Yonsei 2. Điểm điền từ: ${submission.score}/${submission.total} (${submission.percentage}%). Bài đã được lưu vào bảng kiểm tra trên trình duyệt này, không gửi Google Script.`
+    );
   };
 
   const getDreamOverlay = () => {
@@ -3849,6 +4145,210 @@ function App() {
   };
 
 
+  const renderYonseiTeacherDashboardContent = () => {
+    const totalSubmissions = yonseiSubmissions.length;
+    const uniqueStudentCount = new Set(yonseiSubmissions.map((submission) => submission.studentName)).size;
+    const averagePercent = totalSubmissions
+      ? Math.round((yonseiSubmissions.reduce((sum, submission) => sum + submission.percentage, 0) / totalSubmissions) * 10) / 10
+      : 0;
+    const averageWrong = totalSubmissions
+      ? (yonseiSubmissions.reduce((sum, submission) => sum + submission.wrongCount, 0) / totalSubmissions).toFixed(1)
+      : "0";
+
+    if (!yonseiTeacherDashboardUnlocked) {
+      return (
+        <div className="flex min-w-0 flex-1 flex-col rounded-[32px] border border-white/15 bg-black/35 p-7">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/45">Teacher dashboard</p>
+            <h3 className="mt-2 text-4xl font-semibold text-white">Bảng kiểm tra giáo viên</h3>
+            <p className="mt-4 text-base leading-relaxed text-white/65">
+              Nhập mã giáo viên để xem thống kê bài nộp, điểm, câu sai và bản dịch. Dữ liệu ở đây được lưu trên trình duyệt hiện tại, không gửi Google Script.
+            </p>
+            <p className="mt-3 rounded-2xl border border-amber-300/20 bg-amber-300/10 p-4 text-sm leading-relaxed text-amber-50">
+              Nếu học sinh làm trên máy riêng, giáo viên sẽ không tự thấy bài trong bảng này. Khi đó học sinh cần bấm <span className="font-semibold">Gửi email</span>, <span className="font-semibold">Copy báo cáo</span> hoặc <span className="font-semibold">Tải báo cáo .txt</span> sau khi nộp.
+            </p>
+          </div>
+
+          <div className="mt-7 flex max-w-2xl flex-col gap-3 md:flex-row md:items-center">
+            <input
+              value={yonseiTeacherCodeInput}
+              onChange={(event) => {
+                setYonseiTeacherCodeInput(event.target.value);
+                setYonseiTeacherMessage("");
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") handleUnlockYonseiTeacherDashboard();
+              }}
+              placeholder="Nhập mã giáo viên"
+              type="password"
+              autoComplete="off"
+              className="min-w-0 flex-1 rounded-full border border-white/20 bg-white/[0.08] px-6 py-4 text-base text-white outline-none placeholder:text-white/45 focus:border-white/60"
+            />
+            <button
+              onClick={handleUnlockYonseiTeacherDashboard}
+              className="rounded-full bg-white px-8 py-4 text-base font-semibold text-black transition-transform hover:scale-[1.03]"
+            >
+              Mở bảng thống kê
+            </button>
+          </div>
+
+          {yonseiTeacherMessage && (
+            <p className="mt-5 max-w-2xl rounded-2xl bg-white/[0.08] p-4 text-sm leading-relaxed text-white">
+              {yonseiTeacherMessage}
+            </p>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex min-w-0 flex-1 flex-col rounded-[32px] border border-white/15 bg-black/35 p-7">
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/45">Teacher dashboard</p>
+            <h3 className="mt-2 text-4xl font-semibold text-white">Bảng kiểm tra bài nộp Yonsei 2</h3>
+            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/60">
+              Xem trực quan học sinh sai câu nào, điểm bao nhiêu và bản dịch tiếng Việt. Dữ liệu đang lưu trên trình duyệt này.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={exportYonseiSubmissionsCsv}
+              className="rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.14]"
+            >
+              Xuất CSV
+            </button>
+            <button
+              onClick={copyAllYonseiReports}
+              className="rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.14]"
+            >
+              Copy tất cả
+            </button>
+            <button
+              onClick={clearYonseiSubmissions}
+              className="rounded-full border border-rose-200/25 bg-rose-400/10 px-4 py-2 text-sm font-semibold text-rose-50 transition hover:bg-rose-400/20"
+            >
+              Xóa dữ liệu
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="rounded-3xl border border-white/15 bg-slate-950/70 p-5">
+            <p className="text-sm text-white/55">Tổng bài nộp</p>
+            <p className="mt-2 text-3xl font-semibold text-white">{totalSubmissions}</p>
+          </div>
+          <div className="rounded-3xl border border-white/15 bg-slate-950/70 p-5">
+            <p className="text-sm text-white/55">Học sinh</p>
+            <p className="mt-2 text-3xl font-semibold text-white">{uniqueStudentCount}</p>
+          </div>
+          <div className="rounded-3xl border border-white/15 bg-slate-950/70 p-5">
+            <p className="text-sm text-white/55">Điểm TB</p>
+            <p className="mt-2 text-3xl font-semibold text-white">{averagePercent}%</p>
+          </div>
+          <div className="rounded-3xl border border-white/15 bg-slate-950/70 p-5">
+            <p className="text-sm text-white/55">Sai TB</p>
+            <p className="mt-2 text-3xl font-semibold text-white">{averageWrong}</p>
+          </div>
+        </div>
+
+        {yonseiTeacherMessage && (
+          <p className="mt-5 rounded-2xl bg-white/[0.08] p-4 text-sm leading-relaxed text-white">
+            {yonseiTeacherMessage}
+          </p>
+        )}
+
+        <div className="mt-6 min-h-0 flex-1 overflow-y-auto pr-2">
+          {yonseiSubmissions.length === 0 ? (
+            <div className="rounded-3xl border border-dashed border-white/20 bg-slate-950/60 p-8 text-center text-white/65">
+              Chưa có bài nộp nào trên trình duyệt này.
+            </div>
+          ) : (
+            <div className="grid gap-3">
+              {yonseiSubmissions.map((submission) => (
+                <details key={submission.id} className="rounded-3xl border border-white/15 bg-slate-950/70 p-5 text-white">
+                  <summary className="cursor-pointer list-none">
+                    <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                      <div>
+                        <p className="text-lg font-semibold">{submission.studentName}</p>
+                        <p className="mt-1 text-sm text-white/55">
+                          {submission.lesson} · {formatYonseiSubmittedAt(submission.submittedAt)}
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2 text-sm font-semibold">
+                        <span className="rounded-full bg-white px-3 py-1.5 text-black">
+                          {submission.score}/{submission.total} · {submission.percentage}%
+                        </span>
+                        <span className={`rounded-full px-3 py-1.5 ${submission.wrongCount ? "bg-rose-400/20 text-rose-50" : "bg-emerald-400/20 text-emerald-50"}`}>
+                          Sai {submission.wrongCount} câu
+                        </span>
+                      </div>
+                    </div>
+                  </summary>
+
+                  <div className="mt-5 grid gap-4 border-t border-white/10 pt-5">
+                    <div className="rounded-2xl bg-black/25 p-4">
+                      <p className="mb-2 text-sm font-semibold text-white/70">Câu sai</p>
+                      {submission.wrongQuestions.length ? (
+                        <ul className="space-y-1 text-sm leading-relaxed text-rose-50">
+                          {submission.wrongQuestions.map((wrongQuestion) => (
+                            <li key={wrongQuestion}>• {wrongQuestion}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-sm text-emerald-50">Không sai chỗ trống nào.</p>
+                      )}
+                    </div>
+
+                    <div className="rounded-2xl bg-black/25 p-4">
+                      <p className="mb-2 text-sm font-semibold text-white/70">Chi tiết chỗ trống</p>
+                      <div className="grid gap-2 text-sm text-white/75 md:grid-cols-2">
+                        {submission.answerDetails.map((detail) => (
+                          <p key={`${submission.id}-${detail.number}`} className={detail.isCorrect ? "text-emerald-50" : "text-rose-50"}>
+                            {detail.number}. {detail.isCorrect ? "Đúng" : "Sai"} · Điền: {detail.studentAnswer || "chưa điền"} · Đáp án: {detail.correctAnswer}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-black/25 p-4">
+                      <p className="mb-2 text-sm font-semibold text-white/70">Bản dịch tiếng Việt</p>
+                      <p className="max-h-44 overflow-y-auto whitespace-pre-wrap text-sm leading-relaxed text-white/80">
+                        {submission.translation}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => handleCopyYonseiReport(submission)}
+                        className="rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.14]"
+                      >
+                        Copy báo cáo
+                      </button>
+                      <button
+                        onClick={() => downloadYonseiReport(submission)}
+                        className="rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.14]"
+                      >
+                        Tải .txt
+                      </button>
+                      <button
+                        onClick={() => openYonseiSubmissionEmail(submission)}
+                        className="rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.14]"
+                      >
+                        Mở email
+                      </button>
+                    </div>
+                  </div>
+                </details>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   const renderYonseiListeningModal = () => {
     if (!currentYonseiLesson) return null;
 
@@ -3872,6 +4372,14 @@ function App() {
                   <button
                     key={lesson.id}
                     onClick={() => {
+                      if (lesson.id === currentYonseiLesson.id) {
+                        setYonseiTeacherDashboardOpen(false);
+                        return;
+                      }
+
+                      if (!confirmLoseUnsavedYonseiWork()) return;
+
+                      setYonseiTeacherDashboardOpen(false);
                       setSelectedYonseiLessonId(lesson.id);
                       setSelectedLesson(lesson.lessonLabel);
                       resetYonseiListeningProgress();
@@ -3889,6 +4397,18 @@ function App() {
               </div>
             </div>
 
+            <button
+              onClick={toggleYonseiTeacherDashboard}
+              className={`mt-4 rounded-3xl px-5 py-4 text-left text-base font-semibold transition-all duration-300 ${
+                yonseiTeacherDashboardOpen
+                  ? "bg-white text-black"
+                  : "bg-white/[0.08] text-white ring-1 ring-white/15 hover:bg-white/[0.12]"
+              }`}
+            >
+              {yonseiTeacherDashboardOpen ? "Quay lại bài nghe" : "Bảng kiểm tra giáo viên"}
+              <span className="mt-1 block text-xs font-normal opacity-70">Thống kê điểm, câu sai, bản dịch</span>
+            </button>
+
             <div className="mt-6 rounded-3xl border border-white/15 bg-black/35 p-5 text-sm leading-relaxed text-white/65">
               <p className="font-semibold text-white">File nghe cần upload</p>
               <p className="mt-2">
@@ -3899,7 +4419,10 @@ function App() {
 
             <button
               onClick={() => {
+                if (!confirmLoseUnsavedYonseiWork()) return;
+
                 setSelectedExercise(null);
+                setYonseiTeacherDashboardOpen(false);
                 resetYonseiListeningProgress();
               }}
               className="mt-6 rounded-full border border-white/20 bg-white/[0.08] px-6 py-3 text-base text-white transition-transform duration-300 hover:scale-[1.03] hover:bg-white/[0.14]"
@@ -3908,6 +4431,7 @@ function App() {
             </button>
           </aside>
 
+          {yonseiTeacherDashboardOpen ? renderYonseiTeacherDashboardContent() : (
           <div className="flex min-w-0 flex-1 flex-col">
             <div className="mb-5 rounded-[32px] border border-white/15 bg-black/35 p-6">
               <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
@@ -3997,7 +4521,7 @@ function App() {
                   <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/45">Translation</p>
                   <h4 className="mt-1 text-2xl font-semibold text-white">Dịch toàn bộ bài sang tiếng Việt</h4>
                   <p className="mt-2 text-sm leading-relaxed text-white/60">
-                    Sau khi điền xong chỗ trống, học sinh phải dịch toàn bộ nội dung bài nghe sang tiếng Việt. Phần dịch sẽ lưu vào Google Sheet để giáo viên chấm.
+                    Sau khi điền xong chỗ trống, học sinh phải dịch toàn bộ nội dung bài nghe sang tiếng Việt. Khi nộp, hệ thống sẽ lưu điểm, câu sai và bản dịch vào bảng kiểm tra cục bộ, kèm nút gửi email/copy báo cáo.
                   </p>
                 </div>
 
@@ -4006,6 +4530,7 @@ function App() {
                   onChange={(event) => {
                     setYonseiTranslation(event.target.value);
                     setYonseiSubmitMessage("");
+                    setYonseiSubmissionReport(null);
                   }}
                   placeholder="Nhập bản dịch tiếng Việt đầy đủ của cả bài..."
                   className="mt-5 min-h-[260px] flex-1 resize-none rounded-3xl border border-white/15 bg-slate-950/80 p-5 text-base leading-relaxed text-white outline-none placeholder:text-white/35 focus:border-white/50"
@@ -4020,7 +4545,11 @@ function App() {
                   <div className="mt-3 flex flex-col gap-3">
                     <input
                       value={yonseiStudentName}
-                      onChange={(event) => setYonseiStudentName(event.target.value)}
+                      onChange={(event) => {
+                        setYonseiStudentName(event.target.value);
+                        setYonseiSubmitMessage("");
+                        setYonseiSubmissionReport(null);
+                      }}
                       placeholder="Nhập tên học sinh"
                       className="rounded-full border border-white/20 bg-white/[0.08] px-5 py-3 text-sm text-white outline-none placeholder:text-white/45 focus:border-white/60"
                     />
@@ -4029,7 +4558,7 @@ function App() {
                       onClick={handleSubmitYonseiListening}
                       className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-transform hover:scale-[1.03]"
                     >
-                      Nộp bài nghe và bản dịch
+                      Nộp bài và tạo báo cáo
                     </button>
                   </div>
 
@@ -4038,10 +4567,40 @@ function App() {
                       {yonseiSubmitMessage}
                     </p>
                   )}
+
+                  {yonseiSubmissionReport && (
+                    <div className="mt-4 rounded-2xl border border-emerald-300/25 bg-emerald-300/10 p-4 text-sm leading-relaxed text-emerald-50">
+                      <p className="font-semibold text-white">Báo cáo đã tạo</p>
+                      <p className="mt-1">
+                        {yonseiSubmissionReport.studentName} · {yonseiSubmissionReport.lesson} · Điểm {yonseiSubmissionReport.score}/{yonseiSubmissionReport.total} ({yonseiSubmissionReport.percentage}%) · Sai {yonseiSubmissionReport.wrongCount} câu
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <button
+                          onClick={() => handleCopyYonseiReport()}
+                          className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-black transition hover:scale-[1.03]"
+                        >
+                          Copy báo cáo
+                        </button>
+                        <button
+                          onClick={() => downloadYonseiReport()}
+                          className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-black transition hover:scale-[1.03]"
+                        >
+                          Tải .txt
+                        </button>
+                        <button
+                          onClick={() => openYonseiSubmissionEmail()}
+                          className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-black transition hover:scale-[1.03]"
+                        >
+                          Gửi email
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
+          )}
         </div>
       </section>
     );
