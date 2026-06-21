@@ -3449,11 +3449,6 @@ function App() {
 
   const normalizeYonseiAnswer = (value: string) => value.trim().replace(/\s+/g, "");
 
-  const isYonseiBlankCorrect = (blank: YonseiBlankPart) => {
-    const typed = yonseiAnswers[getYonseiBlankKey(blank.number)] ?? "";
-    return normalizeYonseiAnswer(typed) === normalizeYonseiAnswer(blank.answer);
-  };
-
   const updateYonseiAnswer = (blankNumber: number, value: string) => {
     setYonseiAnswers((prev) => ({
       ...prev,
