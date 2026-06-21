@@ -178,7 +178,7 @@ type YonseiSubmissionRecord = {
 
 const YONSEI_LOCAL_SUBMISSIONS_KEY = "kaish-yonsei-listening-2-submissions";
 const YONSEI_UNSAVED_CONFIRM_MESSAGE = "Bạn chưa nộp bài tập này, xác nhận tải lại?";
-const YONSEI_TEACHER_EMAIL = "thanhquangvo1805kr@gmail.com";
+const YONSEI_TEACHER_EMAIL = "";
 
 const formatYonseiSubmittedAt = (isoDate: string) => {
   try {
@@ -278,14 +278,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 2,
     lessonLabel: "Bài 2",
     title: "아름다운 우리 학교",
-    cd: "03",
+    cd: "02",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-02.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-02.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-02.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-03.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-03.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-03.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-02.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-02.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-02.wav", type: "audio/wav" },
     ],
     clozeText: "저는 한국에 온 지 두 달 됐습니다. 제가 다니는 [[1|학교]]는 한국에서 유명한 대학교 중 의 하나입니다. 우리 학교는 [[2|역사]]가 오래됐습니다. 그리고 [[3|캠퍼스]]도 넓고 아름답습 다. 학교 안에는 [[4|도서관]]과 [[5|학생회관]]과 병원이 있습니다. 도서관에는 [[6|컴퓨터실]]과 멀티미 디어실이 있고 학생회관에는 [[7|식당]]과 은행, 음악감상실, 건강센터가 있습니다. 모두 가 까이 있어서 이용하기가 편리합니다.\n\n제가 한국말을 배우는 [[8|한국어학당]]에는 여러 나라에서 온 학생들이 많아서 다양한 친구들을 만날 수 있습니다. 저는 평일에 오전 9시부터 오후 1시까지 [[9|수업]]이 있습니다. 수업이 끝난 후에 저는 친구와 점심을 먹고 자주 컴퓨터실에 가서 인터넷을 합니다. 주 말에는 학교 운동장에서 친구들과 같이 [[10|축구]]나 농구를 합니다.\n\n한국어학당에 있으면 여러 나라를 여행하는 것 같습니다. 저는 날마다 넓고 큰 세계 를 만납니다.",
   },
@@ -294,14 +294,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 3,
     lessonLabel: "Bài 3",
     title: "소중한 물건",
-    cd: "05",
+    cd: "03",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-03.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-03.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-03.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-05.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-05.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-05.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-03.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-03.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-03.wav", type: "audio/wav" },
     ],
     clozeText: "저는 [[1|원룸]]에서 혼자 살기 때문에 물건이 많지 않습니다. 하지만 [[2|노트북]], 엠피쓰리 (MP3), 디카, [[3|휴대전화]],[[4|가족사진]] 등 제가 좋아하는 것이 많습니다. 그 중에서 저에게 제일 소중한 것은 바로 [[5|밥솥]]입니다.\n\n저는 작년까지 [[6|부모님]]과 같이 살았기 때문에 [[7|어머니]]께서 날마다 밥을 해 주셨습 다. 그런데 지금은 부모님과 같이 살지 않고 제가 [[8|요리]]를 잘 못하기 때문에 혼자서 밥 을 해 먹는 것이 너무 어렵습니다. 그래서 밖에서 사 먹는 일이 많아서 [[9|건강]]이 조금 빠졌습니다.\n\n부모님은 항상 제 건강을 걱정하십니다. 그래서 어머니는 지난달에 저에게 밥솥을 보 내 주셨습니다. 이 밥솥은 작아서 혼자 밥을 해 먹기도 좋고 밥도 아주 빨리 됩니다.\n\n밥솥을 받고 오랜만에 따뜻한 밥을 해 먹었습니다. [[10|반찬]]이 많지 않았지만 밥이 따뜻 하니까 아주 맛있었습니다. 밥솥이 있어서 이제 밥을 하는 것이 어렵지 않습니다. 저는 이 밥솥으로 밥을 해 먹을 때마다 어머니를 생각합니다.",
   },
@@ -310,14 +310,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 4,
     lessonLabel: "Bài 4",
     title: "자연의 도시, 밴쿠버",
-    cd: "07",
+    cd: "04",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-04.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-04.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-04.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-07.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-07.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-07.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-04.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-04.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-04.wav", type: "audio/wav" },
     ],
     clozeText: "저는 [[1|캐나다]]에서 왔습니다. 우리나라의 남쪽에는 [[2|미국]]이 있고 북쪽에는 [[3|알래스카]]와 [[4|북극해]]가 있습니다. 캐나다는 세계에서 두 번째로 큰 나라입니다. 그렇지만 사람들이 많지 않아서 복잡하지 않고 살기가 좋습니다.\n\n제 고향은 캐나다 남서쪽에 있는 [[5|밴쿠버]]입니다. 밴쿠버의 서쪽에는 아름다운 바다가 있고 동쪽에는 [[6|로키산맥]]이 있습니다. 산과 바다가 있어서 공기가 맑고 깨끗합니다. 바 다에 가면 [[7|고래]]를 볼 수 있고 산에 가면 [[8|스키]]를 탈 수 있습니다. 밴쿠버에서 해마다 1 월 1일에 북극곰 수영대회가 열리면 사람들은 차가운 바닷물에서 수영을 합니다.\n\n제가 지금 살고 있는 [[9|서울]]과 제 고향 밴쿠버는 다른 것이 많습니다. 서울은 여름에 덥고 겨울에 추운데 밴쿠버는 여름에 날씨가 아주 좋고 겨울에 비가 많이 옵니다. 그 리고 서울에는 밤늦게까지 문을 여는 가게들도 많고 길에 다니는 사람들도 많지만 제 고향에는 저녁에 문을 여는 가게가 많지 않아서 밤이 되면 아주 조용합니다.\n\n저는 제 고향에서 가족들과 함께 많은 시간을 보냈습니다. 그래서 '고향 을 생각하면 사랑하는 가족들이 제일 먼저 생각납니다. 저는 한국에 와서 가족들을 못 본 지 6개 월 됐는데 [[10|방학]]이 되면 고향에 돌아가서 가족들을 만나고 고향 음식도 먹고 싶습니다",
   },
@@ -326,14 +326,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 5,
     lessonLabel: "Bài 5",
     title: "한국 사람과 떡",
-    cd: "09",
+    cd: "05",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-05.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-05.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-05.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-09.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-09.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-09.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-05.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-05.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-05.wav", type: "audio/wav" },
     ],
     clozeText: "떡은 한국 [[1|전통]] 음식 중의 하나입니다. 한국 사람들은 [[2|옛날]]부터 떡을 먹었습니다.\n\n한국 사람들은 떡을 좋아하기 때문에 [[3|특별한]] 날에는 떡을 나누어 먹습니다. [[4|아기]]가 태 어난 지 100일이 됐을 때와 1년이 됐을 때, 그리고 60번째 [[5|생일]]에 큰 잔치를 합니다. 이 렇게 큰 잔치를 할 때마다 떡을 먹습니다. 해마다 [[6|설날]]에는 흰떡으로 만든 떡국을 먹 고 추석에는 [[7|송편]]을 만들어서 같이 먹습니다. [[8|결혼식]] 날에도 떡을 준비하고 [[9|이사]]한 날 에도 이웃 사람들과 떡을 나누어 먹습니다. 제사를 지낼 때에도 떡을 준비합니다.\n\n한국에서는 [[10|붉은]] 떡을 먹으면 나쁜 일이 생기지 않을 거예요: 하고 생각합니다. 그래 서 잔치를 할 때나 이사를 했을 때 붉은 떡을 먹습니다.\n\n떡은 건강에 좋고 맛있어서 아침이나 간식으로 먹는 사람들이 많습니다. 그래서 떡 으로 만드는 음식도 여러 가지가 있습니다. 떡으로 떡국, 떡볶이, 떡라면, 떡피자 같은 음식을 만들 수 있습니다.\n\n여러분도 한국에 있을 때 떡을 많이 드셔 보세요.",
   },
@@ -342,14 +342,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 6,
     lessonLabel: "Bài 6",
     title: "특별한 날에 먹는 음식",
-    cd: "11",
+    cd: "06",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-06.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-06.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-06.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-11.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-11.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-11.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-06.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-06.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-06.wav", type: "audio/wav" },
     ],
     clozeText: "오늘은 제 [[1|생일]]이기 때문에 [[2|친구]]들을 만났습니다. 저는 친구들과 같이 [[3|케이크]]를 먹 으려고 했는데 친구들은 이렇게 말했습니다.\n\n“제임스 씨, 오늘 [[4|미역국]]을 먹었어요?”\n\n“오늘은 제임스 씨 생일이니까 미역국을 먹으러 가요. 한국에서는 생일에 미역국을 먹는 [[5|풍습]]이 있어요.”\n\n그래서 우리는 [[6|한식집]]으로 갔습니다. 맛있게 미역국을 먹고 있는데 친구들은 모두 [[7|수진]] 씨에게 이렇게 물었습니다.\n\n“수진 씨, 언제 [[8|국수]]를 먹여 줄 거예요?” 사람들은 계속 그 질문을 했지만 수진 씨는 대답을 하지 않고 얼굴만 빨개졌습니다. 그 래서 저는 “수진 씨, 왜 그래요? 국수를 싫어해요?” 하고 물었습니다. 친구들은 제 말 을 듣고 모두 웃었습니다. 그때 다른 친구가 저에게 설명을 해 주었습니다.\n\n“제임스 씨, 한국에서는 [[9|결혼식]] 날 [[10|손님]]들에게 국수를 대접해요.”\n\n저는 수진 씨에게 다시 물어봤습니다.\n\n“수진 씨, 그럼 우리 언제 국수를 먹을 수 있어요?\"\n\n“제임스 씨, 저 다음 달에 결혼해요.” 수진 씨는 부끄러워했습니다.\n\n결혼식에서 먹는 국수는 특별한 맛일 것 같습니다. 저는 수진 씨의 결혼식에 가서 친 구들과 같이 국수를 먹고 싶습니다.",
   },
@@ -358,14 +358,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 7,
     lessonLabel: "Bài 7",
     title: "궁중떡볶이",
-    cd: "13",
+    cd: "07",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-07.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-07.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-07.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-13.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-13.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-13.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-07.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-07.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-07.wav", type: "audio/wav" },
     ],
     clozeText: "[[1|궁중떡볶이]]를 아십니까? 궁중떡볶이는 옛날에 [[2|궁중]]에서 먹기 시작했습니다.\n\n궁중떡볶이는 요즘의 매운 떡볶이와 다르게 떡에 [[3|고기]]와 [[4|채소]]를 많이 넣고 [[5|간장]]으로 만든 음식입니다.\n\n재료:\n떡볶이 떡, 소고기 50g, 표고버섯 2개, 당근 50g, 피망 1/2개, 양파 1/4개, 붉은 고추 1개\n\n양념 재료:\n간장 4숟가락, 설탕 2숟가락, 다진 파 2숟가락, 다진 마늘 1숟가락, 식용유, 참기름, 깨, 후춧가루\n\n1: 물에 소금을 조금 넣고 끓이세요. 물이 끓으면 떡볶이 떡을 넣고 데칩니다. 데친 떡을 찬물로 씻은 후에 물을 빼고 참기름을 바릅니다.\n\n2: [[6|소고기]]와 [[7|표고버섯]]은 가늘게 썹니다. 여기에 간장, 설탕(0.5), 참기름, 후춧가루를 넣습니다.\n\n3: [[8|당근]], 피망, [[9|양파]], 파, 붉은 고추도 가늘게 썹니다.\n\n4: 간장(3)에 설탕(1.5), 다진 마늘(0.5), 다진 파, 참기름, 깨, 후춧가루를 넣어서 [[10|양념장]]을 만듭니다.\n\n5: 큰 프라이팬에 식용유를 조금 넣고 파와 양파부터 볶습니다. 그리고 소고기와 표고버섯, 떡을 넣고 볶습니다. 그 다음에 당근, 피망, 붉은 고추를 순서대로 넣고 볶습니다.\n\n6: 볶은 재료에 양념장을 넣고 모든 재료가 다 익을 때까지 더 볶습니다.\n\n7: 불을 끄고 참기름, 깨, 후춧가루를 뿌립니다.",
   },
@@ -374,14 +374,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 8,
     lessonLabel: "Bài 8",
     title: "음식과 문화",
-    cd: "15",
+    cd: "08",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-08.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-08.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-08.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-15.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-15.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-15.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-08.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-08.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-08.wav", type: "audio/wav" },
     ],
     clozeText: "사람들은 모두 [[1|음식]]을 생각하면 즐거워질 것입니다.\n\n무엇을, 어떻게 먹을까?' 아주 오랜 [[2|옛날]]부터 사람들은 이런 생각을 했습니다. 그리고 음식과 음식을 먹는 방법 은 나라마다 아주 다양합니다.\n\n한국 음식은 [[3|국물]]이 많기 때문에 [[4|숟가락]]과 [[5|젓가락]]을 사용하고 밥을 먹을 때도 [[6|그릇]] 을 상 위에 놓고 숟가락으로 먹습니다. 일본 사람들은 밥을 젓가락으로 먹기 때문에 밥 그릇을 들고 먹어야 합니다. [[7|중국]]에는 튀긴 음식과 볶은 음식이 많아서 기쁨이 많고 뜨겁기 때문에 중국 젓가락은 한국 젓가락보다 더 깁니다.\n\n노르웨이는 겨울이 긴 나라입니다. 그래서 사람들은 고기나 [[8|생선]]에 소금을 뿌려서 말린 후에 추운 겨울에도 오랫동안 먹을 수 있는 음식을 만들었습니다. [[9|인도네시아]]는 날씨가 더워서 음식이 쉽게 상할 수 있기 때문에 볶은 음식이 많습니다.\n\n이렇게 나라마다 다른 식사 방법과 다양한 음식은 그 나라의 [[10|문화]]를 잘 보여 주는 것입니다. 다른 나라의 문화를 잘 알고 싶으면 그 나라의 음식을 드셔 보세요.",
   },
@@ -390,14 +390,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 9,
     lessonLabel: "Bài 9",
     title: "시장과 백화점",
-    cd: "17",
+    cd: "09",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-09.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-09.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-09.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-17.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-17.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-17.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-09.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-09.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-09.wav", type: "audio/wav" },
     ],
     clozeText: "저는 [[1|백화점]]보다 [[2|시장]]을 더 좋아합니다. 시장에는 여러 가지 [[3|물건]]도 많고 여기저기 돌아다니면 좋은 물건을 싸게 살 수 있기 때문입니다.\n\n백화점은 보통 오전 10시 반에 문을 여는데 시장은 저녁에 문을 여는 곳도 있습니다. 시장은 백화점과 다르게 [[4|카드]]를 쓸 수 없는 곳도 있지만 [[5|현금]]을 내면 물건 값을 깎아 주는 곳도 있습니다. 물건을 산 후에 물건이 마음에 안 들어서 바꾸려면 [[6|영수증]]이 필 요합니다.\n\n지난 주말에 저나는 친구와 같이 옷을 사러 [[7|동대문시장]]에 갔습니다. 남대문시장에는 가 본 적이 있지만 동대문시장은 처음이었습니다. 밤에 가면 재미있는 [[8|공연]]도 보고 더 싸게 살 수 있을 것 같아서 밤에 갔습니다. 사람들이 쇼핑몰 앞에서 노래도 하고 춤도 추고 있었는데 아주 재미있었습니다. 동대문시장에는 [[9|디자이너]]가 옷을 만들어서 파는 가게들이 많아서 값도 싸고 다양한 모양의 예쁜 옷들이 많았습니다. 배우나 가수의 얼 굴 사진이 있는 [[10|티셔츠]]를 파는 가게도 있었습니다.\n\n저는 노란 모자와 제가 좋아하는 가수의 얼굴 사진이 있는 티셔츠를 샀고 친구는 하 얀 블라우스와 까만색 긴 바지를 샀습니다.\n\n“좀 깎아 주세요”\n\n“한국말도 잘 하고 많이 샀으니까 싸게 드릴게요.\"\n\n우리는 예쁜 옷을 싸게 사서 기분이 좋았습니다.",
   },
@@ -406,14 +406,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 10,
     lessonLabel: "Bài 10",
     title: "수산 시장",
-    cd: "19",
+    cd: "10",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-10.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-10.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-10.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-19.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-19.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-19.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-10.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-10.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-10.wav", type: "audio/wav" },
     ],
     clozeText: "제 한국 친구 중에는 [[1|생선]]을 아주 좋아하는 친구가 있습니다. 그 친구는 저도 생선 을 좋아하는 것을 알고 [[2|수산]] [[3|시장]]을 소개해 줬습니다. 시장에는 여러 가지 [[4|해산물]]이 참 많았습니다. [[5|새우]], [[6|낙지]], [[7|오징어]] 등 모두 다 [[8|싱싱]]하고 맛있을 것 같았습니다. 저는 살아서 움직이는 낙지를 들고 사진도 찍었습니다.\n\n우리는 친구가 자주 가는 단골 가게에 가서 큰 생선 한 마리와 새우를 샀습니다. 가 게 주인아저씨는 서비스로 새우 두 마리를 더 주셨습니다. 우리는 가게 앞에 있는 식 당으로 갔습니다. 식당에서는 우리가 사 간 생선으로 회와 [[9|매운탕]]을 만들어 줬습니다. 친구 두 명과 함께 모두 셋이 먹었는데 아주 넉넉했습니다. 한국에 와서 이렇게 싱싱하 고 맛있는 회는 처음 먹어 봤습니다. 매운탕은 좀 맵지만 여러 가지 채소도 있고 맛있 었습니다.\n\n저는 한국에 여러 종류의 시장이 있는 것을 알고 있었습니다. 친구들과 동대문 시장 에도 가 보고 용산에 있는 [[10|전자상가]]에도 가 봤습니다. 그렇게 큰 수산 시장에는 처음 가 봤는데 오늘 여러 가지 재미있는 구경도 하고 맛있는 생선도 먹어서 정말 기분이 좋 았습나다. 다음에는 또 다른 시장에 가서 구경하고 싶습니다.",
   },
@@ -422,14 +422,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 11,
     lessonLabel: "Bài 11",
     title: "편리한 쇼핑",
-    cd: "21",
+    cd: "11",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-11.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-11.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-11.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-21.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-21.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-21.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-11.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-11.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-11.wav", type: "audio/wav" },
     ],
     clozeText: "저는 지난주에 [[1|책상]]을 사러 학교 앞 [[2|백화점]]에 갔습니다. 백화점은 물건들을 구경하 기 편했습니다. 그리고 [[3|점원]]들이 친절하게 설명을 해 줘서 좋았습니다. 저는 천천히 구 경을 하고 마음에 드는 것을 하나 골랐습니다. 하지만 그 책상은 값이 너무 비싸서 살 수 없었습니다. 그래서 싼 것을 사려고 [[4|시장]]으로 갔습니다. 저는 시장에서 여기저기 힘 들게 돌아다녔습니다. 저는 9시까지 구경을 했지만 마음에 드는 것이 없었습니다. 그래 서 책상을 사지 못하고 그냥 집으로 돌아왔습니다.\n\n집에 돌아왔을 때는 밤 10시가 넘었습니다. 저는 빨리 책상을 사고 싶어서 [[5|인터넷]]에 서 찾아봤습니다. 인터넷에는 여러 가지 책상이 많았습니다. 저는 [[6|서랍]]이 많고 값도 싼 책상을 찾았습니다. 이 책상을 제일 싸게 파는 [[7|사이트]]에 들어가서 다른 사람들이 쓴 글을 읽어 봤습니다. 또 여러 가지 색깔도 자세히 본 후에 [[8|초록색]] 책상으로 주문했습 니다\n\n3일 후에 책상이 집으로 [[9|배달]]됐습니다. 생각보다 빨리 와서 놀랐습니다. 그런데 색깔 이 인터넷에서 본 것보다 더 어두웠습니다. 다른 책상으로 바꿀까 했지만 인터넷으로 산 것은 바꾸기가 복잡할 것 같아서 그만두었습니다.\n\n이제부터 저는 이 책상에서 열심히 [[10|공부]]하겠습니다.",
   },
@@ -438,14 +438,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 12,
     lessonLabel: "Bài 12",
     title: "중고품 시장",
-    cd: "23",
+    cd: "12",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-12.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-12.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-12.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-23.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-23.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-23.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-12.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-12.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-12.wav", type: "audio/wav" },
     ],
     clozeText: "새 책과 [[1|헌 책]] 중에서 어느 것이 더 좋으세요? 많은 사람들이 헌 책 보다 새 책을 사 고 싶어합니다. 하지만 새 책이 3만 원인데 헌 책은 만 원이면 어느 것을 사시겠어요?\n\n[[2|중고품]] 시장에는 아이들의 옷과 [[3|장난감]], [[4|가전제품]]이나 [[5|주방용품]], 요즘에는 살 수 없는 옛날 물건 등 여러 가지 물건이 있습니다. 가끔은 중고품 시장에 새 것 같은 물 건들도 있습니다.\n\n서울에서는 [[6|구청]]에서 주말에 중고품 시장을 여는데 사람들은 자기가 사용한 물건 을 거기에 가지고 가서 팔 수 있습니다. 그리고 거기에서 다른 사람이 사용한 물건도 살 수 있습니다. 또 사람들은 자기가 사용하지 않는 물건을 [[7|아름다운]] 가게'에 줍니 다. 아름다운 가게'에서는 그 물건들을 싼 값에 팔아서 어려운 사람들을 돕습니다. [[8|풍물시장]]에 가면 고가구나 옛날 사진기 같은 구하기 어려운 물건들을 구경하고 살 수 있습니다.\n\n중고품은 고르기가 좀 어렵기는 하지만 물건을 싸게 살 수 있어서 좋고 [[9|쓰레기]]를 줄일 수 있으니까 [[10|환경]] 보호에도 좋습니다. 여러분도 시간이 있으면 중고품 시장에 가서 구경해 보세요.",
   },
@@ -454,14 +454,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 13,
     lessonLabel: "Bài 13",
     title: "친구의 생일 파티",
-    cd: "25",
+    cd: "13",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-13.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-13.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-13.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-25.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-25.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-25.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-13.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-13.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-13.wav", type: "audio/wav" },
     ],
     clozeText: "이번 주 [[1|수요일]]은 우리 반 친구 [[2|리에]]의 [[3|생일]]입니다. 저는 리에의 생일에 리에를 깜짝 놀라게 해 주고 싶습니다. 그래서 요즘 [[4|파티]] [[5|준비]]를 하는데 리에가 모르게 파티를 [[6|계획]] 하는 것은 쉬운 일이 아닙니다.\n\n“이번 주 수요일이 내 생일인데 그날 시간이 있어? 같이 저녁이나 먹을까?\"\n\n리에가 이런 말을 할 때마다 우리는 모두 잘 대답해 주지 않습니다\n\n“글쎄, 요즘은 좀 바쁜데 ……\n\n“잘 모르겠어. 내가 나중에 전화할게.” 이렇게 대답을 할 때 저는 가슴이 두근두근합니다. 그리고 기분이 좋지 않은 얼굴을 하는 리에를 보면 웃음이 나기도 합니다.\n\n오늘은 [[7|선물]]도 예쁘게 포장하고 [[8|식당]]도 예약했습니다. 우리는 리에가 식당에 오면 [[9|폭죽]]을 터뜨리고 노래를 부르려고 합니다. 그런데 어떻게 리에를 식당에 데리고 갈 수 있을까요?\n\n“리에야, [[10|숙제]]가 어려운데 와서 좀 도와 줄 수 있어?”\n\n“리에야, 지금 친구들과 저녁을 먹을 거야. 아직 저녁을 안 먹었으면 같이 먹을까?”\n\n아직 좋은 방법을 생각하지 못했습니다. 어떻게 말하면 좋을까요?",
   },
@@ -470,14 +470,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 14,
     lessonLabel: "Bài 14",
     title: "친구 집 방문",
-    cd: "27",
+    cd: "14",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-14.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-14.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-14.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-27.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-27.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-27.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-14.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-14.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-14.wav", type: "audio/wav" },
     ],
     clozeText: "[[1|언어]] [[2|교환]]을 하는 한국 [[3|친구]]가 저를 집으로 [[4|초대]]했습니다. 한국 사람 집에 처음 가 보는 것이어서 며칠 전부터 기다려졌습니다. 그 [[5|동네]]에는 가 본 적이 없기 때문에 걱정 이 됐는데 친구가 [[6|버스정류장]]에 마중 나와서 고마웠습니다.\n\n친구 집에 가니까 친구 가족이 모두 저에게 반갑게 인사를 했습니다. 저는 친구 어머 니께 [[7|꽃다발]]을 드렸는데 친구 여동생이 꽃보다 더 예쁜 것 같았습니다. 미국과 다르게 한국에서는 집 안에 들어갈 때 [[8|신발]]을 벗어야 했습니다. 방에 들어가니까 상에는 맛있 는 음식이 많이 있었습니다.\n\n“차린 것은 없지만 많이 드세요”\n\n“네? 음식이 정말 많은데요. 잘 먹겠습니다”\n\n제가 [[9|젓가락]]을 사용할 때 힘들어하니까 친구 어머니께서 [[10|포크]]를 주셨습니다. 그리고 제가 고기와 생선을 잘 먹는 것을 보시고 고기와 생선을 제 앞에 놓아 주셨습니다. 음 식을 맛있게 먹은 후에 저는 친구 가족과 같이 밤늦게까지 이야기도 하고 게임도 했습 니다. 아주 재미있었습니다. 그리고 친구 아버지께서 자동차로 저를 기숙사까지 데려다 주셨습니다.\n\n친구 가족의 따뜻한 마음을 느낄 수 있는 좋은 시간이었습니다.",
   },
@@ -486,14 +486,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 15,
     lessonLabel: "Bài 15",
     title: "청첩장",
-    cd: "29",
+    cd: "15",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-15.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-15.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-15.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-29.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-29.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-29.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-15.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-15.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-15.wav", type: "audio/wav" },
     ],
     clozeText: "오랫동안 기다렸습니다. 그리고 드디어 [[1|인생]]의 [[2|반쪽]]을 만났습니다.\n\n저희 두 사람은 두 개의 반쪽으로 하나의 [[3|가정]]을 이루려고 합니다. [[4|사랑]]과 [[5|믿음]]으로 아름다운 가정을 만들어 더 큰 사랑을 나누겠습니다. 바쁘시겠지만 오셔서 축하해 주시면 큰 [[6|기쁨]]이 되겠습니다.\n\n[[7|김영수]]의 장남 [[8|준혁]] 강양자\n\n박정근 한은실의 차녀 [[9|지혜]]\n\n*일시 : 2010년 10월 21일 목요일 저녁 6시 *장소 : [[10|연세대학교]] 동문회관 2층",
   },
@@ -502,14 +502,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 16,
     lessonLabel: "Bài 16",
     title: "친구의 결혼식",
-    cd: "31",
+    cd: "16",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-16.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-16.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-16.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-31.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-31.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-31.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-16.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-16.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-16.wav", type: "audio/wav" },
     ],
     clozeText: "오늘은 제일 친한 친구인 [[1|지혜]]의 [[2|결혼식]] 날이었다. 제일 친한 친구가 결혼하니까 기쁘기도 하고 섭섭하기도 했다. 오늘 결혼식에서 내가 지혜의 [[3|부케]]를 받기로 했는데 나는 아직 친구의 결혼식에서 부케를 받은 적이 없기 때문에 아침부터 [[4|마음]]이 설레 었다. 결혼식은 13시였지만 나는 지혜를 도와주려고 서둘러서 준비를 하고 일찍 집에 서 나갔다.\n\n[[5|결혼식장]]에는 사람들이 아주 많아서 좀 시끄러웠다. 결혼식에는 [[6|신랑]]과 [[7|신부]]의 친 구들보다 친척과 부모님의 친구들이 더 많이 오셨다. 결혼은 신랑과 신부, 두 사람이 하는 것이지만 한국에서 결혼식은 신랑 [[8|가족]]과 신부 가족에게 중요한 행사이기 때문 이다.\n\n결혼식은 오래 걸리지 않았다. 결혼식이 끝난 후에 기념 [[9|촬영]]을 하고 지혜가 나에 게 부케를 던졌다.\n\n내가 부케를 들고 있으니까 여러 사람들이 \"결혼식에서 부케를 받으면 6개월 안에 결혼해야 하는데 결혼할 남자 친구가 있어요?\" 하고 물었다. 아직 남자 친구도 없는 데 부케를 받아서 걱정이다. 하지만 그것보다 지혜가 정말 [[10|행복]]하게 잘 살았으면 좋 겠다.",
   },
@@ -518,14 +518,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 17,
     lessonLabel: "Bài 17",
     title: "서울 구경",
-    cd: "33",
+    cd: "17",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-17.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-17.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-17.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-33.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-33.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-33.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-17.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-17.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-17.wav", type: "audio/wav" },
     ],
     clozeText: "나는 오늘 친구와 같이 [[1|서울]] 시내를 구경하는 서울 도심순환[[2|버스]]를 탔다. 이 버스는 오전 9시부터 밤 9시까지 다니는데 표를 한 번 사면 하루 종일 이용할 수 있다. 또한 [[3|공휴일]]에도 탈 수 있어서 편리하다. 우리는 10시에 [[4|광화문]]에 있는 [[5|면세점]] 앞에서 이 버스 를 타, 이 버스에는 외국어 [[6|서비스]]가 있어서 듣고 싶은 언어로 설명을 들을 수 있다\n\n\"다음 [[7|정류장]]은 [[8|국립중앙박물관]]입니다. 내리실 분은 벨을 눌러 주세요. 버스는 30분 마다 있습니다”\n\n안내원이 한국어와 영어로 친절하게 설명해 줬다. 국립중앙박물관은 구경할 게 많았 지만 1시간만 구경하고 다시 버스를 탔다. 우리는 [[9|이태원]]에 내려서 쇼핑도 하고 점심도 먹었다. 그 다음에는 [[10|한옥]] 마을에 가서 여기저기 구경하고 한복도 입어 보고 떡도 먹 어 봤다. 그런 다음에 서울타워와 대학로도 구경했다.\n\n하루에 버스나 지하철을 여러 번 갈아타고 여기저기를 구경하기가 어려운데 도심순 환버스가 있어서 편리했다. 다음에는 다른 코스도 구경하고 싶다.",
   },
@@ -534,14 +534,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 18,
     lessonLabel: "Bài 18",
     title: "지하철 풍경",
-    cd: "35",
+    cd: "18",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-18.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-18.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-18.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-35.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-35.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-35.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-18.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-18.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-18.wav", type: "audio/wav" },
     ],
     clozeText: "많은 사람들은 [[1|지하철]]에서 하루를 시작합니다. 지하철은 [[2|버스]]보다 시간이 [[3|정확]]하고 갈아타기 쉽기 때문에 지하철을 타는 사람들이 많습니다.\n\n한국의 지하철은 [[4|안전]]하고 [[5|교통]] 카드를 사용할 수 있어서 이용하기가 편리합니다. 요 금도 다른 나라보다 싸고 [[6|새벽]]부터 밤늦게까지 이용할 수 있습니다. 서울에는 여러 지 하철이 있는데 호선마다 색이 다르기 때문에 가고 싶은 역을 쉽게 찾을 수 있습니다. 그 리고 [[7|안내방송]]이 나오기 때문에 어느 역인지 쉽게 알 수 있습니다. 지하철 안에는 노약 자들만 앉는 [[8|노약자석]]이 있고 젊은 사람들은 할아버지, 할머니가 타시면 자리를 양보합니다. 그리고 한국에서 65세가 넘은 노인들은 무료로 지하철을 이용할 수 있습니다\n\n는 지하철 안에서 사람들의 다양한 모습을 봅니다. 신문이나 책을 읽는 사람, 음 악을 듣는 사람, [[9|휴대전화]]로 게임을 하는 사람, 꾸벅꾸벅 조는 사람이 있습니다. 그리 고 큰 소리로 전화를 하는 사람이 있어서 시끄러울 때도 있습니다. 저는 가끔 지하철 안에서 [[10|숙제]]를 하는데 친절하게 가르쳐 주는 한국 사람도 있습니다.\n\n좀 복잡하기는 하지만 한국의 여러 사람들과 여러 모습을 볼 수 있는 지하철, 서울 에서 어디든지 쉽게 갈 수 있게 해 주는 지하철, 이 지하철에서 저도 많은 사람과 함께 하루를 시작합니다.",
   },
@@ -550,14 +550,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 19,
     lessonLabel: "Bài 19",
     title: "가 보고 싶은 지하철역",
-    cd: "37",
+    cd: "19",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-19.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-19.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-19.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-37.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-37.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-37.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-19.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-19.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-19.wav", type: "audio/wav" },
     ],
     clozeText: "그림도 보고 결혼식도 할 수 있는 [[1|지하철역]]을 아세요? 하루에 400만 명이나 이용하 는 [[2|서울]]의 지하철역 중에서 멋있고 재미있어서 가 보고 싶은 지하철역 몇 군데를 소개\n\n하겠습니다.\n\n3호선의 [[3|옥수역]] : [[4|미술관]]\n\n옥수역에는 예쁜 색이 많습니다. 컵 모양의 의자는 노란색이고 문은 빨간색, 노란 색, [[5|초록색]]으로 다양합니다. 그래서 옥수역에 가면 미술관에 간 것 같습니다. 4호선의 [[6|사당역]] : [[7|공연]]장\n\n사당역에서는 멕시코 전통 음악, 전자 바이올린, 힙합 등 다양한 공연을 합니다.\n\n음악도 듣고 공연도 보고 피에로도 만나려면 사당역에 가 보세요. 5호선의 [[8|광화문역]] : [[9|화랑]]\n\n광화문역 지하에는 화랑이 있습니다. 여기에서는 시, 그림, 사진 등 여러 가지 작 품을 전시합니다. 광화문역에 가서 재미있게 구경하세요. 6호선의 녹사평역 : [[10|결혼식장]]\n\n녹사평역은 지붕을 유리로 만들어서 지하 4층까지 아주 밝습니다. 지하철역 벽에 여러 가지 색깔의 유리로 만든 그림이 있어서 아름답고, 유리 계단과 에스컬레이터도 특이합니다. 지하철역이 아주 아름다워서 여기에서 결혼식을 하는 사람들도 많습니다",
   },
@@ -566,14 +566,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 20,
     lessonLabel: "Bài 20",
     title: "교통과 생활",
-    cd: "39",
+    cd: "20",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-20.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-20.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-20.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-39.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-39.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-39.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-20.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-20.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-20.wav", type: "audio/wav" },
     ],
     clozeText: "어느 날 [[1|버스]]나 [[2|지하철]]이 모두 사라지면 어떻게 학교에 오겠습니까? [[3|비행기]]가 없으면 우리는 언제 [[4|고향]]에 계신 [[5|부모님]]을 다시 만날 수 있을까요? 우리가 날마다 이용하는 [[6|교통수단]]이 없으면 우리의 생활은 지금과 아주 다를 것 같습니다.\n\n교통수단이 많지 않은 [[7|옛날]]에 사람들은 어디까지 갈 수 있었을까요? 소나 말을 타고 옆 마을의 산에 갔다가 집으로 돌아오는 것은 하루 종일 걸리는 피곤한 일이었습니다 친구를 만나러 고향에 가고 싶어도 산을 넘고 강을 건너는 [[8|여행]]이 힘들어서 보고 싶을 얼굴을 생각만 했겠지요.\n\n그때 사람들은 우리가 날마다 지하철을 타고 산을 지나서 학교에 다니는 것을 상상할 수 있었을까요? 친구가 보고 싶으면 언제든지 [[9|KTX]]를 타고 고향에 가서 재미있게 놀다가 오는 것도 어려운 일이 아니지요.\n\n여러분은 어떻습니까? 미래의 사람들이 엘리베이터를 타고 [[10|우주]]까지 가는 것을 생각해 본 적이 있나요? 앞으로 저는 우주에서 조용하고 자유롭게 살았으면 좋겠습니다 친구들을 만날 때는 자가용 우주선을 타고 지구로 오겠습니다. 또 친구들이 우주에 놀러 오면 함께 우주 버스를 타고 구경도 하고 파란 바다가 아름다운 지구의 사진도 찍겠습니다.\n\n앞으로 교통수단은 어떻게 달라질까요? 그러면 우리들의 생활은 어떻게 될까요?",
   },
@@ -582,14 +582,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 21,
     lessonLabel: "Bài 21",
     title: "학술정보관",
-    cd: "41",
+    cd: "21",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-21.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-21.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-21.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-41.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-41.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-41.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-21.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-21.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-21.wav", type: "audio/wav" },
     ],
     clozeText: "[[1|학술정보관]]은 올해 새로 문을 연 우리 학교 [[2|도서관]]이다. 새 건물이어서 깨끗하고 이 용하기가 편리하다. [[3|컴퓨터]]로 빈자리를 [[4|예약]]할 수 있고 예약 시간도 정할 수 있다. 그 래서 나는 가끔 학술정보관에 가서 [[5|숙제]]를 하거나 [[6|인터넷]]을 한다.\n\n오늘 나는 언어 교환을 하기로 한 한국 [[7|친구]]를 처음 만났다. 우리는 서로 [[8|취미]]에 대 해서 물어 봤다. 그 친구는 취미가 [[9|영화]] 감상이어서 시간이 있을 때마다 학술정보관에 가서 영화를 본다고 했다.\n\n“거기에 가면 영화를 볼 수 있어요?”\n\n네, 8층에 넓은 멀티미디어센터가 있는데 멀티미디어 자료가 많고 원하는 멀티미디어 자료를 컴퓨터로 빨리 찾을 수 있어요. 나는 거기에서 외국어 공부도 하고 음악도 들어요. 가끔 편한 의자에 앉아서 [[10|헤드폰]]을 쓰고 영화도 봐요. 그렇게 하면 스트레스 가 풀리는 것 같아요. 학기 중에는 1주일에 두 번 멀티미디어센터 안에 있는 영화감상실에서 무료로 영화를 상영해요. 마이클 씨, 금요일 오후에 영화를 상영하는데 같이 가 볼까요?”\n\n우리는 금요일에 멀티미디어센터에 가서 영화를 보기로 했다. ：",
   },
@@ -598,14 +598,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 22,
     lessonLabel: "Bài 22",
     title: "서비스가 좋은 은행",
-    cd: "43",
+    cd: "22",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-22.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-22.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-22.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-43.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-43.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-43.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-22.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-22.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-22.wav", type: "audio/wav" },
     ],
     clozeText: "저는 어제 [[1|통장]]을 만들려고 학교에 있는 [[2|은행]]에 갔어요. 은행 안은 사람이 많아서 좀 복잡했어요. 제가 [[3|번호표]]를 뽑아야 하는 것을 모르고 그냥 [[4|창구]] 앞에 서서 기다리 니까 은행 [[5|안내원]]이 번호표를 뽑아서 줬어요. 번호표를 보니까 제 앞에 기다리는 사람 이 20명쯤 있었어요. 기다리는 것이 지루할 것 같았는데 기다리는 동안 [[6|잡지]]도 보고 텔레비전 뉴스도 보니까 시간이 빨리 갔어요. 의자에 앉아서 잡지를 보다가 제 차례가 돼서 창구로 갔어요. 창구에 가니까 사탕이 많이 있었어요. [[7|직원]]이 사탕을 권해서 하 나 먹었어요.\n\n통장을 만들려면 [[8|외국인등록증]]이 있어야 하는데 저는 외국인등록증을 안 가지고 갔어요. 은행 직원은 친절하게 “외국인등록증이 없으면 [[9|학생증]]과 [[10|여권]]을 보여 주세요” 하 고 말했어요. 저는 학생증과 여권을 보여 줬어요. 그리고 서류에 이름과 연락처를 적고 서명을 했어요. 저는 현금카드가 필요해서 현금카드도 같이 신청했어요. 조금 기다리 니까 통장과 현금카드가 모두 나왔어요.\n\n저는 한국말을 잘 못해서 걱정했는데 쉽게 통장과 현금카드를 만들 수 있어서 기분이 좋았어요. 직원이 친절하고 일을 생각보다 빨리 처리해 줬어요. 한국의 은행은 서비스가 좋은 것 같아요.\n\n격",
   },
@@ -614,14 +614,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 23,
     lessonLabel: "Bài 23",
     title: "요가 배우기",
-    cd: "45",
+    cd: "23",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-23.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-23.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-23.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-45.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-45.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-45.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-23.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-23.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-23.wav", type: "audio/wav" },
     ],
     clozeText: "저는 [[1|한국]]에 사는 동안 한국 사람들도 많이 만나고 한국에 대해서 많이 배우고 싶 었습니다. 그래서 어떻게 하면 좋을지 [[2|방법]]을 찾고 있었습니다. 그런데 얼마 전에 버스 [[3|정류장]]에서 서대문구청의 [[4|문화]] [[5|프로그램]]을 소개하는 [[6|광고]]를 봤습니다. 그 광고에는 '전통무용; '가야금; '떡케이크 만들기' 같은 프로그램이 있었습니다.\n\n저는 아주 기뻐서 서대문구청의 [[7|문화회관]]에 직접 찾아 갔습니다. 그곳의 프로그램은 한 달에 3만 원~6만 원 정도로 값도 별로 비싸지 않았습니다. 배우고 싶은 것이 많았 지만 제가 아직 [[8|한국말]]이 서투르기 때문에 우선 [[9|요가]]를 신청하기로 했습니다. 요가는 선생님의 말씀을 잘 몰라도 다른 학생들을 보고 따라 할 수 있으니까 어렵지 않을 것 같았습니다.\n\n제가 신청한 요가 [[10|수업]]은 화요일과 목요일 저녁에 한 시간 동안 합니다. 같이 요가를 하는 아주머니들은 운동을 아주 좋아하는 것 같습니다. 그리고 이야기하는 것도 좋아 해서 저에게 말을 많이 겁니다.\n\n요즘 한국에서 유행하고 있는 요가를 배우고 아주머니들과 여러 가지 이야기도 많\n\n. 이 하니까 한국이 더 가까워지는 것 같습니다. 요가를 배운 후에는 한국의 전통 문화 도 배웠으면 좋겠습니다.",
   },
@@ -630,14 +630,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 24,
     lessonLabel: "Bài 24",
     title: "자원봉사",
-    cd: "47",
+    cd: "24",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-24.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-24.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-24.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-47.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-47.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-47.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-24.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-24.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-24.wav", type: "audio/wav" },
     ],
     clozeText: "한국 [[1|생활]]에 익숙해지기는 했지만 나는 요즘 게을러지는 것을 느꼈다. 오늘도 특별 히 한 일이 없이 시간을 보냈다. [[2|친구]]들과 커피를 마신 후에 옷가게를 구경했다. 기숙 사 친구에게 이런 이야기를 하니까 친구는 [[3|자원봉사]]에 대해서 이야기해 주었다.\n\n“서울시 [[4|자원봉사센터]]에는 외국인 자원봉사 프로그램이 많아. 나는 요즘 주민 센터 [[5|도서관]]에서 책을 대출해 주는 일을 하고 있어.\"\n\n나는 “아직 [[6|한국말]]을 잘 못하는데 할 수 있을까?\" 하고 걱정이 됐지만 인터넷에서 자 원봉사에 대한 자료를 찾아봤다. [[7|노인]]들에게 점심을 나누어 드리는 일도 있고 아이들에 게 [[8|영어]]를 가르치는 일도 있었다. 또 자원봉사센터에는 도와주는 분들이 많았다. 어려 운 사람들을 도와주려고 시작하는 것이지만 사실 내가 배우는 것이 더 많고 서로 나 누는 기쁨도 클 것 같았다.\n\n나는 일주일에 한 번 [[9|양로원]]에 계신 할머니와 할아버지를 찾아가서 이야기를 해 드 리는 일부터 해 보려고 한다. 내가 외국인이기는 하지만 어려운 노인들과 한 [[10|가족]] 같이 지냈으면 좋겠다.\n\n우리나라에서도 자원봉사를 해 본 적이 없는 내가 한국에서 그런 일을 할 수 있을지 모르겠다. 그래도 내일은 서울시 자원봉사센터에 한번 가 보려고 한다.",
   },
@@ -646,14 +646,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 25,
     lessonLabel: "Bài 25",
     title: "미영 씨와의 전화",
-    cd: "49",
+    cd: "25",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-25.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-25.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-25.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-49.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-49.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-49.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-25.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-25.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-25.wav", type: "audio/wav" },
     ],
     clozeText: "지난주에 한국 [[1|친구]]가 나에게 [[2|미영]] 씨를 소개해 줬다. 나는 모르는 [[3|여자]]를 만나는 것이 겁이 났다. 미영 씨를 처음 만났을 때 너무 떨리고 [[4|한국말]]도 생각이 안 나서 [[5|실수]] 를 많이 했다. 그런데 미영 씨와 헤어진 후에 나는 자꾸 미영 씨가 생각났다. 미영 씨 를 다시 만나고 싶었지만 어떻게 [[6|연락]]을 해야 할지, 무슨 말을 어떻게 해야 할지 몰라 서 오늘도 한참 생각했다.\n\n지금 [[7|전화]]를 할까? 저녁에 [[8|문자]]를 보낼까?'\n\n금요일에 만날까? 아니면 토요일에 만날까?\"\n\n'영화를 보자고 할까? 아니, [[9|오페라]]를 보자고 할까?\"\n\n“따르릉\" 갑자기 전화가 왔다.\n\n\"여보세요?\"\n\n“여보세요? 피터 씨, 저 김미영인데요.\"\n\n“아! 미영 씨, 우리 영화 보러 갈래요?”\n\n나는 깜짝 놀라서 인사도 안 하고 영화를 보러 가자고 했다. 전화기에서 미영 씨의 웃 는 소리가 들렸다. 미영 씨의 [[10|목소리]]는 정말 부드러웠다. 나는 부끄러웠지만 행복했다.",
   },
@@ -662,14 +662,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 26,
     lessonLabel: "Bài 26",
     title: "전화 예약",
-    cd: "51",
+    cd: "26",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-26.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-26.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-26.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-51.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-51.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-51.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-26.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-26.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-26.wav", type: "audio/wav" },
     ],
     clozeText: "오랜만에 [[1|유코]]에게서 전화가 왔다. 유코는 이번 [[2|방학]]에 한국에 오겠다고 했다. 유코 가 나에게 [[3|한국말]]이 많이 늘었냐고 해서 나는 물론이라고 했다.\n\n유코가 같이 여행할 수 있냐고 해서 나는 유코에게 [[4|제주도]]에 가자고 했다. 그리고 비 행기 표 예매와 [[5|호텔]] [[6|예약]]은 내가 한국에서 하겠다고 했다. 나는 [[7|여행사]]에 전화를 하 기 전에 학교에서 배운 여러 가지 표현을 연습했다.\n\n나는 여행사에 전화를 걸어서 먼저 제주도행 [[8|비행기]] 표가 얼마냐고 물어봤다. 그러니 까 여행사 직원이 나에게 일본 사람이냐고 했다. 그 사람은 내가 일본 사람인지 어떻게 알았을까? 내 [[9|발음]]이 이상한가? 발음 연습을 더 열심히 해야겠다. 나는 전화로 이야기 하니까 무슨 말인지 이해하기가 어려웠다. 여행사 직원이 뭐라고 물었는데 나는 잘 몰 라서 답답했다. 전화로 예약하는 것이 힘들어서 여행사에 직접 가겠다고 했다. 내가 여 행사가 어디에 있냐고 물으니까 [[10|신촌]]에 있다고 하는 것 같았다. 나는 시청' 인지, 신촌 인지 다시 한 번 물어봤다.\n\n사람들과 한국말로 이야기할 때 어렵지 않았기 때문에 나는 전화로 예약하는 것도 자신이 있었다. 그런데 전화로 통화하는 것은 직접 만나서 이야기하는 것보다 어려웠\n\n. 유코가 오기 전에 한국말 연습을 많이 해야겠다.",
   },
@@ -678,14 +678,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 27,
     lessonLabel: "Bài 27",
     title: "부모님과의 화상 통화",
-    cd: "53",
+    cd: "27",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-27.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-27.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-27.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-53.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-53.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-53.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-27.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-27.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-27.wav", type: "audio/wav" },
     ],
     clozeText: "저는 한국에 온 지 한 달쯤 됐습니다. [[1|유학]] [[2|생활]]이 재미있기는 하지만 가끔 외로울 때가 있습니다.\n\n저는 외로울 때마다 [[3|인터넷]]으로 [[4|부모님]]과 [[5|화상]] [[6|통화]]를 합니다. 인터넷 화상 통화는 소리도 잘 들리고 화면도 커서 아주 좋습니다. 한국 생활이 힘들거나 부모님이 보고 싶을 때 화상 통화를 하면 기분이 좋아집니다. 화상 통화를 할 때는 부모님이 바로 옆 에 계시는 것 같습니다. 부모님은 제 한국 생활에 대해서 많이 알고 싶어하십니다 항 상 저에게 어떻게 지내냐고 하시고 필요한 것은 없냐고 물어보십니다. 그리고 늘 열심 히 공부하라고 하십니다.\n\n얼마 전에 저는 몸이 많이 아팠습니다. [[7|어머니]]께서 제 모습을 보고 걱정하실 것 같아 서 화장을 하고 통화를 했는데 어머니 얼굴을 보니까 갑자기 [[8|눈물]]이 났습니다. 어머니 가 저를 보고 왜 우냐고 하셔서 저는 너무 반가워서 운다고 했습니다. 울고 있는 저를 보고 어머니도 같이 우셨습니다. 저는 그때 이번 [[9|방학]]에 고향에 갈 거라고 했습니다 제가 고향에 가면 어머니는 맛있는 [[10|음식]]을 많이 만들어 주겠다고 하셨습니다. 빨리 방 학이 돼서 부모님을 만났으면 좋겠습니다.",
   },
@@ -694,14 +694,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 28,
     lessonLabel: "Bài 28",
     title: "단짝 친구",
-    cd: "55",
+    cd: "28",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-28.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-28.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-28.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-55.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-55.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-55.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-28.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-28.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-28.wav", type: "audio/wav" },
     ],
     clozeText: "저와 [[1|지민]]이는 [[2|단짝]] [[3|친구]]입니다. 지민이는 [[4|아침]]에 눈을 뜨면 저부터 찾습니다. 저는 지민이와 같이 자는데 가끔은 제가 아침에 [[5|노래]]를 불러서 지민이를 깨워 줍니다.\n\n지민이는 어디에 가든지 저를 데리고 갑니다. 가끔 깜박 잊어버리고 저를 안 데리 고 가면 우리는 둘 다 하루 종일 불안해합니다. 우리는 언제나 [[6|손]]을 잡고 다닙니다. 지민이는 [[7|이야기]]하는 것을 좋아해서 저에게 언제나 이야기를 많이 합니다. 그리고 저 는 이야기를 듣는 것을 좋아해서 우리는 아주 잘 맞습니다.\n\n그런데 지민이는 저보다 머리가 좀 나빠서 똑같은 것을 자꾸 물어 봅니다. 윤아의 [[8|전화번호]]가 몇 번이냐고 묻고, 어제 배운 단어 '저울 이 무슨 뜻이냐고 묻고, 볼펜 5 개에 1.200원이면 한 개에 얼마냐고 묻습니다. 제가 친절하게 다 가르쳐 주니까 지민 이는 생각을 더 안 하는 것 같습니다.\n\n이렇게 생각하기를 싫어하는 지민이도 제 생각을 정말 많이 해 줍니 다. 지난주에 날씨가 좀 추워져서 지민이가 선물로 예쁜 [[9|스웨터]]와 목 도리를 사 주었습니다. 그래서 저도 다음 지민이 [[10|생일]]에 불러주려고 최신 노래를 열심히 연습하고 있습니다.\n\n여러분, 저와 지민이가 부럽죠? *%^^*",
   },
@@ -710,14 +710,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 29,
     lessonLabel: "Bài 29",
     title: "국제진료센터",
-    cd: "57",
+    cd: "29",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-29.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-29.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-29.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-57.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-57.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-57.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-29.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-29.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-29.wav", type: "audio/wav" },
     ],
     clozeText: "나는 지금까지 심하게 아픈 적도 없고 [[1|병원]]에 간 적도 별로 없다.\n\n그런데 지난 [[2|수요일]]에 학교에서 갑자기 [[3|배]]가 아프기 시작했다. 그래서 [[4|수업]]이 끝나고 [[5|기숙사]]에 돌아와서 쉬었다. 저녁 때가 되니까 배가 더 아프고 설사도 여러 번 했다. 기 숙사 [[6|방친구]]가 어디가 아프냐고 해서 증상을 말하니까 약을 사 가지고 왔다. 그 약을 먹었지만 별로 낫지 않아서 밤에는 잠도 잘 못 잤다.\n\n다음 날 아침에 방친구가 병원에 같이 가자고 했다. 나는 [[7|한국말]]도 잘 못하고 어디에 가서 어떻게 해야 하는지 몰랐는데 정말 고마웠다. 방친구는 한국에 온 지 일 년이 지 나서 한국생활에 아주 익숙하다. 우리는 세브란스병원의 [[8|국제진료센터]]로 갔다. 거기는 모든 서류가 영어로 되어 있고 선생님도 영어로 설명해 주셔서 참 편했다. 선생님은 뭐 잘못 먹은 것은 없었냐, 최근에 뭘 먹었냐 등 몇 가지 질문을 한 후에 [[9|검사]]를 하자고 하셨다\n\n1시간쯤 후에 결과가 나왔는데 [[10|장염]]이라고 하셨다. 주사를 맞고 약국에 가서 3일분 의 약을 받아 가지고 왔다. 약을 먹고 2~3일 쉬니까 좀 괜찮아졌다. 큰 병은 아니지만\n\n아프니까 가족들 생각이 많이 났다. 빨리 나아서 맛있는 음식을 먹었으면 좋겠다.",
   },
@@ -726,14 +726,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 30,
     lessonLabel: "Bài 30",
     title: "한의원에서의 신기한 경험",
-    cd: "59",
+    cd: "30",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-30.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-30.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-30.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-59.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-59.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-59.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-30.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-30.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-30.wav", type: "audio/wav" },
     ],
     clozeText: "나는 오늘 친구들과 [[1|농구]]를 하다가 넘어졌다. 너무 아파서 걷기도 힘들었다.\n\n친구는 그렇게 아플 때는 [[2|한의원]]에 가서 [[3|침]]을 맞는 게 좋다고 했다. 나는 침이라는 말을 처음 들어서 친구에게 침이 뭐냐고 물어 봤다. 친구는 침은 [[4|바늘]] 같이 생긴 것인 데 침을 맞으면 빨리 나을 수 있다고 했다. 작년에 [[5|스키장]]에서 스키를 타다가 넘어졌을 때 한의원에 가서 침을 맞고 나았다고 했다. 친구는 학교 근처에 있는 유명한 한의원에 같이 가 보지 않겠냐고 했다.\n\n나는 친구와 같이 한의원에 갔다. 한의사 [[6|선생님]]은 이것저것 물어 보시고 [[7|발목]]을 만 져 보셨다. 한의사 선생님은 나에게 발목을 많이 삐었으니까 침을 맞아야 한다고 하셨 다. 그리고 발목이 많이 부었으니까 [[8|찜질]]을 하라고 하셨다. 내가 [[9|약]]은 안 먹어도 되냐 고 물어보니까 약은 안 먹어도 되고 침만 몇 번 더 맞으면 된다고 하셨다. 그리고 며칠 동안은 많이 걷지 말고 쉬라고 하셨다.\n\n나는 침을 맞기 전에 [[10|긴장]]을 많이 했는데 다행히 침을 맞을 때 별로 아프지 않았다. 30분쯤 지나니까 좀 좋아지는 것 같았다. 아주 신기했다.",
   },
@@ -742,14 +742,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 31,
     lessonLabel: "Bài 31",
     title: "쉽게 할 수 있는 스트레칭",
-    cd: "61",
+    cd: "31",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-31.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-31.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-31.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-61.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-61.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-61.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-31.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-31.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-31.wav", type: "audio/wav" },
     ],
     clozeText: "공부하다가 힘들 때 [[1|건강]]을 위한 [[2|스트레칭]]을 해 보면 어떨까요? 다음은 여러분이 [[3|의자]]에 앉아서 할 수 있는 스트레칭입니다. 가벼운 기분으로 따라해 보세요.\n\n때왼손으로 [[4|머리]] 오른쪽을 잡습니다. 머리를 왼쪽으로 당기세요. [[5|오른손]]은 아래로 쪽 뻔어 의 자를 잡습니다. 마음 속으로 열까지 셉니다. 이 [[6|동작]]을 세 번 반복합니다. 반대쪽도 같은 동 작을 세 번 합니다.\n\n떤의자에 똑바로 앉습니다. 오른쪽 다리를 굽혀서 [[7|발목]]을 왼쪽 다리 위에 올려 놓습니다. 오른 쪽 발목으로 천천히 동그라미 그리기를 열 번 반복합니다. 반대쪽도 같은 동작을 열 번 반 복합니다.\n\n두 손을 빨리 비벼서 따뜻해지게 합니다. 두 손을 양쪽 눈에 대고 [[8|손끝]]으로 천천히 눌러 줍 니다. 오랜 시간 동안 책을 본 후에 눈이 피곤해졌을 때 이렇게 하면 좋습니다.\n\n0허리를 펴고 똑바로 앉습니다. 두 손을 잡고 팔을 앞쪽으로 쪽 뻔습니다. 이때 손바닥이 밖 으로 향하게 합니다. 마음 속으로 열까지 센 후에 팔을 내립니다. 다시 두 팔을 위로 뻔고\n\n열을 셉니다. [[9|손목]]을 천천히 동그라미를 그리는 것처럼 열 번 돌립니다.\n\n오랜 시간 앉아서 공부하기가 얼마나 힘듭니까? 쉬는 시간에 이 스트레칭을 하면 건강도 지키고 [[10|성적]]도 올릴 수 있을 것입니다.",
   },
@@ -758,14 +758,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 32,
     lessonLabel: "Bài 32",
     title: "건강 보험",
-    cd: "63",
+    cd: "32",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-32.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-32.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-32.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-63.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-63.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-63.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-32.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-32.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-32.wav", type: "audio/wav" },
     ],
     clozeText: "는 [[1|감기]]에 걸려서 그저께부터 [[2|열]]이 나는 데다가 [[3|머리]]도 아팠다. 유미 씨도 [[4|기침]]이 심해서 우리는 같이 [[5|병원]]에 갔다. 우리는 먼저 체온을 재고 기다리다가 진료를 받았다.\n\n는 [[6|진료비]]가 생각보다 많이 나와서 깜짝 놀랐다. 유미 씨에게 진료비가 너무 비싸 지 않냐고 했다. 유미 씨는 진료비가 비싸기는 하지만 여행자 [[7|보험]]에 들어서 괜찮다고 했다.\n\n“여행자 보험요?”\n\n나는 여행자 보험에 대해서 아는 것이 없었는데 유미 씨가 잘 설명해 줬다. 여행자 보 험에 들면 진료를 받은 후에 [[8|영수증]]을 가지고 보험 회사에 가서 진료비를 돌려받을 수 있다고 한다. 한국에도 보험 회사가 많다고 하니까 한번 알아 봐야겠다.\n\n우리의 이야기를 듣고 간호사는 나에게 건강 보험에 대해서 가르쳐줬다. 나는 건강 보험 이야기도 처음 들었다. 한국에 사는 외국인들도 외국인등록증을 가지고 건강보 험공단에 가면 [[9|국민건강보험]]에 들 수 있다고 한다. 그리고 유학생이면 [[10|보험료]]가 비싸지 않다고 했다.\n\n나는 비싼 진료비를 생각하니까 머리가 더 아픈 것 같았다. 싸게 진료를 받는 방법을 모르고 돈을 많이 내서 아까웠다. 어떤 보험이 좋은지 알아봐야겠다.",
   },
@@ -774,14 +774,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 33,
     lessonLabel: "Bài 33",
     title: "혼자 떠나는 여행",
-    cd: "65",
+    cd: "33",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-33.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-33.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-33.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-65.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-65.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-65.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-33.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-33.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-33.wav", type: "audio/wav" },
     ],
     clozeText: "저는 [[1|방학]] 때 한국의 여러 곳을 구경하고 학교에서 배운 [[2|한국말]]을 연습하기 위해 서 한국에서 2주일 동안 [[3|여행]]을 한 적이 있어요. 혼자 자유롭게 여행을 하고 싶어서 계획을 세우지 않고 [[4|여행책자]]만 사 가지고 여행을 떠났어요.\n\n한국에서 혼자 하는 여행이어서 긴장이 됐는데 [[5|여행지]] 사람들은 모두 친절했어요. 사람들은 내 서투른 한국말을 잘 들어주고 길도 잘 가르쳐 줬어요.\n\n저는 거의 날마다 [[6|찜질방]]에서 잤어요. 찜질방은 값도 싸고 쉽게 찾을 수 있어서 편 리했어요. [[7|일본]]에도 한국 같은 찜질방이 있었으면 좋겠어요.\n\n저는 가끔 돈을 아끼려고 지나가는 차를 얻어 타기도 했어요. 어느 날 저는 차를 얻어 타려고 한 30분 정도 기다리고 있었는데 어떤 [[8|트럭]] 아저씨가 지나가다가 차를 세우고 그 트럭을 타라고 하셨어요. 그 아저씨는 음료수도 주시고 내가 가고 싶은 곳 까지 데려다 주셨어요.\n\n또 하나 기억이 나는 일은 [[9|동해]]에 갔을 때 어떤 학생을 만난 일이에요. 그 한국 대학생은 군대에 가기 전에 혼자 여행을 하고 싶어서 부산에서 왔다고 했어요. 우리 는 동해 바닷가에 앉아서 파도 소리도 듣고 같이 술도 마셨어요. 일본과 한국의 다 른 점에 대한 이야기도 하고 우리의 [[10|미래]]에 대한 이야기도 했어요. 지금 그 학생은 무엇을 하고 있을까? 가끔 생각이 나요.\n\n한국말이 서툴러서 고생하기는 했지만 한국의 여러 곳에서 많은 것을 직접 배울 수 있는 좋은 시간이었어요.\n\n※ 일본 학생의 글",
   },
@@ -790,14 +790,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 34,
     lessonLabel: "Bài 34",
     title: "꿈 같은 세계 여행",
-    cd: "67",
+    cd: "34",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-34.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-34.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-34.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-67.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-67.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-67.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-34.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-34.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-34.wav", type: "audio/wav" },
     ],
     clozeText: "저는 어렸을 때부터 [[1|해외여행]]을 많이 했습니다. 저희 [[2|아버지]]께서는 사업을 하셨는데 외국으로 출장을 가시는 일이 많았습니다. 그래서 가끔 저도 아버지를 따라서 [[3|세계]] 여 러 나라로 여행을 갈 기회가 있었습니다\n\n제가 아버지를 따라서 처음 갔던 곳은 [[4|두바이]]였습니다. 두바이는 아랍에미리트의 도 시인데 크고 아름다운 [[5|건물]]이 많았습니다. 그곳은 날씨가 너무 더워서 다니기가 힘들 었지만 모든 건물 안은 시원했고 호텔 방에는 [[6|수영장]]도 있었습니다.\n\n또 저는 10살 때 [[7|미국]]으로 여행을 갔습니다. 그 때 마이클 잭슨의 [[8|콘서트]]가 있었는데 저는 그 콘서트에서 제 티셔츠에 마이클 잭슨의 사인을 받았습니다. 그 옷은 제 보물 1 호입니다. 미국에서 한 달쯤 있었는데 마지막 주에 [[9|교통사고]]가 나서 저는 3일 동안 병원 에 입원해 있었습니다. 그 때 저를 치료해 주신 스미스 선생님과 요즘도 연락합니다.\n\n대학교 1학년 때 갔던 [[10|브라질]]도 기억에 남습니다. 저는 아마존 강에서 며칠 동안 보트를 탔습니다. 강에서는 언제 무슨 일이 생길 지 몰라서 저는 좀 무서웠지만 그곳 사람들은 전혀 걱정을 하지 않아서 놀랐습니다. 아마존에서 본 나무와 신기한 동물들도 잊을 수 없습니다.\n\n가족들과 같이 자동차 여행을 했던 스페인, 모래에서 스노보드를 탔던 페루, 다른 문화를 볼 수 있었던 인도 등 여러 나라에서 정말 많은 것을 배우고 느꼈습니다\n\n※ 학생이 발표한 이야기를 글로 엮은 것",
   },
@@ -806,14 +806,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 35,
     lessonLabel: "Bài 35",
     title: "여행 계획",
-    cd: "69",
+    cd: "35",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-35.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-35.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-35.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-69.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-69.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-69.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-35.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-35.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-35.wav", type: "audio/wav" },
     ],
     clozeText: "이제 곧 신나는 [[1|방학]]입니다. 이번 방학에는 무엇을 하겠습니까? 여러분이 꿈꾸던 여 행을 떠나지 않겠습니까?\n\n자, 그럼 지금부터 [[2|여행]] [[3|계획]]을 세워 봅시다. 즐거운 여행을 하기 위해서 여행 계획만 큼 중요한 것은 없습니다. 여행 계획을 세우기 위해서 무엇을 해야 할까요? 우선 여행 을 가서 무엇을 하고 싶은지 정해야 합니다. [[4|관광]], [[5|휴식]], [[6|문화]] 학습, 새로운 체험 등 여 행의 목적이 무엇인지 먼저 생각해야겠지요. 다음으로 정해진 [[7|경비]]에 맞춰서 [[8|여행지]], 여행 기간, 교통편, 숙박 시설을 알아봅니다.\n\n여행지를 결정하면 다음으로 그곳에 대한 정보를 찾아봅니다. 가려고 하는 곳의 날씨, 음식, 물가, 볼거리 등에 대해서 알아봅니다. 여행 안내서나 [[9|인터넷]]에서 찾은 정보, 또는 주변 사람들에게서 들은 여행지 정보를 가지고 일정을 짜세요. 정확한 정보를 가지고 일정을 잘 짜서 떠나면 경비도 아낄 수 있고 더 즐거운 시간도 보내게 될 것입니다.\n\n일정이 정해지면 교통편, 숙박 시설을 예약하고 필요한 경우에 [[10|여권]]과 비자도 준비하 세요. 마지막으로 짐을 쌉니다. 여행지의 날씨에 맞는 옷과 세면 도구, 두통약이나 소화 제 등 필요한 약을 준비하세요.\n\n드디어 수업이 끝나는 날, 친구들과 인사를 한 후에 기다리고 기다리던 여행을 떠나 세요!",
   },
@@ -822,14 +822,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 36,
     lessonLabel: "Bài 36",
     title: "추천하고 싶은 여행지",
-    cd: "71",
+    cd: "36",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-36.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-36.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-36.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-71.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-71.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-71.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-36.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-36.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-36.wav", type: "audio/wav" },
     ],
     clozeText: "한국에서 [[1|여행]]을 해 봤습니까? \"한국 하면 어디가 생각납니까? [[2|제주도]], [[3|설악산]], [[4|경주]] 에 대해서 잘 알고 있을 겁니다. [[5|자연]]의 아름다움, 특히 나무와 숲을 좋아하는 사람에 게 저는 [[6|보성]]의 [[7|녹차]] 밭과 담양의 [[8|대나무]] 숲을 추천하고 싶습니다.\n\n보성의 녹차 밭은 경치가 아름다워서 영화와 드라마를 많이 찍은 곳입니다. 넓은 차 밭의 초록빛이 얼마나 아름다운지 모릅니다. 해마다 5월에 차축제가 열리는데 그때는 찻잎 따기, 차 만들기, 다도 배우기 [[9|행사]]가 있습니다. 보성은 녹차 삼겹살이 유명하고 근처에 해수욕장이 있어서 바다도 같이 즐길 수 있습니다.\n\n담양은 조용히 대나무 숲을 산책하려고 하는 사람들에게 좋은 곳입니다. 시원한 바 람 소리도 들고 대나무 숲길도 걸으면 기분이 좋아질 겁니다. 그리고 대나무 숲에서 나\n\n는 깨끗한 공기를 마시고 명상하면 머리도 맑아지고 스트레스도 풀릴 겁니다.\n\n한 번에 두 곳을 다 가 보고 싶으면 여행사 단체 관광 상품을 이용하는 게 좋습니 다. 용산역에서 [[10|KTX]]를 타면 정읍역까지 3시간 30분쯤 걸립니다. 거기에서 여행사 버스 를 타고 두 곳을 구경하면 시간도 아낄 수 있고 여행 경비도 많이 들지 않습니다. 하루 에 갔다가 올 수 있으니까 주말에 한번 가 보세요.",
   },
@@ -838,14 +838,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 37,
     lessonLabel: "Bài 37",
     title: "방 청소",
-    cd: "73",
+    cd: "37",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-37.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-37.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-37.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-73.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-73.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-73.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-37.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-37.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-37.wav", type: "audio/wav" },
     ],
     clozeText: "저는 혼자 [[1|자취]]를 하는 남학생입니다. 자취 [[2|생활]]은 자유롭기는 하지만 집이 항 상 지저분한 것이 문제예요. 그렇지만 게으른 저는 [[3|청소]]하는 것을 싫어합니다. 집 에 들어오면 아무 것도 하고 싶지 않습니다. 학교에서 돌아오면 피곤해서 [[4|침대]]에 누워 있고 싶습니다. 청소를 할까 하다가 더러운 방을 보면 무엇을 어떻게 치워야 할지 모르겠어요. 방이 더러우면 더러울수록 더 청소를 하기 싫어져요. 좀 쉽게 청소하는 방법이 있으면 가르쳐 주세요.\n\n집에 들어가면 우선 [[5|창문]]을 활짝 열어 보세요. 그럼 깨끗하게 청소하고 싶은 기분이 들 거예요. 먼저 바닥에 놓여 있는 큰 [[6|물건]]부터 치우세요. 방이 좀 깨끗 해 보일 거예요. 다음으로 필요가 없는 것은 모두 버리세요. 아끼는 물건이어도 1 년 동안 한 번도 쓴 적이 없으면 버리는 것이 좋아요. 그리고 이제부터 5분 청소 를 시작하세요. 한 가지 일이 끝나면 5분 동안 꼭 청소를 하는 거예요. 예를 들 어 [[7|숙제]]를 한 후에는 5분만 [[8|책상]] 위를 치우세요. 보던 책을 바로 책꽂이에 꽂으 면 깨끗해질 거예요. 피자를 먹은 후에는 바로 상을 치우고 [[9|쓰레기]]를 버리세요. 집에 돌아와서 침대에 눕기 전에 옷을 갈아입고 벗은 옷을 [[10|옷장]] 안에 잘 넣으세 요. 5분이면 다 할 수 있어요. 이렇게 일주일 동안 5분만 청소를 계속 해 보세요.\n\n일주일 후에는 마법같이 깨끗해져 있을 거예요.",
   },
@@ -854,14 +854,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 38,
     lessonLabel: "Bài 38",
     title: "이사하는 날",
-    cd: "75",
+    cd: "38",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-38.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-38.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-38.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-75.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-75.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-75.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-38.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-38.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-38.wav", type: "audio/wav" },
     ],
     clozeText: "저는 한국에 온 지 6개월 됐어요. 제가 한국에 처음 왔을 때 살았던 방은 깨끗하고 처음에는 방 값도 싸서 마음에 들었어요. 그런데 옆 방 사람이 너무 시끄럽고 방 값도 올라서 저는 한 달 전부터 [[1|이사]]해야겠다고 생각했어요.\n\n제가 [[2|기숙사]]에서 살지 [[3|하숙집]]에서 살지 결정을 못하고 있는데 친한 [[4|친구]]가 학교 근 처에 있는 하숙집을 소개해 줬어요. 그 하숙집에 가 보니까 [[5|햇빛]]이 잘 들어서 방이 밝 고 조용했어요. 그리고 [[6|교통편]]도 좋은 데다가 하숙비도 싸서 저는 거기에서 살기로 했 어요.\n\n[[7|이삿짐센터]]를 이용하면 편하게 이사할 수 있지만 저는 짐이 많지 않아서 친구들에게 도와 달라고 부탁했어요. 친구들은 이삿날 아침 일찍 와서 짐 싸는 것과 옮기는 것을 도와줬어요. 친구들과 같이 일을 하니까 별로 힘들지 않고 재미있었어요. 우리는 콜택 시로 짐을 옮겼어요. 새 하숙집까지 [[8|택시]]로 15분밖에 걸리지 않았어요.\n\n우리는 짐을 정리한 후 [[9|중국집]]에서 [[10|자장면]]과 탕수육을 배달시켜서 먹었어요. 일을 하고 먹어서 그런지 정말 맛있었어요. 하숙집 아주머니가 써 주신 수박도 아주 맛있 었어요. 이사하기 전에 걱정을 많이 했는데 친구들이 도와줘서 이사가 무사히 잘 끝났 어요. 제가 어렵고 힘들 때마다 저를 도와주는 친구들이 정말 고마워요. 저는 한국에\n\n서 사는 동안 친구들과 좋은 추억을 많이 쌓고 싶어요,",
   },
@@ -870,14 +870,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 39,
     lessonLabel: "Bài 39",
     title: "로봇과 생활",
-    cd: "77",
+    cd: "39",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-39.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-39.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-39.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-77.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-77.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-77.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-39.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-39.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-39.wav", type: "audio/wav" },
     ],
     clozeText: "[[1|할머니]]께서는 가끔 우리 집에 오시는데 오시면 늘 같은 이야기를 하신다. 세상 참 좋 아졌다고. 할머니께서 어렸을 때는 [[2|수도]]나 [[3|전기]] 같은 것이 없어서 직접 불을 피워서 밥 을 하고 강에 가서 손으로 [[4|빨래]]를 했다고 한다. 그래서 할머니는 하루 종일 [[5|집안일]]을 하셨다고 하는데 나는 그런 할머니의 생활을 상상도 할 수 없다.\n\n내가 어렸을 때는 [[6|세탁기]]나 [[7|청소기]] 같은 여러 가지 가전제품이 있어서 편하기는 했지 만 사람이 하나하나 직접 작동해야 했다.\n\n그런데 요즘은 모든 기능을 가진 가사 [[8|로봇]]이 집안일을 다 알아서 해 준다. 여러 가 지 [[9|센서]]를 가진 이 로봇은 청소를 하면서 집안의 공기도 깨끗하게 해 준다. 그리고 옷 장을 열고 레이저로 물도 없이 더러운 옷을 깨끗하게 세탁한다. 이 로봇은 내 기분이 나 건강 상태를 보고 내가 먹고 싶은 음식을 광센서로 10분 만에 요리해 준다. 그리고 내가 음식을 다 먹으면 그릇도 나노센서로 닦는다.\n\n몇 주 전에는 새로 나온 마사지 프로그램을 사서 넣었는데 어깨, 팔, 다리도 아주 잘 주무른다. 다림질 프로그램도 추가해 보니까 세탁소 아저씨보다 다림질도 더 잘 한다. 내가 원하는 것을 알아서 해 주는 로봇이 있으니까 귀찮은 집안일을 아무 문제없이 다 할 수 있다\n\n사람들은 이 로봇 때문에 요즘은 혼자 사는 것이 편해졌다고 한다. 나는 다른 사람 들과 있는 것보다 이 로봇과 있는 것이 훨씬 더 좋다. 다음 달에는 [[10|생활비]]를 아껴서 새 로 나온 프로그램을 더 사야겠다.",
   },
@@ -886,14 +886,14 @@ const yonseiListeningLessons: YonseiListeningLesson[] = [
     lessonNumber: 40,
     lessonLabel: "Bài 40",
     title: "다양한 집안일 도우미",
-    cd: "79",
+    cd: "40",
     audioSources: [
       { src: "/yonsei-listening-2/lesson-40.mp3", type: "audio/mpeg" },
       { src: "/yonsei-listening-2/lesson-40.m4a", type: "audio/mp4" },
       { src: "/yonsei-listening-2/lesson-40.wav", type: "audio/wav" },
-      { src: "/yonsei-listening-2/cd-79.mp3", type: "audio/mpeg" },
-      { src: "/yonsei-listening-2/cd-79.m4a", type: "audio/mp4" },
-      { src: "/yonsei-listening-2/cd-79.wav", type: "audio/wav" },
+      { src: "/yonsei-listening-2/cd-40.mp3", type: "audio/mpeg" },
+      { src: "/yonsei-listening-2/cd-40.m4a", type: "audio/mp4" },
+      { src: "/yonsei-listening-2/cd-40.wav", type: "audio/wav" },
     ],
     clozeText: "지난주에 친한 한국 [[1|친구]]가 [[2|아기]]를 낳아서 친구들과 아기 옷을 사 가지고 친구 집에 놀 러 갔습니다.\n\n아기를 낳은 친구는 얼굴도 좀 붓고 힘들어 보였습니다. 한국에서는 아기를 낳으면 1주 일 정도는 [[3|목욕]]도 하지 않고 [[4|집안일]]도 잘 하지 않는다고 합니다. 친구 집에는 친구의 어머 니같이 보이는 분이 아기를 돌보고 계셨습니다.\n\n“[[5|어머니]]이셔?\"\n\n“아니야, [[6|산후]] [[7|도우미]]이셔. 예전에는 어머니들이 산후에 산모와 아기를 도와주셨는데 요 즘은 전문적으로 이런 일을 해 주시는 분들이 많아. 어머니가 도와주시면 제일 좋겠지만 우리 어머니도 요즘 건강이 안 좋으셔서 산후 도우미를 불렀어.\"\n\n내가 우리나라에는 이런 직업이 없다고 하니까 친구들이 한국에 있는 여러 종류의 도 우미에 대해서 이야기해 주었습니다.\n\n“우리 집에도 일주일에 두 번 집안일을 도와주는 [[8|가사]] 도우미가 와. 부부가 다 일을 하 는 집에서는 바쁜 엄마와 아빠를 위해서 아이를 돌보는 [[9|육아]] 도우미도 많이 쓴다고 해.\"\n\n“맞아. 아픈 사람을 돌보는 [[10|간병인]]도 있지. 요즘은 장을 봐 주는 쇼퍼도 있어\"\n\n“나도 전에 아팠을 때 약을 사러 가기가 힘들어서 심부름 도우미를 부른 적이 있어. 그 도 우미는 전등 바꾸기 같은 여자들이 하기 어려운 일도 도와준다고 했어. 아, 그리고 우리 아파트 윗집에 사는 사람은 바쁠 때 애완동물을 산책시켜 주는 애완동물 산책 도우미를 불러.”\n\n한국에 참 여러 종류의 도우미가 있다는 것을 알게 되었습니다. 우리나라에도 이런 도\n\n도우미가 있었으면 좋겠습니다.",
   },
@@ -3846,7 +3846,7 @@ function App() {
     setYonseiChecked(true);
     setYonseiSubmissionReport(submission);
     setYonseiSubmitMessage(
-      `Đã nộp bài nghe Yonsei 2. Điểm điền từ: ${submission.score}/${submission.total} (${submission.percentage}%). Bài đã được lưu vào bảng kiểm tra trên trình duyệt này.`
+      `Đã nộp bài nghe Yonsei 2. Điểm điền từ: ${submission.score}/${submission.total} (${submission.percentage}%). Bài đã được lưu vào bảng kiểm tra trên trình duyệt này, không gửi Google Script.`
     );
   };
 
@@ -4162,7 +4162,7 @@ function App() {
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/45">Teacher dashboard</p>
             <h3 className="mt-2 text-4xl font-semibold text-white">Bảng kiểm tra giáo viên</h3>
             <p className="mt-4 text-base leading-relaxed text-white/65">
-              Nhập mã giáo viên để xem thống kê bài nộp, điểm, câu sai và bản dịch. Dữ liệu ở đây được lưu trên trình duyệt hiện tại.
+              Nhập mã giáo viên để xem thống kê bài nộp, điểm, câu sai và bản dịch. Dữ liệu ở đây được lưu trên trình duyệt hiện tại, không gửi Google Script.
             </p>
             <p className="mt-3 rounded-2xl border border-amber-300/20 bg-amber-300/10 p-4 text-sm leading-relaxed text-amber-50">
               Nếu học sinh làm trên máy riêng, giáo viên sẽ không tự thấy bài trong bảng này. Khi đó học sinh cần bấm <span className="font-semibold">Gửi email</span>, <span className="font-semibold">Copy báo cáo</span> hoặc <span className="font-semibold">Tải báo cáo .txt</span> sau khi nộp.
@@ -4410,11 +4410,11 @@ function App() {
             </button>
 
             <div className="mt-6 rounded-3xl border border-white/15 bg-black/35 p-5 text-sm leading-relaxed text-white/65">
-              <p className="font-semibold text-white">File nghe đã tải xong</p>
+              <p className="font-semibold text-white">File nghe cần upload</p>
               <p className="mt-2">
-                File nghe đã upload thành công: <span className="font-semibold text-white">public/yonsei-listening-2/lesson-{String(currentYonseiLesson.lessonNumber).padStart(2, "0")}.mp3</span>
+                Ưu tiên: <span className="font-semibold text-white">public/yonsei-listening-2/lesson-{String(currentYonseiLesson.lessonNumber).padStart(2, "0")}.mp3</span>
               </p>
-              <p className="mt-2">Hãy kiểm tra âm thanh/chất lượng bản ghi âm: cd-{currentYonseiLesson.cd}.mp3.</p>
+              <p className="mt-2">Cũng hỗ trợ .m4a, .wav hoặc tên theo CD: cd-{currentYonseiLesson.cd}.mp3.</p>
             </div>
 
             <button
@@ -4516,7 +4516,7 @@ function App() {
                 </div>
               </div>
 
-              <div className="flex min-h-0 flex-col rounded-[32px] border border-white/15 bg-black/35 p-5">
+              <div className="flex min-h-0 flex-col overflow-y-auto rounded-[32px] border border-white/15 bg-black/35 p-5">
                 <div>
                   <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/45">Translation</p>
                   <h4 className="mt-1 text-2xl font-semibold text-white">Dịch toàn bộ bài sang tiếng Việt</h4>
@@ -4562,39 +4562,39 @@ function App() {
                     </button>
                   </div>
 
-                  {yonseiSubmitMessage && (
-                    <p className="mt-4 rounded-2xl bg-white/[0.08] p-4 text-sm leading-relaxed text-white">
-                      {yonseiSubmitMessage}
-                    </p>
-                  )}
-
                   {yonseiSubmissionReport && (
                     <div className="mt-4 rounded-2xl border border-emerald-300/25 bg-emerald-300/10 p-4 text-sm leading-relaxed text-emerald-50">
                       <p className="font-semibold text-white">Báo cáo đã tạo</p>
                       <p className="mt-1">
                         {yonseiSubmissionReport.studentName} · {yonseiSubmissionReport.lesson} · Điểm {yonseiSubmissionReport.score}/{yonseiSubmissionReport.total} ({yonseiSubmissionReport.percentage}%) · Sai {yonseiSubmissionReport.wrongCount} câu
                       </p>
-                      <div className="mt-3 flex flex-wrap gap-2">
+                      <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
+                        <button
+                          onClick={() => openYonseiSubmissionEmail()}
+                          className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-black transition hover:scale-[1.03]"
+                        >
+                          Gửi email báo cáo
+                        </button>
                         <button
                           onClick={() => handleCopyYonseiReport()}
-                          className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-black transition hover:scale-[1.03]"
+                          className="rounded-full border border-white/20 bg-white/[0.12] px-4 py-2 text-xs font-semibold text-white transition hover:scale-[1.03]"
                         >
                           Copy báo cáo
                         </button>
                         <button
                           onClick={() => downloadYonseiReport()}
-                          className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-black transition hover:scale-[1.03]"
+                          className="rounded-full border border-white/20 bg-white/[0.12] px-4 py-2 text-xs font-semibold text-white transition hover:scale-[1.03]"
                         >
                           Tải .txt
                         </button>
-                        <button
-                          onClick={() => openYonseiSubmissionEmail()}
-                          className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-black transition hover:scale-[1.03]"
-                        >
-                          Gửi email
-                        </button>
                       </div>
                     </div>
+                  )}
+
+                  {yonseiSubmitMessage && (
+                    <p className="mt-4 rounded-2xl bg-white/[0.08] p-4 text-sm leading-relaxed text-white">
+                      {yonseiSubmitMessage}
+                    </p>
                   )}
                 </div>
               </div>
