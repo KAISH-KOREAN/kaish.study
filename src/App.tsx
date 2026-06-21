@@ -178,7 +178,7 @@ type YonseiSubmissionRecord = {
 
 const YONSEI_LOCAL_SUBMISSIONS_KEY = "kaish-yonsei-listening-2-submissions";
 const YONSEI_UNSAVED_CONFIRM_MESSAGE = "Bạn chưa nộp bài tập này, xác nhận tải lại?";
-const YONSEI_TEACHER_EMAIL = "";
+const YONSEI_TEACHER_EMAIL = "thanhquangvo1805kr@gmail.com";
 
 const formatYonseiSubmittedAt = (isoDate: string) => {
   try {
