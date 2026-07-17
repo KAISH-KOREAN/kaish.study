@@ -76,14 +76,16 @@ export default function AboutPage({ onBack }: AboutPageProps) {
             <div className="ka-hero-trust">
               <span><span style={{ color: "#C98A00" }}>★★★★★</span> 4.9/5</span>
               <span className="ka-sep" />
-              <span>Giảng viên tốt nghiệp <strong style={{ color: NAVY }}>SNU</strong></span>
+              <span>Giảng viên nghiên cứu sinh tiến sĩ <strong style={{ color: NAVY }}>SNU</strong></span>
               <span className="ka-sep" />
               <span>Sĩ số <strong style={{ color: NAVY }}>≤ 15</strong> HV/lớp</span>
             </div>
           </div>
           <div className="ka-hero-media">
             <div className="ka-hero-imgbg" />
-            <div className="ka-hero-img"><span>[ ảnh học viên / lớp học<br />hoặc cảnh Hàn Quốc ]</span></div>
+            <div className="ka-hero-img">
+  <img src="/hinhnenabout.png" alt="Học viên KAISH" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+</div>
             <div className="ka-hero-badge">
               <div className="ka-hero-badge-ic">🎓</div>
               <div><div style={{ fontWeight: 800, color: NAVY, fontSize: 20, lineHeight: 1 }}>TOPIK 6</div><div style={{ fontSize: 12, color: MUTED }}>Chuẩn giảng viên</div></div>
