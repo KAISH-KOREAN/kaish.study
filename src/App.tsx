@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import AboutPage, { AboutOverlay } from "./pages/AboutPage";
 
 const GOOGLE_SHEET_WEB_APP_URL =
   "https://script.google.com/macros/s/AKfycbxmCBs9KGkVBSb5UvqykWkA1FcH7gH_poagkKdO2btW_pTanpEpdjIL77zhtw5qpiMrJg/exec";
@@ -4976,13 +4977,19 @@ function App() {
         </a>
 
         <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <a key={link} href="#" className={`text-sm transition-colors hover:text-white ${link === "Home" ? "text-white" : "text-white/65"}`}>
-              {link}
-            </a>
-          ))}
-        </div>
-
+  {navLinks.map((link) => (
+    <a
+      key={link}
+      href={link === "About" ? "#about" : "#"}
+      className={`text-sm transition-colors hover:text-white ${link === "Home" ? "text-white" : "text-white/65"}`}
+    >
+      {link}
+    </a>
+  ))}
+</div>
+        
+<AboutOverlay />
+        
         <div className="flex items-center gap-3">
           <div className="relative shrink-0">
             <button
