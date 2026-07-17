@@ -97,7 +97,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
       {/* ============ TRUST BAR ============ */}
       <section className="ka-trust">
         <div className="ka-wrap ka-trustgrid">
-          {[["SNU", NAVY, "Giảng viên tốt nghiệp"], ["7+", RED, "Năm kinh nghiệm giảng dạy"], ["≤ 15", NAVY, "Học viên / lớp"], ["100%", NAVY, "Online, có record xem lại"]].map(([n, c, l], i) => (
+          {[["SNU", NAVY, "Giảng viên nghiên cứu sinh tiến sĩ"], ["7+", RED, "Năm kinh nghiệm giảng dạy"], ["≤ 15", NAVY, "Học viên / lớp"], ["100%", NAVY, "Online, có record xem lại"]].map(([n, c, l], i) => (
             <div key={i} className={i ? "ka-trust-cell ka-trust-bd" : "ka-trust-cell"}>
               <div style={{ fontSize: 34, fontWeight: 800, color: c as string, lineHeight: 1 }}>{n}</div>
               <div style={{ fontSize: 14, color: MUTED, marginTop: 4 }}>{l}</div>
@@ -375,9 +375,9 @@ const STEPS = [
 ];
 
 const TESTI = [
-  { quote: "Lộ trình rõ ràng nên mình không còn học lan man. Sau 6 tháng mình đã đạt TOPIK 4 đúng như kế hoạch.", name: "Nguyễn M. Anh", role: "TOPIK 4 · 6 tháng" },
-  { quote: "Khóa phân tích xã hội bằng ArcGIS thực sự khác biệt — mình viết được báo cáo nghiên cứu để nộp hồ sơ du học.", name: "Trần Q. Huy", role: "SV Hàn Quốc học" },
-  { quote: "Được sửa luận học bổng tận tình. Mình nhận học bổng và giờ đang học tại Seoul, biết ơn KAISH rất nhiều.", name: "Lê T. Ngọc", role: "Học bổng · Seoul" },
+  { quote: "Lộ trình rõ ràng nên mình không còn học lan man. Sau 6 tháng mình đã đạt TOPIK 4 đúng như kế hoạch.", name: "ㅇㅇ Trà", role: "TOPIK 4 · 6 tháng" },
+  { quote: "Khóa phân tích xã hội bằng ArcGIS thực sự khác biệt — mình viết được báo cáo nghiên cứu để nộp hồ sơ du học.", name: "ㅇㅇ Linh", role: "TOPIK 5·3 tháng" },
+  { quote: "Được sửa luận học bổng tận tình. Mình nhận học bổng và giờ đang học tại Seoul, biết ơn KAISH rất nhiều.", name: "ㅇㅇㅇ", role: "Học bổng · Sogang University" },
 ];
 
 const PRICING = [
