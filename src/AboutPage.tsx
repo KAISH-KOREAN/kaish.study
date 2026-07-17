@@ -46,10 +46,13 @@ export default function AboutPage({ onBack }: AboutPageProps) {
       {/* ============ HEADER ============ */}
       <header className="ka-header">
         <div className="ka-wrap ka-headrow">
-          <button className="ka-logo" onClick={onBack} aria-label="Về trang chủ">
-            <span style={{ color: RED }}>K</span>
-            <span style={{ color: NAVY }}>AISH</span>
-          </button>
+          <button className="ka-logo" onClick={onBack} aria-label="Về trang chủ"
+  style={{ display: "flex", alignItems: "center", gap: 10, background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+  <img src="/public/kaish-logo.png" alt="KAISH" style={{ height: 40, width: "auto", display: "block" }} />
+  <span style={{ fontSize: 24, fontWeight: 800, letterSpacing: ".02em" }}>
+    <span style={{ color: RED }}>K</span><span style={{ color: NAVY }}>AISH</span>
+  </span>
+</button>
           <nav className="ka-nav">
             <a href="#gioi-thieu">Giới thiệu</a>
             <a href="#khoa-hoc">Khóa học</a>
