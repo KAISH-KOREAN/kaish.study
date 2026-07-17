@@ -88,7 +88,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
 </div>
             <div className="ka-hero-badge">
               <div className="ka-hero-badge-ic">🎓</div>
-              <div><div style={{ fontWeight: 800, color: NAVY, fontSize: 20, lineHeight: 1 }}>TOPIK 6</div><div style={{ fontSize: 12, color: MUTED }}>Chuẩn giảng viên</div></div>
+              <div><div style={{ fontWeight: 800, color: NAVY, fontSize: 20, lineHeight: 1 }}>TOPIK 6</div><div style={{ fontSize: 12, color: MUTED }}>Nghiệp vụ sư phạm trường đại học</div></div>
             </div>
           </div>
         </div>
