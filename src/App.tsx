@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import AboutPage, { AboutOverlay } from "./pages/AboutPage";
+import AboutPage, { AboutOverlay } from "./AboutPage";
 
 const GOOGLE_SHEET_WEB_APP_URL =
   "https://script.google.com/macros/s/AKfycbxmCBs9KGkVBSb5UvqykWkA1FcH7gH_poagkKdO2btW_pTanpEpdjIL77zhtw5qpiMrJg/exec";
