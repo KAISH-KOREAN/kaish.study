@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { AboutOverlay } from "./AboutPage";
+import { VisitorAnalytics } from "./VisitorAnalytics";
+import { completeAnalyticsLesson } from "./analytics";
 
 const GOOGLE_SHEET_WEB_APP_URL =
   "https://script.google.com/macros/s/AKfycbxmCBs9KGkVBSb5UvqykWkA1FcH7gH_poagkKdO2btW_pTanpEpdjIL77zhtw5qpiMrJg/exec";
@@ -3390,6 +3392,7 @@ function App() {
       return;
     }
 
+    completeAnalyticsLesson();
     const payload = {
       studentName: studentName.trim(),
       lesson: currentLessonData?.title ?? selectedLessonKey,
@@ -3544,6 +3547,7 @@ function App() {
 
     const { score, total, wrongQuestions } = calculateTopikReadingScore();
     const hasAnswerKey = total > 0;
+    completeAnalyticsLesson();
     const payload = {
       studentName: topikStudentName.trim(),
       lesson: currentTopikTest.title,
@@ -3845,6 +3849,7 @@ function App() {
     if (!submission) return;
 
     saveYonseiSubmissionLocally(submission);
+    completeAnalyticsLesson();
     setYonseiChecked(true);
     setYonseiSubmissionReport(submission);
     setYonseiSubmitMessage(
@@ -4130,7 +4135,7 @@ function App() {
                 className="rounded-full border border-white/20 bg-white/[0.08] px-6 py-4 text-base text-white outline-none placeholder:text-white/45 focus:border-white/60"
               />
 
-              <button onClick={handleSubmitVocabExercise} className="rounded-full bg-white px-8 py-4 text-base font-semibold text-black transition-transform hover:scale-[1.03]">
+              <button data-analytics="submit-vocabulary" onClick={handleSubmitVocabExercise} className="rounded-full bg-white px-8 py-4 text-base font-semibold text-black transition-transform hover:scale-[1.03]">
                 Nộp bài
               </button>
             </div>
@@ -4557,7 +4562,7 @@ function App() {
                     />
 
                     <button
-                      onClick={handleSubmitYonseiListening}
+                      data-analytics="submit-yonsei" onClick={handleSubmitYonseiListening}
                       className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-transform hover:scale-[1.03]"
                     >
                       Nộp bài và tạo báo cáo
@@ -4827,7 +4832,7 @@ function App() {
                     />
 
                     <button
-                      onClick={handleSubmitTopikReading}
+                      data-analytics="submit-topik" onClick={handleSubmitTopikReading}
                       className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-transform hover:scale-[1.03]"
                     >
                       {hasAnswerKey ? "Nộp phiếu và lưu điểm" : "Lưu phiếu chọn đáp án"}
@@ -5033,7 +5038,7 @@ function App() {
           </div>
 
           <button
-  onClick={handleStartLearning}
+  data-analytics="start-learning" onClick={handleStartLearning}
   className="liquid-glass rounded-full px-6 py-2.5 text-sm text-white transition-transform duration-300 hover:scale-[1.03]"
 >
   Start Learning
@@ -5060,7 +5065,7 @@ function App() {
           자료를 정리하고, 생각을 확장하며, 더 나은 연구와 학습을 이어갑니다.
         </p>
 
-        <button onClick={handleStartLearning} className="liquid-glass animate-fade-rise-delay-2 mt-12 cursor-pointer rounded-full px-14 py-5 text-base text-white transition-transform duration-300 hover:scale-[1.03]">
+        <button data-analytics="start-learning" onClick={handleStartLearning} className="liquid-glass animate-fade-rise-delay-2 mt-12 cursor-pointer rounded-full px-14 py-5 text-base text-white transition-transform duration-300 hover:scale-[1.03]">
           Start Learning
         </button>
 
@@ -5069,7 +5074,7 @@ function App() {
             {learningLevels.map((level) => (
               <button
                 key={level}
-                onClick={() => handleLevelClick(level)}
+                data-analytics="select-level" onClick={() => handleLevelClick(level)}
                 className={`liquid-glass rounded-2xl bg-slate-950/40 px-5 py-4 text-left text-sm text-white transition-all duration-300 hover:scale-[1.03] hover:bg-slate-950/55 ${
                   lessonsByLevel[level] ? "ring-1 ring-white/50" : ""
                 }`}
@@ -5151,7 +5156,7 @@ function App() {
                   return (
                     <button
                       key={lesson}
-                      onClick={() => handleLessonClick(lesson)}
+                      data-analytics="select-lesson" onClick={() => handleLessonClick(lesson)}
                       className={`rounded-2xl border border-white/15 bg-white/[0.08] px-5 py-4 text-left text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/[0.12] ${
                         selectedLesson === lesson ? "ring-2 ring-white/80" : ""
                       }`}
@@ -5182,7 +5187,7 @@ function App() {
                       className={`rounded-2xl border border-white/15 bg-white/[0.08] px-5 py-5 text-left text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/[0.12] ${
                         selectedExercise === exercise.id ? "ring-2 ring-white/80" : ""
                       }`}
-                      onClick={() => handleExerciseClick(exercise.id)}
+                      data-analytics="open-exercise" onClick={() => handleExerciseClick(exercise.id)}
                     >
                       <span className="block text-base font-semibold">{exercise.title}</span>
                       <span className="mt-2 block text-sm leading-relaxed text-white/60">{exercise.description}</span>
@@ -5246,6 +5251,12 @@ function App() {
       {selectedExercise === "yonseiListening" && renderYonseiListeningModal()}
 
       {selectedExercise === "topikReading" && renderTopikReadingModal()}
+      <VisitorAnalytics
+        screen={[levelsOpen ? "learning" : "home", selectedLevel, selectedLesson, selectedExercise].filter(Boolean).join(" / ")}
+        lessonKey={selectedExercise ? [selectedLevel, selectedLesson, selectedExercise,
+          selectedExercise === "topikReading" ? selectedTopikTestId : selectedExercise === "yonseiListening" ? selectedYonseiLessonId : ""
+        ].filter(Boolean).join(" / ") : null}
+      />
     </main>
   );
 }
