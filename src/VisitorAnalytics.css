@@ -1,0 +1,95 @@
+.kaish-analytics-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(560px, calc(100% - 40px));
+  max-width: none;
+  max-height: calc(100dvh - 40px);
+  margin: auto;
+  padding: clamp(24px, 4vw, 36px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 22px;
+  background: #151c25;
+  color: #f6f7fa;
+  box-shadow: 0 28px 100px rgba(0, 0, 0, 0.65);
+  font: 15px/1.65 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-align: left;
+}
+
+.kaish-analytics-dialog::backdrop {
+  background: rgba(4, 10, 18, 0.58);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+}
+
+.kaish-analytics-dialog .kaish-analytics-eyebrow {
+  margin: 0 0 14px;
+  color: #a5c6dd;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.kaish-analytics-dialog h2 {
+  margin: 0 0 18px;
+  color: #fff;
+  font-size: clamp(25px, 5vw, 32px);
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+}
+
+.kaish-analytics-dialog p {
+  margin: 0 0 14px;
+  color: #c7d0db;
+}
+
+.kaish-analytics-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.kaish-analytics-actions button {
+  flex: 1 1 180px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid #7b8da3;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.kaish-analytics-actions .kaish-analytics-allow {
+  background: #f6f7fa;
+  color: #111c29;
+}
+
+.kaish-analytics-actions .kaish-analytics-allow:hover {
+  background: #dceaf4;
+}
+
+.kaish-analytics-actions .kaish-analytics-leave {
+  background: transparent;
+  color: #e0e7f0;
+}
+
+.kaish-analytics-actions .kaish-analytics-leave:hover {
+  background: #253244;
+}
+
+.kaish-analytics-actions button:focus-visible {
+  outline: 2px solid #9ed9ff;
+  outline-offset: 4px;
+}
+
+.kaish-analytics-dialog .kaish-analytics-error {
+  color: #ffcdac;
+  font-size: 13px;
+}
+

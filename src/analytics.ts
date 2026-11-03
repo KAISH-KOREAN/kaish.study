@@ -61,9 +61,10 @@ export function useVisitorAnalytics(screen: string, lessonKey: string | null) {
       localStorage.setItem(CHOICE_KEY, value);
       if (value === "no") sessionStorage.removeItem(SESSION_KEY);
     } catch {
-      return;
+      return false;
     }
     setChoice(value);
+    return true;
   }
 
   useEffect(() => {
