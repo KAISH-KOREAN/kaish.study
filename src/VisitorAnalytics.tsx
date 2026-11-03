@@ -49,23 +49,11 @@ export function VisitorAnalytics({
         onCancel={(event) => event.preventDefault()}
         onKeyDown={(event) => event.stopPropagation()}
       >
-        <p className="kaish-analytics-eyebrow">KAISH · VISIT ANALYTICS</p>
+        <p className="kaish-analytics-eyebrow">KAISH</p>
         <h2 id="kaish-analytics-title">Before you enter KAISH</h2>
         <div id="kaish-analytics-description">
           <p>
-            Access to KAISH requires allowing the usage analytics described below.
-            If you prefer not to share this information, you can leave without
-            enabling analytics.
-          </p>
-          <p>
-            With your permission, we record your IP address, browser/device type,
-            page views, button clicks, time on site and lesson activity for usage
-            research. Records older than 30 days are removed from our analytics
-            database daily.
-          </p>
-          <p>
-            These analytics do not include your name, answers or activity on other
-            websites. To reset your choice, clear KAISH site data in your browser.
+            Welcome to Kaish! Our study and review materials are completely free to use. We hope you’ll keep supporting Kaish as we continue to grow
           </p>
         </div>
         {storageError && (
@@ -81,14 +69,14 @@ export function VisitorAnalytics({
             autoFocus
             onClick={allow}
           >
-            Allow analytics
+            I Understand
           </button>
           <button
             className="kaish-analytics-leave"
             type="button"
             onClick={leave}
           >
-            Leave without analytics
+            Leave the Site
           </button>
         </div>
       </dialog>
