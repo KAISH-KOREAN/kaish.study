@@ -199,27 +199,42 @@ export function AboutOverlay() {
                 resilient cities in Seoul
               </p>
             </div>
-            <div
-              className="founder-map"
-              aria-label="Illustrated connection between Vietnam and South Korea"
-            >
-              <div className="founder-map-lines" aria-hidden="true" />
-              <div className="founder-map-title">
-                A research journey across cities
-              </div>
-              <div className="founder-map-path" aria-hidden="true" />
-              <div className="founder-city founder-city-one">
-                <span className="founder-city-pin" />
-                <strong>Ho Chi Minh City</strong>
-                <small>Vietnam · where my questions began</small>
-              </div>
-              <div className="founder-city founder-city-two">
-                <span className="founder-city-pin" />
-                <strong>Seoul</strong>
-                <small>South Korea · where I study them</small>
-              </div>
-              <div className="founder-map-footer">
-                URBAN CHANGE / CLIMATE / COMMUNITY
+            <div className="founder-visuals">
+              <figure className="founder-portrait">
+                <img
+                  src="/anh-chan-dung.jpg"
+                  alt="Vo Thanh Quang"
+                  width={1616}
+                  height={2880}
+                  decoding="async"
+                />
+                <figcaption>
+                  <strong>Vo Thanh Quang</strong>
+                  <span>Urban planning researcher</span>
+                </figcaption>
+              </figure>
+              <div
+                className="founder-map"
+                aria-label="Illustrated connection between Vietnam and South Korea"
+              >
+                <div className="founder-map-lines" aria-hidden="true" />
+                <div className="founder-map-title">
+                  A research journey across cities
+                </div>
+                <div className="founder-map-path" aria-hidden="true" />
+                <div className="founder-city founder-city-one">
+                  <span className="founder-city-pin" />
+                  <strong>Ho Chi Minh City</strong>
+                  <small>Vietnam · where my questions began</small>
+                </div>
+                <div className="founder-city founder-city-two">
+                  <span className="founder-city-pin" />
+                  <strong>Seoul</strong>
+                  <small>South Korea · where I study them</small>
+                </div>
+                <div className="founder-map-footer">
+                  URBAN CHANGE / CLIMATE / COMMUNITY
+                </div>
               </div>
             </div>
           </section>
