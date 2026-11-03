@@ -1,5 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import "./AboutPage.css";
+
+const researchImageStyle: CSSProperties = {
+  display: "block",
+  width: "100%",
+  height: 260,
+  flexShrink: 0,
+  objectFit: "contain",
+  background: "#fff",
+  padding: 8,
+  marginBottom: 18,
+  borderRadius: 10,
+};
 
 const sections = [
   ["Journey", "founder-journey"],
@@ -318,6 +330,13 @@ export function AboutOverlay() {
             </div>
             <div className="founder-research-grid">
               <article className="founder-research-card">
+                <img
+                  className="founder-research-image"
+                  src="/carbonsinks.jpeg"
+                  alt="Carbon storage change in Ho Chi Minh City, 2002–2026"
+                  loading="lazy"
+                  style={researchImageStyle}
+                />
                 <span className="founder-chip">Manuscript in progress</span>
                 <h3>
                   Urban expansion and carbon storage in Ho Chi Minh City,
@@ -330,6 +349,13 @@ export function AboutOverlay() {
                 <small>Land use · carbon storage · Vietnam</small>
               </article>
               <article className="founder-research-card">
+                <img
+                  className="founder-research-image"
+                  src="/ehsa-vietnam.jpeg"
+                  alt="Emerging heat hotspots in Vietnam"
+                  loading="lazy"
+                  style={researchImageStyle}
+                />
                 <span className="founder-chip">Manuscript in progress</span>
                 <h3>Heat hotspots and vulnerable populations across Vietnam</h3>
                 <p>
@@ -340,6 +366,13 @@ export function AboutOverlay() {
                 <small>Extreme heat · climate adaptation · Vietnam</small>
               </article>
               <article className="founder-research-card">
+                <img
+                  className="founder-research-image"
+                  src="/oral-presentation.png"
+                  alt="Spatial analysis results from the oral presentation"
+                  loading="lazy"
+                  style={researchImageStyle}
+                />
                 <span className="founder-chip">Conference presentation</span>
                 <h3>Oral presentation</h3>
                 <p>
@@ -505,3 +538,4 @@ export function AboutOverlay() {
     </div>
   );
 }
+
