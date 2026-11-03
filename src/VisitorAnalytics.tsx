@@ -50,6 +50,18 @@ export function VisitorAnalytics({
         onKeyDown={(event) => event.stopPropagation()}
       >
         <p className="kaish-analytics-eyebrow">KAISH</p>
+        <img
+  src="/analytics-banner.jpg"
+  alt="KAISH illustration"
+  style={{
+    display: "block",
+    width: "100%",
+    maxHeight: 180,
+    objectFit: "cover",
+    borderRadius: 12,
+    marginBottom: 20,
+  }}
+/>
         <h2 id="kaish-analytics-title">Before you enter KAISH</h2>
         <div id="kaish-analytics-description">
           <p>
