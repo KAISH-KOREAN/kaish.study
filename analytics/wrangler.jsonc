@@ -1,0 +1,28 @@
+{
+  "name": "kaish-analytics",
+  "account_id": "a2ced5b9f6fbc72573883e0a10d5d1c6",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-03",
+  "workers_dev": true,
+  "vars": { "ALLOWED_ORIGINS": "https://kaish.study,https://www.kaish.study" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "kaish-analytics",
+      "database_id": "680e0b51-f381-4090-a2f9-8b7a49dfa91b",
+    },
+  ],
+  "ratelimits": [
+    {
+      "name": "COLLECT_LIMIT",
+      "namespace_id": "61501",
+      "simple": { "limit": 120, "period": 60 },
+    },
+    {
+      "name": "ADMIN_LIMIT",
+      "namespace_id": "61502",
+      "simple": { "limit": 10, "period": 60 },
+    },
+  ],
+  "triggers": { "crons": ["0 3 * * *"] },
+}
