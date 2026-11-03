@@ -10,7 +10,7 @@ const videoUrl = "/videos/297736-Trim.mp4";
 const gammaMusicEmbedUrl =
   "https://www.youtube.com/embed/n4YghVcjbpw";
 
-const navLinks = ["Home", "Studio", "About", "Journal", "Reach Us"];
+const navLinks = ["Home", "Studio", "About Founder", "Journal", "Reach Us"];
 
 type BackgroundMode = "morning" | "afternoon" | "night";
 type ExerciseType = "vocabulary" | "translation" | "choice" | "topikReading" | "yonseiListening" | null;
@@ -4981,7 +4981,7 @@ function App() {
   {navLinks.map((link) => (
     <a
       key={link}
-      href={link === "About" ? "#about" : "#"}
+      href={link === "About Founder" ? "#about" : "#"}
       className={`text-sm transition-colors hover:text-white ${link === "Home" ? "text-white" : "text-white/65"}`}
     >
       {link}
