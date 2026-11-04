@@ -328,8 +328,8 @@ export function AboutOverlay() {
               <p>research notebook</p>
               <h2 id="founder-research-title">Questions I am working on.</h2>
               <span>
-                Working papers and presentations are labelled by their current
-                status.
+                Thesis research, working papers and presentations are labelled
+                by their current status.
               </span>
             </div>
             <div className="founder-research-grid">
@@ -390,6 +390,84 @@ export function AboutOverlay() {
                 >
                   View program ↗
                 </a>
+              </article>
+              <article className="founder-research-card">
+                <img
+                  className="founder-research-image"
+                  src="/master-thesis.png"
+                  alt="GIS map of surveyed residents near Ho Chi Minh City Metro Line 1 stations"
+                  loading="lazy"
+                  style={researchImageStyle}
+                />
+                <span className="founder-chip">Master’s thesis · 2025</span>
+                <h3>
+                  Analysis of Factors Influencing Transport Mode Choice of
+                  Residents Living in Metro Station Areas: A Case Study of
+                  Ho Chi Minh City Metro Line 1
+                </h3>
+                <p>
+                  My master’s thesis at Dankook University examines factors
+                  associated with transport mode choice among residents living
+                  near Ho Chi Minh City Metro Line 1 stations.
+                </p>
+                <small>Travel behaviour · Metro station areas · Vietnam</small>
+              </article>
+              <article className="founder-research-card">
+                <img
+                  className="founder-research-image"
+                  src="/EHSA-korean-pedestrians.png"
+                  alt="Spatial patterns and hotspot analysis of older pedestrian crashes in South Korea"
+                  loading="lazy"
+                  style={researchImageStyle}
+                />
+                <span className="founder-chip">Research in progress</span>
+                <h3>
+                  Conditional Fatality Risk in Older Pedestrian Injury Crashes:
+                  Intersection versus Non-intersection Locations
+                </h3>
+                <p>
+                  Examining whether the probability of a fatal outcome,
+                  conditional on an injury crash involving an older pedestrian,
+                  differs between intersection and non-intersection locations
+                  in South Korea.
+                </p>
+                <small>Older pedestrians · Road safety · South Korea</small>
+              </article>
+              <article className="founder-research-card">
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                    gap: 8,
+                    marginBottom: 18,
+                  }}
+                >
+                  <img
+                    className="founder-research-image"
+                    src="/systematic-climatechange-korea_1.png"
+                    alt="Bilingual keyword framework for reviewing machine learning and climate change research"
+                    loading="lazy"
+                    style={{ ...researchImageStyle, minWidth: 0, marginBottom: 0 }}
+                  />
+                  <img
+                    className="founder-research-image"
+                    src="/systematic-climatechange-korea_2.png"
+                    alt="Overview of publication trends and research focus areas in South Korean climate change and machine learning literature"
+                    loading="lazy"
+                    style={{ ...researchImageStyle, minWidth: 0, marginBottom: 0 }}
+                  />
+                </div>
+                <span className="founder-chip">Systematic review in progress</span>
+                <h3>
+                  Machine Learning in South Korean Climate Change Research:
+                  A Systematic Review
+                </h3>
+                <p>
+                  Mapping the research areas in which machine learning is
+                  applied to climate change in South Korea, with a focus on
+                  buildings, transport, urban form and waste.
+                </p>
+                <small>Systematic review · Machine learning · Climate change</small>
               </article>
             </div>
           </section>
