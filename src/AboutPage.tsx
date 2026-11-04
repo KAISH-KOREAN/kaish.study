@@ -24,6 +24,7 @@ const sections = [
 const credentials = [
   {
     title: "Net Zero 101: What, Why and How",
+    image: "/netzero.jpeg",
     issuer:
       "United Nations University Institute for the Advanced Study of Sustainability",
     date: "2026",
@@ -31,6 +32,7 @@ const credentials = [
   },
   {
     title: "Introduction to Urban Planning",
+    image: "/introduction-to-urban-planning.jpeg",
     issuer: "University of Seoul",
     date: "2025",
     kind: "Course completion",
@@ -38,12 +40,14 @@ const credentials = [
   {
     title:
       "Site Planning: Toward Shared Grounds Between Urban Design and Architecture",
+    image: "/site-planning.png",
     issuer: "University of Seoul",
     date: "2025",
     kind: "Course completion",
   },
   {
     title: "Urban Space and Residential Culture in Korea",
+    image: "/urban-space.png",
     issuer: "Yonsei University",
     date: "2025",
     kind: "Course completion",
@@ -468,11 +472,19 @@ export function AboutOverlay() {
               <p>recognition &amp; learning</p>
               <h2 id="founder-credentials-title">Always learning.</h2>
             </div>
-            <div className="founder-scholarship">
-              <span className="founder-spark" aria-hidden="true">
-                ✳
-              </span>
-              <div>
+            <div className="founder-scholarship" style={{ flexWrap: "wrap" }}>
+              <img
+                src="/GKS.jpeg"
+                alt="Korean Government Scholarship master's degree completion certificate"
+                loading="lazy"
+                style={{
+                  ...researchImageStyle,
+                  width: "min(100%, 180px)",
+                  height: 220,
+                  marginBottom: 0,
+                }}
+              />
+              <div style={{ flex: "1 1 220px", minWidth: 0 }}>
                 <small>Scholarship · 2023</small>
                 <h3>Korean Government Scholarship</h3>
                 <p>Master’s degree track</p>
@@ -481,6 +493,14 @@ export function AboutOverlay() {
             <div className="founder-credential-grid">
               {credentials.map((item) => (
                 <article key={item.title}>
+                  {item.image && (
+                    <img
+                      src={item.image}
+                      alt={item.title + " — certificate of completion"}
+                      loading="lazy"
+                      style={researchImageStyle}
+                    />
+                  )}
                   <span>
                     {item.kind} · {item.date}
                   </span>
@@ -538,4 +558,5 @@ export function AboutOverlay() {
     </div>
   );
 }
+
 
